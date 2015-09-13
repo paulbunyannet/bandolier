@@ -14,7 +14,6 @@
     "php": "^5.4"
   },
   "require-dev": {
-    "fabpot/php-cs-fixer": "^1.10",
     "phpunit/phpunit": "^4.8"
   },
   "autoload": {
@@ -25,9 +24,7 @@
   "minimum-stability": "stable",
   "scripts": {
     "test": [
-      "php-cs-fixer fix --dry-run",
       "phpunit --verbose"
-    ],
-    "lint": "php-cs-fixer fix"
+    ]
   }
 }
