@@ -1,6 +1,6 @@
 <?php
 /**
- * String Tests
+ * stripSlashes Tests
  *
  * Created 9/12/15 3:03 PM
  * Tests for String methods
@@ -18,7 +18,7 @@ use Pbc\Bandolier\BandolierTestCase;
  * Class StringsTest
  * @package Pbc\Bandolier\Type
  */
-class StringsTest extends BandolierTestCase
+class StripSlashesTest extends BandolierTestCase
 {
 
     /**
