@@ -22,7 +22,7 @@ use Pbc\Bandolier\BandolierTestCase;
 class TitleCaseTest extends BandolierTestCase
 {
 
-    /**
+    /*
      * Test title case string with default settings
      */
     public function testTitleCaseString()
