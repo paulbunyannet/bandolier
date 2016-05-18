@@ -1,2 +1,5 @@
 /vendor/
 .idea
+tmp
+clover.xml
+coverage-checker.php

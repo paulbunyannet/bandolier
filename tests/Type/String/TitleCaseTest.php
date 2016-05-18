@@ -21,7 +21,6 @@ use Pbc\Bandolier\BandolierTestCase;
  */
 class TitleCaseTest extends BandolierTestCase
 {
-
     /*
      * Test title case string with default settings
      */
@@ -44,9 +43,8 @@ class TitleCaseTest extends BandolierTestCase
         $stringIn = "this|is|a|string";
         $stringOut = "This|Is|A|String";
 
-        $this->assertEquals(Strings::titleCase($stringIn,['|']), $stringOut);
-
-
+        $this->assertEquals(Strings::titleCase($stringIn, ['|']), $stringOut);
+        
     }
 
     /**
@@ -58,10 +56,18 @@ class TitleCaseTest extends BandolierTestCase
         $stringIn = "this is a string";
         $stringOut = "This is a string";
 
-        $this->assertEquals(Strings::titleCase($stringIn,[' '],['is','a','string']), $stringOut);
-
-
+        $this->assertEquals(Strings::titleCase($stringIn, [' '], ['is', 'a', 'string']), $stringOut);
+        
     }
 
+    /**
+     * @test
+     */
+    public function it_finds_an_uppercase_exception_string()
+    {
+        $stringIn = "THIS IS A STRING";
+        $stringOut = "This IS A STRING";
 
+        $this->assertSame(Strings::titleCase($stringIn, [' '], ['IS', 'A', 'STRING']), $stringOut);
+    }
 }

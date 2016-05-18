@@ -8,7 +8,10 @@ php:
 before_install:
 - composer self-update
 install: composer install --prefer-source --no-interaction --dev
-script: composer test
+script:
+  - composer get-coverage-checker
+  - composer test
+  - php coverage-checker.php clover.xml 80
 cache:
   directories:
   - vendor

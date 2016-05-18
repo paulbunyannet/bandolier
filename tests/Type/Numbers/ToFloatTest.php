@@ -28,5 +28,12 @@ class ToFloatTest extends BandolierTestCase
         $this->assertSame(1000000.25, Numbers::tofloat('$1,000,000.25'));
         $this->assertSame(100.25, Numbers::tofloat('abc100def.25xyz'));
     }
-    
+
+    /**
+     * @test
+     */
+    public function a_integer_will_return_as_a_float()
+    {
+        $this->assertSame(125.0, Numbers::tofloat('125'));
+    }
 }
