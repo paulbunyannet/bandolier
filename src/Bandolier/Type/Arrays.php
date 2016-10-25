@@ -1,0 +1,32 @@
+<?php
+/**
+ * Arrays
+ *
+ * Created 10/24/16 9:53 PM
+ * Arrays
+ *
+ * @author Nate Nolting <naten@paulbunyan.net>
+ * @package Pbc\Bandolier\Type
+ */
+
+namespace Pbc\Bandolier\Type;
+
+
+class Arrays
+{
+    /**
+     * From default attribute list, overwrite if key is found
+     * @param array $defaults
+     * @param array $atts
+     * @return array|bool
+     */
+    public static function defaultAttributes(array $defaults = [], array $atts = [])
+    {
+        foreach ($atts as $name => $value) {
+            if (array_key_exists($name, $defaults)) {
+                $defaults[$name] = $value;
+            }
+        }
+        return ($defaults) ? $defaults : false;
+    }
+}
