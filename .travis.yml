@@ -8,7 +8,8 @@ php:
 - hhvm
 matrix:
   allow_failures:
-    - php: hhvm 5.4
+    - php: hhvm
+    - php: 5.4
 before_install:
   - composer self-update
 install: composer install --prefer-source --no-interaction --dev
