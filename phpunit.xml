@@ -16,13 +16,13 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/Bandolier</directory>
+            <directory suffix=".php">./src/Bandolier</directory>
         </whitelist>
     </filter>
 
     <testsuites>
         <testsuite name="Bandolier Test Suite">
-            <directory suffix=".php">tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
