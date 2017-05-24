@@ -12,15 +12,16 @@
         >
     <logging>
         <log type="coverage-clover" target="./clover.xml"/>
+        <log type="coverage-html" target="./coverage/report" lowUpperBound="50" highLowerBound="80"/>
     </logging>
     <filter>
-        <whitelist>
-            <directory>src/Bandolier</directory>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/Bandolier</directory>
         </whitelist>
     </filter>
 
     <testsuites>
-        <testsuite name="Baondolier Test Suite">
+        <testsuite name="Bandolier Test Suite">
             <directory suffix=".php">tests</directory>
         </testsuite>
     </testsuites>

@@ -12,15 +12,13 @@ matrix:
     - php: 5.4
 before_install:
   - composer self-update
-install: composer install --prefer-source --no-interaction --dev
+install:
+  - composer install --prefer-source --no-interaction
 script:
-  - composer get-coverage-checker
-  - composer test
-  - php coverage-checker.php clover.xml 80
+  - vendor/bin/phpunit
 cache:
   directories:
   - vendor
   - $HOME/.composer/cache
-notifications:
-  slack:
-    secure: XltjoPkCSZV7e5Tj3NeVM/li85BVWGW8yTBCXh7RC8PHrNvEy2AH7PbK82FeqG3EXQvgtwmTsN3Wac+XIWi9X4xjSi8G94u7vlRDwwhIM37iLqG/aAQcw+iPDMB5tXdeOs/J6sQ4gTeg6PC4+1+ikMY2wqYOLAjWxN1lSzPR0YQ+dortgwwY2mDxRbDcQGGHX0Hq7gnBItwGufPTAr1T0W0vZVPOi0ipztipGAFQ3OKXQIiJ7qUIctxEvkt1kP65sgdFAxYZg4y7sLJZ0A6AAXk3dlfGfVH6ewUg3Bs/ZaoJLnEM6i3Sj+QMXoFy0EM785+mzxpDB9Vlnt9CvZH6sQwGuoztxvfft5/ili2gLp0GQ13P9iezdosbIH+ZVQ19Tm7Cp6KCgFgwUwJchWybeb0E6EZFP8tLVVXLGYRmHlghIFwZaH8AAmT93I+NfPlGtiG22S7lmxMmsxEHpNjZEh6sVunyUHJp6XYT+FacqAvoiOg/i78wz84b+Ve/iyxh3dQjEU9LQOOngqwn63tqxpsyaPPLmfkioZsehggt/0t3Q+xWslYfH07SQrO+b4pQmrcmnbhy+Krxq4l7d2iIkm4gVdhivxDrMAEYVa+Fy3pvq11I6Jyfdl0N1t6uz3I06RNu339iGSQnuKpXHlf1nL6MBNVigaudCWuA5vED+6g=
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
