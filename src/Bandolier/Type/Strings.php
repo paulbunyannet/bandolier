@@ -71,4 +71,37 @@ class Strings
         //foreach
         return $string;
     }
+
+    /**
+     * If string starts with
+     * http://stackoverflow.com/a/834355/405758
+     *
+     * @param $haystack
+     * @param $needle
+     *
+     * @return bool
+     */
+    public static function startsWith($haystack, $needle)
+    {
+        return !strncmp($haystack, $needle, strlen($needle));
+    }
+
+    /**
+     * If string ends with
+     * http://stackoverflow.com/a/834355/405758
+     *
+     * @param $haystack
+     * @param $needle
+     *
+     * @return bool
+     */
+    public static function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        if ($length == 0) {
+            throw new \Exception("Needle must be one or more characters");
+        }
+
+        return (substr($haystack, -$length) === $needle);
+    }
 }

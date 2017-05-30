@@ -11,12 +11,73 @@ namespace Pbc\Bandolier;
  * @package Bandolier
  * @subpackage Test
  */
+/**
+ * Class BandolierTestCase
+ * @package Pbc\Bandolier
+ */
 abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
 {
 
-    public function setUp()
-    {
+    /**
+     * @var
+     */
+    protected static $faker;
+    /**
+     * @var
+     */
+    protected $characterChecks;
+    /**
+     * @var array
+     */
+    protected $specialCharacters = [
+        '\'',
+        '"',
+        "!",
+        "@",
+        "#",
+        "$",
+        "%",
+        "^",
+        "&",
+        "*",
+        "(",
+        ")",
+        "[",
+        "{",
+        "]",
+        "}",
+        '|',
+        "\\",
+        ":",
+        ":",
+        ",",
+        "<",
+        ".",
+        ">",
+        "/",
+        "?"
+    ];
 
+    /**
+     *
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        self::$faker = \Faker\Factory::create();
+
+        $this->characterChecks = array_merge(
+            range("a", "Z"),
+            $this->specialCharacters
+        );
+    }
+
+    /**
+     *
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
     }
 
 }
