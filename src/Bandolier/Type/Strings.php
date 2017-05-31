@@ -1,4 +1,5 @@
 <?php
+
 namespace Pbc\Bandolier\Type;
 
 class Strings
@@ -30,7 +31,7 @@ class Strings
         if (!is_string($string) || strlen($string) === 0) {
             return false;
         }
-        $string = str_replace('_',' ',$string);
+        $string = str_replace('_', ' ', $string);
         return Strings::titleCase($string);
     }
 
@@ -41,8 +42,11 @@ class Strings
      *
      * @return bool|mixed|string
      */
-    public static function titleCase($string, $delimiters = [" ", "-", ".", "'", "O'", "Mc"], $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"])
-    {
+    public static function titleCase(
+        $string,
+        $delimiters = [" ", "-", ".", "'", "O'", "Mc"],
+        $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"]
+    ) {
         /*
          * Exceptions in lower case are words you don't want converted
          * Exceptions all in upper case are any words you don't want converted to title case
@@ -92,8 +96,8 @@ class Strings
      *
      * @param $haystack
      * @param $needle
-     *
      * @return bool
+     * @throws \Exception
      */
     public static function endsWith($haystack, $needle)
     {
@@ -103,5 +107,20 @@ class Strings
         }
 
         return (substr($haystack, -$length) === $needle);
+    }
+
+    /**
+     * @param string $haystack
+     * @param string $needle
+     * @param bool $caseSensitive
+     * @return bool
+     */
+    public static function contains($haystack, $needle, $caseSensitive = true)
+    {
+        if ($caseSensitive) {
+            return strlen(strstr($haystack, $needle)) > 0;
+        } else {
+            return strlen(stristr($haystack, $needle)) > 0;
+        }
     }
 }
