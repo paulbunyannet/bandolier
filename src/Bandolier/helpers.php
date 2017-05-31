@@ -17,14 +17,15 @@ if (! function_exists('env')) {
         if ($value === false) {
             return value($default);
         }
+
         $conditions = [
-            ['return' => true, 'checks' => 'true', '(true)', '"true"'],
-            ['return' => false, 'checks' => 'false', '(false)', '"false"'],
-            ['return' => null, 'checks' => 'null', '(null)', '"null"'],
-            ['return' => '', 'checks' => 'empty', '(empty)', '"empty"'],
+            ['return' => true, 'checks' => ['true', '(true)', '"true"']],
+            ['return' => false, 'checks' => ['false', '(false)', '"false"']],
+            ['return' => null, 'checks' => ['null', '(null)', '"null"']],
+            ['return' => '', 'checks' => ['empty', '(empty)', '"empty"']],
         ];
         for ($i=0, $iCount=count($conditions); $i < $iCount; $i++) {
-            if (Strings::contains($value, $conditions[$i]['checks'], false)) {
+            if (in_array($value, $conditions[$i]['checks'])) {
                 return $conditions[$i]['return'];
             }
         }

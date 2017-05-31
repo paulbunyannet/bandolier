@@ -124,6 +124,7 @@ class Strings
                     return true;
                 }
             }
+
             return false;
         }
 
