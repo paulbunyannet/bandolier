@@ -19,14 +19,14 @@ class Numbers
      * http://php.net/manual/en/function.floatval.php#114486
      *
      * $num = '1.999,369€';
-     * var_dump(tofloat($num)); // float(1999.369)
+     * var_dump(toFloat($num)); // float(1999.369)
      * $otherNum = '126,564,789.33 m²';
-     * var_dump(tofloat($otherNum)); // float(126564789.33)
+     * var_dump(toFloat($otherNum)); // float(126564789.33)
      *
      * @param $num
      * @return mixed
      */
-    public static function tofloat($num)
+    public static function toFloat($num)
     {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
@@ -43,6 +43,8 @@ class Numbers
         );
     }
 
+
+
     /**
      * Convert number to word
      * http://www.karlrixon.co.uk/writing/convert-numbers-to-words-with-php/ (originally convert_number_to_words)
@@ -52,21 +54,25 @@ class Numbers
      * one hundred and twenty-three million, four hundred and fifty-six thousand, seven hundred and eighty-nine
      *
      * echo Numbers::toWord(123456789.123);
-     * one hundred and twenty-three million, four hundred and fifty-six thousand, seven hundred and eighty-nine point one two three
+     * one hundred and twenty-three million, four hundred and
+     * fifty-six thousand, seven hundred and eighty-nine point one two three
      *
      * echo Numbers::toWord(-1922685.477);
      * negative one million, nine hundred and twenty-two thousand, six hundred and eighty-five point four seven seven
      *
      * float rounding can be avoided by passing the number as a string
      * echo Numbers::toWord(123456789123.12345); // rounds the fractional part
-     * one hundred and twenty-three billion, four hundred and fifty-six million, seven hundred and eighty-nine thousand, one hundred and twenty-three point one two
+     * one hundred and twenty-three billion, four hundred and fifty-six million, seven hundred and eighty-nine thousand,
+     * one hundred and twenty-three point one two
      *
      * echo Numbers::toWord('123456789123.12345'); // does not round
-     * one hundred and twenty-three billion, four hundred and fifty-six million, seven hundred and eighty-nine thousand, one hundred and twenty-three point one two three four five
+     * one hundred and twenty-three billion, four hundred and fifty-six million, seven hundred and eighty-nine thousand,
+     * one hundred and twenty-three point one two three four five
      *
      * @param $number
      * @return bool|mixed|null|string
      * @throws \Exception
+     * @SuppressWarnings(PHPMD)
      */
     public static function toWord($number)
     {

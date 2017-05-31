@@ -12,7 +12,6 @@
 
 namespace Pbc\Bandolier\Type;
 
-
 /**
  * Class File
  * @package Pbc\Bandolier\Type
@@ -28,20 +27,22 @@ class File
      * @param array $results
      * @return array
      */
-    public static function getDirContents($dir, &$results = array()){
+    public static function getDirContents($dir, &$results = array())
+    {
         $files = scandir($dir);
 
-        foreach($files as $key => $value){
-            $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
-            if(!is_dir($path)) {
+        foreach ($files as $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
                 $results[] = $path;
-            } else if(is_dir($path) && $value != "." && $value != "..") {
-                File::getDirContents($path, $results);
-                $results[] = $path;
+            } else {
+                if (is_dir($path) && $value != "." && $value != "..") {
+                    File::getDirContents($path, $results);
+                    $results[] = $path;
+                }
             }
         }
 
         return $results;
     }
-
 }

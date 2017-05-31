@@ -11,18 +11,17 @@
 
 namespace Pbc\Bandolier\Type;
 
-
 class Arrays
 {
     /**
      * From default attribute list, overwrite if key is found
      * @param array $defaults
-     * @param array $atts
+     * @param array $attributes
      * @return array|bool
      */
-    public static function defaultAttributes(array $defaults = [], array $atts = [])
+    public static function defaultAttributes(array $defaults = [], array $attributes = [])
     {
-        foreach ($atts as $name => $value) {
+        foreach ($attributes as $name => $value) {
             if (array_key_exists($name, $defaults)) {
                 $defaults[$name] = $value;
             }

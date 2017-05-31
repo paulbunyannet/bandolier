@@ -11,7 +11,6 @@
 
 namespace Pbc\Bandolier\Type;
 
-
 /**
  * Class Encoded
  * @package Pbc\Bandolier\Type
@@ -29,8 +28,8 @@ class Encoded
     {
         $encodeType = self::getEncodeType($strange);
         switch ($encodeType) {
-            case('json'):
-            case('serialized'):
+            case ('json'):
+            case ('serialized'):
                 $unpackMethod = 'unpack'.ucfirst($encodeType);
                 $decode = self::$unpackMethod($strange);
                 if (array_key_exists($thing, $decode)) {
@@ -89,11 +88,12 @@ class Encoded
 
     /**
      * @param $string
+     * @param bool $associativeArray
      * @return mixed
      */
-    public static function unpackJson($string, $assc = true)
+    public static function unpackJson($string, $associativeArray = true)
     {
-        return json_decode($string, $assc);
+        return json_decode($string, $associativeArray);
     }
 
     /**
@@ -104,5 +104,4 @@ class Encoded
     {
         return unserialize($string);
     }
-
 }

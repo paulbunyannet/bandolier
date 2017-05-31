@@ -17,24 +17,16 @@ if (! function_exists('env')) {
         if ($value === false) {
             return value($default);
         }
-
-        switch (strtolower($value)) {
-            case 'true':
-            case '(true)':
-            case '"true"':
-                return true;
-            case 'false':
-            case '(false)':
-            case '"false"':
-                return false;
-            case 'empty':
-            case '(empty)':
-            case '"empty"':
-                return '';
-            case 'null':
-            case '(null)':
-            case '"null"':
-                return;
+        $conditions = [
+            ['return' => true, 'checks' => 'true', '(true)', '"true"'],
+            ['return' => false, 'checks' => 'false', '(false)', '"false"'],
+            ['return' => null, 'checks' => 'null', '(null)', '"null"'],
+            ['return' => '', 'checks' => 'empty', '(empty)', '"empty"'],
+        ];
+        for ($i=0, $iCount=count($conditions); $i < $iCount; $i++) {
+            if (Strings::contains($value, $conditions[$i]['checks'], false)) {
+                return $conditions[$i]['return'];
+            }
         }
 
         if (strlen($value) > 1 && Strings::startsWith($value, '"') && Strings::endsWith($value, '"')) {
