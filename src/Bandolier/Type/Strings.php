@@ -111,12 +111,22 @@ class Strings
 
     /**
      * @param string $haystack
-     * @param string $needle
+     * @param mixed $needle
      * @param bool $caseSensitive
      * @return bool
      */
     public static function contains($haystack, $needle, $caseSensitive = true)
     {
+        // if needle is an array then check is one of it's values is in the haystack
+        if (is_array($needle)) {
+            for ($i = 0, $iCount = count($needle); $i < $iCount; $i++) {
+                if (self::contains($haystack, $needle[$i], $caseSensitive) === true) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         if ($caseSensitive) {
             return strlen(strstr($haystack, $needle)) > 0;
         } else {

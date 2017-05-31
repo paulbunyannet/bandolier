@@ -77,4 +77,43 @@ class ContainsTest extends BandolierTestCase
         $haystack =  "Bar Baz";
         $this->assertFalse(Strings::contains($haystack, $needle, false));
     }
+
+    /**
+     * Check if string in array is inside the haystack case sensitive
+     */
+    public function testAnArrayValueIsInTheHaystackCaseSensitive()
+    {
+        $needle = ["Foo"];
+        $haystack =  "Foo Bar Baz";
+        $this->assertTrue(Strings::contains($haystack, $needle));
+    }
+    /**
+     * Check if string in array is not inside the haystack case sensitive
+     */
+    public function testAnArrayValueIsNotInTheHaystackCaseSensitive()
+    {
+        $needle = ["foo"];
+        $haystack =  "Foo Bar Baz";
+        $this->assertFalse(Strings::contains($haystack, $needle));
+    }
+
+    /**
+     * Check if string in array is inside the haystack case insensitive
+     */
+    public function testAnArrayValueIsInTheHaystackCaseInsensitive()
+    {
+        $needle = ["foo"];
+        $haystack =  "Foo Bar Baz";
+        $this->assertTrue(Strings::contains($haystack, $needle, false));
+    }
+
+    /**
+     * Check if string in array is not inside the haystack case insensitive
+     */
+    public function testAnArrayValueIsNotInTheHaystackCaseInsensitive()
+    {
+        $needle = ["Bin"];
+        $haystack =  "foo bar baz";
+        $this->assertFalse(Strings::contains($haystack, $needle, false));
+    }
 }
