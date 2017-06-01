@@ -38,6 +38,14 @@ if (! function_exists('env')) {
     }
 }
 
+if (!function_exists('getAttribute')) {
+    function getAttribute(array $data, $attribute = null, $default = null)
+    {
+        return \Pbc\Bandolier\Type\Arrays::getAttribute($data, $attribute, $default);
+    }
+}
+
+
 if (! function_exists('value')) {
     /**
      * Return the default value of the given value.

@@ -34,6 +34,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that if the environment variable is not found then return a default
+     * @test testGettingDefaultValue
+     * @group env
      */
     public function testGettingDefaultValue()
     {
@@ -44,6 +46,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a value from env()
+     * @test testGetAPlainValueFromEnv
+     * @group env
      */
     public function testGetAPlainValueFromEnv()
     {
@@ -55,6 +59,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * Test getting a true value from env()
+     * @test testGetATrueValueFromEnv
+     * @group env
      */
     public function testGetATrueValueFromEnv()
     {
@@ -67,6 +73,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a true value from env() when the value is surrounded by quotes
+     * @test testGetATrueValueWithQuotesFromEnv
+     * @group env
      */
     public function testGetATrueValueWithQuotesFromEnv()
     {
@@ -79,6 +87,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a true value from env() is surrounded by parentheses
+     * @test testGetATrueValueWithParenthesesFromEnc
+     * @group env
      */
     public function testGetATrueValueWithParenthesesFromEnc()
     {
@@ -91,6 +101,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a false value from env()
+     * @test testGetAFalseValueFromEnv
+     * @group env
      */
     public function testGetAFalseValueFromEnv()
     {
@@ -103,6 +115,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a false value from env() when the value is surrounded by quotes
+     * @test testGetAFalseValueWithQuotesFromEnv
+     * @group env
      */
     public function testGetAFalseValueWithQuotesFromEnv()
     {
@@ -115,6 +129,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a false value from env() is surrounded by parentheses
+     * @test testGetAFalseValueWithParenthesesFromEnc
+     * @group env
      */
     public function testGetAFalseValueWithParenthesesFromEnc()
     {
@@ -127,6 +143,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a empty value from env()
+     * @test testGetAEmptyValueFromEnv
+     * @group env
      */
     public function testGetAEmptyValueFromEnv()
     {
@@ -139,6 +157,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a empty value from env() when the value is surrounded by quotes
+     * @test testGetAEmptyValueWithQuotesFromEnv
+     * @group env
      */
     public function testGetAEmptyValueWithQuotesFromEnv()
     {
@@ -151,6 +171,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a empty value from env() is surrounded by parentheses
+     * @test testGetAEmptyValueWithParenthesesFromEnc
+     * @group env
      */
     public function testGetAEmptyValueWithParenthesesFromEnc()
     {
@@ -162,6 +184,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * Test getting a null value from env()
+     * @test testGetANullValueFromEnv
+     * @group env
      */
     public function testGetANullValueFromEnv()
     {
@@ -174,6 +198,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a null value from env() when the value is surrounded by quotes
+     * @test testGetANullValueWithQuotesFromEnv
+     * @group env
      */
     public function testGetANullValueWithQuotesFromEnv()
     {
@@ -186,6 +212,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a null value from env() is surrounded by parentheses
+     * @test testGetANullValueWithParenthesesFromEnc
+     * @group env
      */
     public function testGetANullValueWithParenthesesFromEnc()
     {
@@ -198,6 +226,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test getting a null value from env() is surrounded by parentheses
+     * @test testGetAValueWithQuotesFromEnc
+     * @group env
      */
     public function testGetAValueWithQuotesFromEnc()
     {
@@ -207,5 +237,54 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         putenv($var.'='. $value);
 
         $this->assertSame($realVal, env($var));
+    }
+
+    /**
+     * @test testGetAttributeCanFindKeyInArray
+     * @group GetAttribute
+     */
+    public function testGetAttributeCanFindKeyInArray()
+    {
+        $value = 'foo';
+        $key = 'bar';
+        $data = [$key => $value];
+        $this->assertSame($value, getAttribute($data, $key));
+    }
+
+    /**
+     * @test testAttributeWillReturnNullIfNoDefaultIsSetAndTheKeyIsNotFoundInArray
+     * @group GetAttribute
+     */
+    public function testGetAttributeWillReturnNullIfNoDefaultIsSetAndTheKeyIsNotFoundInArray()
+    {
+        $value = 'foo';
+        $key = 'bar';
+        $data = [$key => $value];
+        $this->assertNull(getAttribute($data, 'bazz'));
+    }
+
+    /**
+     * @test testGetAttributeWillReturnDefaultIfKeyIsNotFound
+     * @group GetAttribute
+     */
+    public function testGetAttributeWillReturnDefaultIfKeyIsNotFound()
+    {
+        $value = 'foo';
+        $key = 'bar';
+        $default = 'bin';
+        $data = [$key => $value];
+        $this->assertSame($default, getAttribute($data, 'bazz', $default));
+    }
+    /**
+     * @test testGetAttributeWillReturnDefaultIfKeyIsNotSet
+     * @group getAttribute
+     */
+    public function testGetAttributeWillReturnDefaultIfKeyIsNotSet()
+    {
+        $value = 'foo';
+        $key = 'bar';
+        $default = 'bin';
+        $data = [$key => $value];
+        $this->assertSame($default, getAttribute($data, null, $default));
     }
 }

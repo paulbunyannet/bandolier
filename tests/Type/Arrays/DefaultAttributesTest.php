@@ -5,7 +5,7 @@ namespace Pbc\Bandolier\Type;
  * ArraysTest
  *
  * Created 10/24/16 10:03 PM
- * Tests for Arrays methods
+ * Tests for Arrays::DefaultAttributes method
  *
  * @author Nate Nolting <naten@paulbunyan.net>
  * @package Pbc\Bandolier\Type
@@ -13,7 +13,7 @@ namespace Pbc\Bandolier\Type;
 
 use Pbc\Bandolier\BandolierTestCase;
 
-class ArraysTest extends BandolierTestCase
+class DefaultAttributesTest extends BandolierTestCase
 {
     /**
      * @return array
@@ -26,7 +26,7 @@ class ArraysTest extends BandolierTestCase
     /**
      * @return array
      */
-    public function teatDown()
+    public function tearDown()
     {
         parent::tearDown();
     }
