@@ -25,10 +25,12 @@ class Utility
     {
 
         $ipAddress = null;
-        $records = dns_get_record(trim($address));
-        foreach ($records as $record) {
-            if ($record['type'] == 'A') {
-                $ipAddress = $record['ip'];
+        if (function_exists('dns_get_record')) {
+            $records = dns_get_record(trim($address));
+            foreach ($records as $record) {
+                if ($record['type'] == 'A') {
+                    $ipAddress = $record['ip'];
+                }
             }
         }
         return $ipAddress;
