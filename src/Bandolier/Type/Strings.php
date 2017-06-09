@@ -2,6 +2,10 @@
 
 namespace Pbc\Bandolier\Type;
 
+/**
+ * Class Strings
+ * @package Pbc\Bandolier\Type
+ */
 class Strings
 {
 
@@ -133,5 +137,24 @@ class Strings
         } else {
             return strlen(stristr($haystack, $needle)) > 0;
         }
+    }
+
+    /**
+     * Strip outer quotes from a string
+     * @param $value
+     * @return bool|string
+     */
+    public static function stripOuterQuotes($value)
+    {
+        $start = (strlen($value) > 1 && self::startsWith($value, '"'))
+            || (strlen($value) > 1 && self::startsWith($value, '\''));
+
+        $end = (strlen($value) > 1 && self::endsWith($value, '"'))
+            || (strlen($value) > 1 && self::endsWith($value, '\''));
+
+        if ($start && $end) {
+            return substr($value, 1, -1);
+        }
+        return $value;
     }
 }

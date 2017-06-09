@@ -12,12 +12,15 @@ if (! function_exists('env')) {
      */
     function env($key, $default = null)
     {
+        // get the environment variable
         $value = getenv($key);
 
+        // if value is false just return the value
         if ($value === false) {
             return value($default);
         }
 
+        // check the value against true, false, and null values
         $conditions = [
             ['return' => true, 'checks' => ['true', '(true)', '"true"']],
             ['return' => false, 'checks' => ['false', '(false)', '"false"']],
@@ -30,15 +33,21 @@ if (! function_exists('env')) {
             }
         }
 
-        if (strlen($value) > 1 && Strings::startsWith($value, '"') && Strings::endsWith($value, '"')) {
-            return substr($value, 1, -1);
-        }
+        // strip the outer quotes from the value
+        $value = Strings::stripOuterQuotes($value);
 
         return $value;
     }
 }
 
 if (!function_exists('getAttribute')) {
+    /**
+     * Get an attribute from an array.
+     * @param array $data
+     * @param null $attribute
+     * @param null $default
+     * @return mixed|null
+     */
     function getAttribute(array $data, $attribute = null, $default = null)
     {
         return \Pbc\Bandolier\Type\Arrays::getAttribute($data, $attribute, $default);
