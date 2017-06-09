@@ -1,5 +1,6 @@
 <?php
 namespace Pbc\Bandolier;
+
 /**
  * BandolierTestCase
  *
@@ -11,6 +12,8 @@ namespace Pbc\Bandolier;
  * @package Bandolier
  * @subpackage Test
  */
+use Faker\Factory;
+
 /**
  * Class BandolierTestCase
  * @package Pbc\Bandolier
@@ -19,7 +22,7 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var
+     * @var \Faker\Generator
      */
     protected static $faker;
     /**
@@ -79,5 +82,4 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
     }
-
 }
