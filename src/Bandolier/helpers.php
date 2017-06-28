@@ -1,13 +1,13 @@
 <?php
 use Pbc\Bandolier\Type\Strings;
 
-if (! function_exists('env')) {
+if (!function_exists('env')) {
     /**
      * Gets the value of an environment variable. Supports boolean, empty and null.
      * Borrowed from Illuminate/Foundation
      *
-     * @param  string  $key
-     * @param  mixed   $default
+     * @param  string $key
+     * @param  mixed $default
      * @return mixed
      */
     function env($key, $default = null)
@@ -27,7 +27,7 @@ if (! function_exists('env')) {
             ['return' => null, 'checks' => ['null', '(null)', '"null"']],
             ['return' => '', 'checks' => ['empty', '(empty)', '"empty"']],
         ];
-        for ($i=0, $iCount=count($conditions); $i < $iCount; $i++) {
+        for ($i = 0, $iCount = count($conditions); $i < $iCount; $i++) {
             if (in_array($value, $conditions[$i]['checks'])) {
                 return $conditions[$i]['return'];
             }
@@ -55,15 +55,22 @@ if (!function_exists('getAttribute')) {
 }
 
 
-if (! function_exists('value')) {
+if (!function_exists('value')) {
     /**
      * Return the default value of the given value.
      *
-     * @param  mixed  $value
+     * @param  mixed $value
      * @return mixed
      */
     function value($value)
     {
         return $value instanceof Closure ? $value() : $value;
+    }
+}
+
+if (!function_exists('httpProtocol')) {
+    function httpProtocol()
+    {
+        return Pbc\Bandolier\Type\Paths::httpProtocol();
     }
 }
