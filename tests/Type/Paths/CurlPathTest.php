@@ -12,29 +12,29 @@
 
 namespace Pbc\Bandolier\Type;
 
-use Pbc\Bandolier\BandolierTestCase;
 use Mockery as m;
+use Pbc\Bandolier\BandolierTestCase;
 
 class CurlPathTest extends BandolierTestCase
 {
 
-  /**
-   * Setup the test
-   */
-  public function setUp()
-  {
-      parent::setUp();
+    /**
+     * Setup the test
+     */
+    public function setUp()
+    {
+        parent::setUp();
 
-  }
+    }
 
-  /**
-   * Tear down the test
-   */
-  public function tearDown()
-  {
-      parent::tearDown();
-      m::close();
-  }
+    /**
+     * Tear down the test
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 
     /**
      * Test curlPath will return url with web init if SERVER_NAME containes .local with env
@@ -45,7 +45,9 @@ class CurlPathTest extends BandolierTestCase
     {
         putenv("SERVER_NAME=somesite.local");
         putenv('SERVER_PORT=' . 443);
-        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', new Paths()));
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
+        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
     }
 
@@ -60,10 +62,11 @@ class CurlPathTest extends BandolierTestCase
         putenv('SERVER_PORT');
         $_SERVER['SERVER_NAME'] = 'somesite.local';
         $_SERVER['SERVER_PORT'] = 443;
-        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', new Paths()));
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
+        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
     }
-
 
 
     /**
@@ -75,7 +78,7 @@ class CurlPathTest extends BandolierTestCase
     {
         putenv("SERVER_NAME=somesite.com");
         putenv('SERVER_PORT=' . 443);
-        $this->assertSame('https://somesite.com/some_path', Paths::curlPath('/some_path', new Paths()));
+        $this->assertSame('https://somesite.com/some_path', Paths::curlPath('/some_path'));
 
     }
 
@@ -90,30 +93,40 @@ class CurlPathTest extends BandolierTestCase
         putenv('SERVER_PORT');
         $_SERVER['SERVER_NAME'] = 'somesite.local';
         $_SERVER['SERVER_PORT'] = 443;
-        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', new Paths()));
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
+        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
     }
 
-        /**
-         * Test curlPath will return url with web init if /.dockerenv file exists
-         * @test
-         * @group CurlPath
-         */
-        public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEDoesNotContainLocalWithEnv()
-        {
-            putenv("SERVER_NAME=somesite.com");
-            putenv('SERVER_PORT=' . 443);
-            $file = "checker.txt";
-            $path = __DIR__ . '/' . $file;
-            file_put_contents($path, "");
-            $pathsMock = m::mock('Paths');
-            $pathsMock->shouldReceive('getCurlCheckForWebFileName')->once()->andReturn($path);
-            $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
-            unlink($path);
-        }
+    /**
+     * Test curlPath will return url with web init if /.dockerenv file exists
+     * @test
+     * @group CurlPath
+     */
+    public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEDoesNotContainLocalWithEnv()
+    {
+        putenv("SERVER_NAME=somesite.local");
+        putenv('SERVER_PORT=' . 443);
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
+        $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
+    }
 
 
-
+    /**
+     * Test curlPath will return url with regular server name if not .local
+     * @test
+     * @group CurlPath
+     */
+    public function testCurlPathWillReturnUrlWithRegularServerNameIfNotLocal()
+    {
+        putenv("SERVER_NAME=somesite.com");
+        putenv('SERVER_PORT=' . 443);
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldNotReceive('checkForEnvironmentFile');
+        $this->assertSame('https://somesite.com/some_path', Paths::curlPath('/some_path', $pathsMock));
+    }
 
 
 }

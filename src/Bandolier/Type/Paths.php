@@ -11,8 +11,6 @@
 
 namespace Pbc\Bandolier\Type;
 
-use function PHPSTORM_META\type;
-
 
 /**
  * Class Paths
@@ -21,9 +19,16 @@ use function PHPSTORM_META\type;
 class Paths
 {
 
+    /**
+     *
+     */
     const CURL_CHECK_FILE = '/.dockerenv';
 
-    public function __construct()
+    /**
+     * Paths constructor.
+     * @param array $data
+     */
+    public function __construct(array $data = [])
     {
 
         return $this;
@@ -35,16 +40,27 @@ class Paths
      * otherwise use the current SERVER_NAME
      * @param $toPath
      * @param Paths $paths pass an instance of Path (or mock)
+     * @param null $dockerEnv path to environment file that should exist if we're in a docker container
      * @return string
      */
-    public static function curlPath($toPath, $paths)
+    public static function curlPath($toPath, $paths = null, $dockerEnv = null)
     {
+        if (!$paths) {
+            $paths = new Paths();
+        }
+
+        if (!$dockerEnv) {
+            $dockerEnv = self::CURL_CHECK_FILE;
+        }
+
         $serverName = self::serverName();
-        if (strpos($serverName, '.local') !== false
-            || file_exists($paths->getCurlCheckForWebFileName())
+
+        if ($serverName === 'web'
+            || (strpos($serverName, '.local') !== false && $paths->checkForEnvironmentFile($dockerEnv) === true)
         ) {
             $serverName = 'web';
         }
+
         return self::httpProtocol() . '://' . $serverName . DIRECTORY_SEPARATOR . ltrim($toPath, DIRECTORY_SEPARATOR);
     }
 
@@ -54,16 +70,18 @@ class Paths
      */
     public static function serverName()
     {
-        return env(
-            'SERVER_NAME',
-            (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'web')
+        return env('SERVER_NAME', (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'web')
         );
     }
 
 
-    public function getCurlCheckForWebFileName($file = null)
+    /**
+     * @param null $file
+     * @return bool|null
+     */
+    protected function checkForEnvironmentFile($file = null)
     {
-        return $file && file_exists($file) ? $file : self::CURL_CHECK_FILE;
+        return $file && file_exists($file) ? $file : false;
     }
 
     /**
