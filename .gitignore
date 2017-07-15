@@ -1,6 +1,7 @@
 /vendor/
 .idea
 tmp
+!tmp/.gitignore
 clover.xml
 coverage-checker.php
 coverage

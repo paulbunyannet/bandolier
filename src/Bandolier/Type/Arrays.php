@@ -20,6 +20,10 @@ namespace Pbc\Bandolier\Type;
  * @package Pbc\Bandolier\Type
  */
 
+/**
+ * Class Arrays
+ * @package Pbc\Bandolier\Type
+ */
 class Arrays extends BaseType
 {
 
@@ -32,6 +36,11 @@ class Arrays extends BaseType
      * @var array|string
      */
     protected $attribute;
+
+    /**
+     * @var mixed
+     */
+    protected $value;
 
     /**
      * @var mixed
@@ -82,6 +91,32 @@ class Arrays extends BaseType
     public static function getAttribute(array $data, $attribute = null, $default = null)
     {
         return (new Arrays(['data' => $data, 'attribute' => $attribute, 'default' => $default]))->doGetAttribute();
+    }
+
+    /**
+     * Get the key from an array by value
+     * @param array $data
+     * @param $value
+     * @return int|null|string
+     */
+    public static function getKey(array $data, $value)
+    {
+        return (new Arrays(['data' => $data, 'value' => $value]))->doGetKey();
+    }
+
+    /** Get key from array by value
+     * https://stackoverflow.com/a/26714857/405758
+     * @return int|null|string
+     */
+    public function doGetKey()
+    {
+        foreach ($this->data as $key => $value) {
+            if ($this->value === $value) {
+                return $key;
+            }
+        }
+
+        return null;
     }
 
     /**
