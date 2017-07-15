@@ -56,7 +56,7 @@ class Paths
         $serverName = self::serverName();
 
         if ($serverName === 'web'
-            || (strpos($serverName, '.local') !== false && $paths->checkForEnvironmentFile($dockerEnv) === true)
+            || (strpos($serverName, '.local') !== false && $paths->checkForEnvironmentFile($dockerEnv))
         ) {
             $serverName = 'web';
         }
@@ -77,11 +77,11 @@ class Paths
 
     /**
      * @param null $file
-     * @return bool|null
+     * @return bool
      */
     protected function checkForEnvironmentFile($file = null)
     {
-        return $file && file_exists($file) ? $file : false;
+        return $file && file_exists($file);
     }
 
     /**
