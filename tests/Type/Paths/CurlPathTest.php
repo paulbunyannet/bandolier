@@ -37,11 +37,11 @@ class CurlPathTest extends BandolierTestCase
     }
 
     /**
-     * Test curlPath will return url with web init if SERVER_NAME containes .local with env
+     * Test curlPath will return url with web init if SERVER_NAME contains .local with env
      * @test
      * @group CurlPath
      */
-    public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainesLocalWithEnv()
+    public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainsLocalWithEnv()
     {
         putenv("SERVER_NAME=somesite.local");
         putenv('SERVER_PORT=' . 443);
@@ -52,11 +52,11 @@ class CurlPathTest extends BandolierTestCase
     }
 
     /**
-     * Test curlPath will return url with web init if SERVER_NAME containes .local with super globals
+     * Test curlPath will return url with web init if SERVER_NAME contains .local with super globals
      * @test
      * @group CurlPath
      */
-    public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainesLocalWithSuperGlobals()
+    public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainsLocalWithSuperGlobals()
     {
         putenv("SERVER_NAME");
         putenv('SERVER_PORT');
