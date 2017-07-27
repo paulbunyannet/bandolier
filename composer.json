@@ -27,7 +27,8 @@
   },
   "autoload-dev": {
     "files": [
-      "tests/BandolierTestCase.php"
+      "tests/BandolierTestCase.php",
+      "tests/Mock/GuzzleHttpClientMock.php"
     ]
   },
   "minimum-stability": "stable",

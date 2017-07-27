@@ -1,17 +1,14 @@
 <?php
 /**
- * ${CLASS_NAME}
+ * BaseType
  *
- * Created 6/1/17 10:30 AM
- * Description of this file here....
- *
+ * Base helper type
  * @author Nate Nolting <naten@paulbunyan.net>
  * @package Pbc\Bandolier\Type
  * @subpackage Subpackage
  */
 
 namespace Pbc\Bandolier\Type;
-
 
 class BaseType
 {

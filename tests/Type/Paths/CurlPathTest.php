@@ -13,6 +13,7 @@
 namespace Pbc\Bandolier\Type;
 
 use Mockery as m;
+use Pbc\Bandolier\Type\Paths;
 use Pbc\Bandolier\BandolierTestCase;
 
 class CurlPathTest extends BandolierTestCase
@@ -55,6 +56,7 @@ class CurlPathTest extends BandolierTestCase
      * Test curlPath will return url with web init if SERVER_NAME contains .local with super globals
      * @test
      * @group CurlPath
+     * @covers \Pbc\Bandolier\Type\Paths::checkForEnvironmentFile
      */
     public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainsLocalWithSuperGlobals()
     {
@@ -67,6 +69,27 @@ class CurlPathTest extends BandolierTestCase
         $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
     }
+
+
+    /**
+     * Test curlPath will return url with normal uri if SERVER_NAME contains .local with super globals but the container env files does not exist
+     * @test
+     * @group CurlPath
+     * @covers \Pbc\Bandolier\Type\Paths::checkForEnvironmentFile
+     */
+    public function testCurlPathWillReturnUrlWithNormalUriIfSERVERNAMEContainsLocalWithSuperGlobalsButTheContainerEnvFilesDoesNotExist()
+    {
+        putenv("SERVER_NAME");
+        putenv('SERVER_PORT');
+        $_SERVER['SERVER_NAME'] = 'somesite.local';
+        $_SERVER['SERVER_PORT'] = 443;
+        $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(false);
+        $this->assertSame('https://'.$_SERVER['SERVER_NAME'].'/some_path', Paths::curlPath('/some_path', $pathsMock,'non/existant/container/env/.file'));
+
+    }
+
+
 
 
     /**
@@ -83,11 +106,11 @@ class CurlPathTest extends BandolierTestCase
     }
 
     /**
-     * Test curlPath will retrn url without web init if SERVER_NAME does not contain .local with super globals
+     * Test curlPath will return url without web init if SERVER_NAME does not contain .local with super globals
      * @test
      * @group CurlPath
      */
-    public function testCurlPathWillRetrnUrlWithoutWebInitIfSERVERNAMEDoesNotContainLocalWithSuperGlobals()
+    public function testCurlPathWillReturnUrlWithoutWebInitIfSERVERNAMEDoesNotContainLocalWithSuperGlobals()
     {
         putenv("SERVER_NAME");
         putenv('SERVER_PORT');

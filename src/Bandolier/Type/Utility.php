@@ -11,7 +11,6 @@
 
 namespace Pbc\Bandolier\Type;
 
-
 class Utility
 {
 
@@ -36,4 +35,3 @@ class Utility
         return $ipAddress;
     }
 }
-

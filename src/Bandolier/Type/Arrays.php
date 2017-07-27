@@ -15,15 +15,6 @@ namespace Pbc\Bandolier\Type;
  * Class Arrays
  * @package Pbc\Bandolier\Type
  */
-/**
- * Class Arrays
- * @package Pbc\Bandolier\Type
- */
-
-/**
- * Class Arrays
- * @package Pbc\Bandolier\Type
- */
 class Arrays extends BaseType
 {
 
@@ -94,6 +85,15 @@ class Arrays extends BaseType
     }
 
     /**
+     * Check for key in array, return default is not found
+     * @return mixed
+     */
+    public function doGetAttribute()
+    {
+        return array_key_exists($this->attribute, $this->data) ? $this->data[$this->attribute] : $this->default;
+    }
+
+    /**
      * Get the key from an array by value
      * @param array $data
      * @param $value
@@ -117,14 +117,5 @@ class Arrays extends BaseType
         }
 
         return null;
-    }
-
-    /**
-     * Check for key in array, return default is not found
-     * @return mixed
-     */
-    public function doGetAttribute()
-    {
-        return array_key_exists($this->attribute, $this->data) ? $this->data[$this->attribute] : $this->default;
     }
 }

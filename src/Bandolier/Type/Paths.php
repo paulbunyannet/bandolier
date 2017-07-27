@@ -11,18 +11,27 @@
 
 namespace Pbc\Bandolier\Type;
 
-
 /**
  * Class Paths
  * @package Pbc\Bandolier\Type
  */
 class Paths
 {
-
     /**
-     *
+     * Path to check for whether inside
+     * a docker container or not.
      */
     const CURL_CHECK_FILE = '/.dockerenv';
+
+    /**
+     * @var array
+     */
+    protected $data = [];
+
+    /**
+     * @var string
+     */
+    protected $curlCheckFile = "";
 
     /**
      * Paths constructor.
@@ -30,7 +39,7 @@ class Paths
      */
     public function __construct(array $data = [])
     {
-
+        $this->data = $data;
         return $this;
     }
 
@@ -52,7 +61,6 @@ class Paths
         if (!$dockerEnv) {
             $dockerEnv = self::CURL_CHECK_FILE;
         }
-
         $serverName = self::serverName();
 
         if ($serverName === 'web'
@@ -70,16 +78,16 @@ class Paths
      */
     public static function serverName()
     {
-        return env('SERVER_NAME', (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'web')
-        );
+        return env('SERVER_NAME', (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'web'));
     }
 
 
     /**
-     * @param null $file
+     * @param string $file
      * @return bool
+     * @codeCoverageIgnore
      */
-    protected function checkForEnvironmentFile($file = null)
+    protected function checkForEnvironmentFile($file = self::CURL_CHECK_FILE)
     {
         return $file && file_exists($file);
     }
@@ -128,5 +136,55 @@ class Paths
             'SERVER_PORT',
             (isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80)
         );
+    }
+
+    /**
+     * Get content from a path
+     * @param array $params parameters
+     * @return string
+     */
+    public static function fileGetContents($params)
+    {
+        /** @var string $toPath Path to get request from */
+        /** @var array $clientParams parameters passed into client */
+        /** @var \GuzzleHttp\Client $client */
+        /** @var string $request_type request type */
+        /** @var array $requestParams parameters to pass into request */
+        /** @var string $request type of request */
+        $parameters = Arrays::defaultAttributes([
+            "toPath" => self::httpProtocol() . '://' . self::serverName() . '/',
+            "clientParams" => [],
+            "client" => "\\GuzzleHttp\\Client",
+            "request" => "GET",
+            "requestParams" => [],
+        ], $params);
+        extract($parameters);
+
+        $baseUri = parse_url($toPath, PHP_URL_SCHEME) . "://" . parse_url($toPath, PHP_URL_HOST);
+        $clientParams['base_uri'] = $baseUri;
+        if (is_string($client)) {
+            $client = new $client($clientParams);
+        }
+        $path = substr($toPath, strlen($baseUri), strlen($baseUri));
+        return $client->request($request, $path, $requestParams)->getBody()->getContents();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurlCheckFile()
+    {
+        return $this->curlCheckFile;
+    }
+
+    /**
+     * @param string $curlCheckFile
+     */
+    public function setCurlCheckFile($curlCheckFile = null)
+    {
+        if (!$curlCheckFile) {
+            $curlCheckFile = self::CURL_CHECK_FILE;
+        }
+        $this->curlCheckFile = $curlCheckFile;
     }
 }
