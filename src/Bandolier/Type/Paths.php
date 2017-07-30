@@ -165,7 +165,7 @@ class Paths
         if (is_string($client)) {
             $client = new $client($clientParams);
         }
-        $path = substr($toPath, strlen($baseUri), strlen($baseUri));
+        $path = substr($toPath, strlen($baseUri), strlen($toPath));
         return $client->request($request, $path, $requestParams)->getBody()->getContents();
     }
 
