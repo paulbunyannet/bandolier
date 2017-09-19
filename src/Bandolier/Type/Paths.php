@@ -160,13 +160,10 @@ class Paths
         ], $params);
         extract($parameters);
 
-        $baseUri = parse_url($toPath, PHP_URL_SCHEME) . "://" . parse_url($toPath, PHP_URL_HOST);
-        $clientParams['base_uri'] = $baseUri;
         if (is_string($client)) {
             $client = new $client($clientParams);
         }
-        $path = substr($toPath, strlen($baseUri), strlen($toPath));
-        return $client->request($request, $path, $requestParams)->getBody()->getContents();
+        return $client->{strtolower($request)}($toPath, $clientParams)->getBody()->getContents();
     }
 
     /**

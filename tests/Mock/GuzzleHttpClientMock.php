@@ -31,4 +31,9 @@ class GuzzleHttpClientMock
     {
         return  "Foo Bar Baz";
     }
+
+    public function get($path="", $params = "")
+    {
+        return $this;
+    }
 }
