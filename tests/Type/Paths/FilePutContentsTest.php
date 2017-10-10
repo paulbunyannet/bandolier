@@ -1,13 +1,12 @@
 <?php
 /**
- * ${CLASS_NAME}
+ * FilePutContentsTest
  *
  * Created 10/10/17 10:31 AM
- * Description of this file here....
+ * Tests for the filePutContents helper
  *
  * @author Nate Nolting <naten@paulbunyan.net>
  * @package Bandolier\Type
- * @subpackage Subpackage
  */
 
 namespace Bandolier\Type;

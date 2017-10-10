@@ -202,4 +202,31 @@ class Paths
         }
         return file_put_contents($filePath, $content);
     }
+
+    /**
+     * Delete a non empty folder
+     * https://stackoverflow.com/a/1653776/405758
+     * http://us3.php.net/rmdir
+     * @param $dir
+     * @return bool
+     */
+    public static function rmDir($dir)
+    {
+        if (!file_exists($dir)) {
+            return true;
+        }
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+            if (!Paths::rmDir($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+
+        }
+        return rmdir($dir);
+    }
 }
