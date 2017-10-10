@@ -160,10 +160,13 @@ class Paths
         ], $params);
         extract($parameters);
 
+        $baseUri = parse_url($toPath, PHP_URL_SCHEME) . "://" . parse_url($toPath, PHP_URL_HOST);
+        $clientParams['base_uri'] = $baseUri;
         if (is_string($client)) {
             $client = new $client($clientParams);
         }
-        return $client->{strtolower($request)}($toPath, $clientParams)->getBody()->getContents();
+        $path = substr($toPath, strlen($baseUri), strlen($baseUri));
+        return $client->request($request, $path, $requestParams)->getBody()->getContents();
     }
 
     /**
@@ -183,5 +186,20 @@ class Paths
             $curlCheckFile = self::CURL_CHECK_FILE;
         }
         $this->curlCheckFile = $curlCheckFile;
+    }
+
+    /**
+     * Traverse path to make file
+     * @param string $filePath path to file to check if it exists
+     * @param string|null $content content of file to be written
+     * @return bool|int
+     */
+    public static function filePutContents($filePath, $content = null)
+    {
+        // https://stackoverflow.com/a/282140/405758
+        if (!file_exists(dirname($filePath))) {
+            mkdir(dirname($filePath), 0775, true);
+        }
+        return file_put_contents($filePath, $content);
     }
 }
