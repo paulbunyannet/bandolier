@@ -99,9 +99,9 @@ class Arrays extends BaseType
      * @param $value
      * @return int|null|string
      */
-    public static function getKey(array $data, $value)
+    public static function getKey(array $data, $value, $default = null)
     {
-        return (new Arrays(['data' => $data, 'value' => $value]))->doGetKey();
+        return (new Arrays(['data' => $data, 'value' => $value, 'default' => $default]))->doGetKey();
     }
 
     /** Get key from array by value
@@ -116,6 +116,6 @@ class Arrays extends BaseType
             }
         }
 
-        return null;
+        return $this->default;
     }
 }

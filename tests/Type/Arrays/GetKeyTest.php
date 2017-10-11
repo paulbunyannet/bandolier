@@ -109,4 +109,16 @@ class GetKeyTest extends BandolierTestCase
       $data = [$key => $value];
       $this->assertNull(Arrays::getKey($data, (object)$value));
     }
+
+
+    /**
+     * Test getting a key from an array that does not exist will return a default value
+     * @test
+     * @group GetKey
+     */
+    public function testGettingAKeyFromAnArrayThatDoesNotExistWillReturnADefaultValue()
+    {
+      $data = ['key' => 'value'];
+      $this->assertSame(Arrays::getKey($data, 'unknown', 'default'), 'default');
+    }
 }
