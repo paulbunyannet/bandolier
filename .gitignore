@@ -6,3 +6,5 @@ clover.xml
 coverage-checker.php
 coverage
 phpunit.phar
+_site
+Gemfile.lock
