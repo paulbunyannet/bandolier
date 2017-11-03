@@ -15,6 +15,19 @@ class Numbers
 {
 
     /**
+     * Check to see if a number is divisible by another
+     * @param $number
+     * @param $divisibleBy
+     * @return bool
+     */
+    public static function divisible($number, $divisibleBy) {
+        if($number % $divisibleBy === 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Convert string to float
      * http://php.net/manual/en/function.floatval.php#114486
      *
