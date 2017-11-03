@@ -1,7 +1,7 @@
 # Setup
 development:  false
 title:        Bandolier
-tagline:      Reusable utility functions used throughout PHP projects!
+tagline:      Reusable utility functions/methods for use throughout PHP projects!
 baseurl:      "/bandolier"
 paginate:     1
 
