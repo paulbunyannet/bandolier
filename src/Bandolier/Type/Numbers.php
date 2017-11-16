@@ -162,7 +162,7 @@ class Numbers
     /**
      * @return array
      */
-    private static function toWordDictionary()
+    public static function toWordDictionary()
     {
         return array(
             0                       => 'zero',
@@ -199,7 +199,7 @@ class Numbers
             1000000000              => 'billion',
             1000000000000           => 'trillion',
             1000000000000000        => 'quadrillion',
-            1000000000000000000     => 'quintillion'
+            1000000000000000000     => 'quintillion',
         );
     }
 }
