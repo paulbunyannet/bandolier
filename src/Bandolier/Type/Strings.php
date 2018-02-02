@@ -6,8 +6,41 @@ namespace Pbc\Bandolier\Type;
  * Class Strings
  * @package Pbc\Bandolier\Type
  */
+/**
+ * Class Strings
+ * @package Pbc\Bandolier\Type
+ */
 class Strings
 {
+
+    /**
+     * The cache of stripped slashes strings
+     *
+     * @var array
+     */
+    protected static $stripSlashesCache = [];
+
+    /**
+     * The cache of title formatted strings
+     *
+     * @var array
+     */
+    protected static $formatForTitleCache = [];
+
+    /**
+     * The cache of title case strings
+     *
+     * @var array
+     */
+    protected static $titleCaseCache = [];
+
+    /**
+     * The cache of strip outer quotes
+     *
+     * @var array
+     */
+    protected static $stripOuterQuotesCache;
+    protected static $wordsToNumberCache;
 
     /**
      * Strip wild slashes in strings, with up to triple slash stripping (anymore than that should be handled elsewhere)
@@ -15,51 +48,94 @@ class Strings
      * use Pbc\Bandolier\Type\String;
      * $string = String::stripSlashes('A string with a bunch of \\\ slashes in it');
      *
-     * @param $string
+     * @param $value
      * @return mixed
      */
-    public static function stripSlashes($string)
+    public static function stripSlashes($value)
     {
-        $string = stripslashes($string);
-        $string = str_replace("\\\\", "\\", $string);
-        $string = str_replace("\\\"", "\"", $string);
-        $string = str_replace("\\'", "'", $string);
-        $string = str_replace("\\\'", "'", $string);
-        $string = str_replace('\\\"', '"', $string);
-        return $string;
-    }
-
-    public static function formatForTitle($string)
-    {
-
-        if (!is_string($string) || strlen($string) === 0) {
+        // if value passed as empty or is not a string then return false
+        if (!is_string($value) || strlen($value) === 0) {
             return false;
         }
-        $string = str_replace('_', ' ', $string);
-        return Strings::titleCase($string);
+
+        /** @var string $cache Cache Value */
+        $cache = self::cacheString($value);
+
+        // check for cache
+        if (isset(static::$stripSlashesCache[$cache])) {
+            return static::$stripSlashesCache[$cache];
+        }
+
+        $value = stripslashes($value);
+        $value = str_replace("\\\\", "\\", $value);
+        $value = str_replace("\\\"", "\"", $value);
+        $value = str_replace("\\'", "'", $value);
+        $value = str_replace("\\\'", "'", $value);
+        $value = str_replace('\\\"', '"', $value);
+
+        return static::$stripSlashesCache[$cache] = $value;
     }
 
     /**
-     * @param       $string
-     * @param array $delimiters
-     * @param array $exceptions
+     * @param $value
+     * @return bool|mixed|string
+     */
+    public static function formatForTitle($value, $delimiters=['-','_'])
+    {
+        // if value passed as empty or is not a string then return false
+        if (!is_string($value) || strlen($value) === 0) {
+            return false;
+        }
+
+        /** @var string $cache Cache Value */
+        $cache = self::cacheString($value, $delimiters);
+
+        // check for cache
+        if (isset(static::$formatForTitleCache[$cache])) {
+            return static::$formatForTitleCache[$cache];
+        }
+
+        // change underscores to spaces
+        $stripDelimiters = str_replace($delimiters, array_fill(0, count($delimiters), ' '), $value);
+
+        return static::$formatForTitleCache[$cache] = Strings::titleCase($stripDelimiters);
+    }
+
+    /**
+     * Convert a string to Title Case
      *
+     * @param string $value String to convert
+     * @param array $delimiters Delimiters to break into apart words
+     * @param array $exceptions strings to skip when capitalizing
      * @return bool|mixed|string
      */
     public static function titleCase(
-        $string,
+        $value,
         $delimiters = [" ", "-", ".", "'", "O'", "Mc"],
         $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"]
     ) {
+        // if value passed as empty or is not a string then return false
+        if (!is_string($value) || strlen($value) === 0) {
+            return false;
+        }
+
+        /** @var string $cache Cache Value */
+        $cache = self::cacheString($value, $delimiters, $exceptions);
+
+        // check for cache
+        if (isset(static::$titleCaseCache[$cache])) {
+            return static::$titleCaseCache[$cache];
+        }
+
         /*
          * Exceptions in lower case are words you don't want converted
          * Exceptions all in upper case are any words you don't want converted to title case
          *   but should be converted to upper case, e.g.:
          *   king henry viii or king henry Viii should be King Henry VIII
          */
-        $string = mb_convert_case($string, MB_CASE_TITLE, "UTF-8");
+        $value = mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
         foreach ($delimiters as $delimiter) {
-            $words = explode($delimiter, $string);
+            $words = explode($delimiter, $value);
             $newWords = [];
             foreach ($words as $word) {
                 if (in_array(mb_strtoupper($word, "UTF-8"), $exceptions)) {
@@ -74,10 +150,9 @@ class Strings
                 }
                 array_push($newWords, $word);
             }
-            $string = join($delimiter, $newWords);
+            $value = join($delimiter, $newWords);
         }
-        //foreach
-        return $string;
+        return static::$formatForTitleCache[$cache] = $value;
     }
 
     /**
@@ -146,6 +221,19 @@ class Strings
      */
     public static function stripOuterQuotes($value)
     {
+        // if value passed as empty or is not a string then return false
+        if (!is_string($value) || strlen($value) === 0) {
+            return false;
+        }
+
+        /** @var string $cache Cache Value */
+        $cache = self::cacheString($value);
+
+        // check for cache
+        if (isset(static::$stripOuterQuotesCache[$cache])) {
+            return static::$stripOuterQuotesCache[$cache];
+        }
+
         $start = (strlen($value) > 1 && self::startsWith($value, '"'))
             || (strlen($value) > 1 && self::startsWith($value, '\''));
 
@@ -153,23 +241,37 @@ class Strings
             || (strlen($value) > 1 && self::endsWith($value, '\''));
 
         if ($start && $end) {
-            return substr($value, 1, -1);
+            return static::$stripOuterQuotesCache[$cache] = substr($value, 1, -1);
         }
-        return $value;
+        return static::$stripOuterQuotesCache[$cache] = $value;
     }
 
     /**
      * Convert a string such as "one hundred thousand" to 100000.00.
      * https://stackoverflow.com/a/11219737/405758
      *
-     * @param string $data The numeric string.
+     * @param string $value The numeric string.
      *
-     * @return float or false on error
+     * @return float|bool
      */
-    public static function wordsToNumber($data) {
+    public static function wordsToNumber($value) {
+
+        // if value passed as empty or is not a string then return false
+        if (!is_string($value) || strlen($value) === 0) {
+            return false;
+        }
+
+        /** @var string $cache Cache Value */
+        $cache = self::cacheString($value);
+
+        // check for cache
+        if (isset(static::$wordsToNumberCache[$cache])) {
+            return static::$wordsToNumberCache[$cache];
+        }
+
         // Replace all number words with an equivalent numeric value
-        $data = strtr(
-            $data, array_merge(array_flip(Numbers::toWordDictionary()), ['and' => ''])
+        $value = strtr(
+            $value, array_merge(array_flip(Numbers::toWordDictionary()), ['and' => ''])
         );
 
         // Coerce all tokens to numbers
@@ -177,7 +279,7 @@ class Strings
             function ($val) {
                 return floatval($val);
             },
-            preg_split('/[\s-]+/', $data)
+            preg_split('/[\s-]+/', $value)
         );
 
         $stack = new \SplStack; // Current work stack
@@ -210,8 +312,21 @@ class Strings
             // Store the last processed part
             $last = $part;
         }
-
-        return $sum + $stack->pop();
+        return static::$wordsToNumberCache[$cache] = $sum + $stack->pop();
     }
 
+    /**
+     * Create a cache string from function attributes
+     *
+     * @return null|string
+     */
+    protected static function cacheString()
+    {
+        $string = null;
+        foreach (func_get_args() as $functionArgument) {
+            $string .= md5(serialize($functionArgument));
+        }
+
+        return $string;
+    }
 }

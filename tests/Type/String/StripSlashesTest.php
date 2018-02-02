@@ -65,4 +65,15 @@ class StripSlashesTest extends BandolierTestCase
         $this->assertEquals
         ($stringStripped, Strings::stripSlashes($string));
     }
+
+    /**
+     * Test passing an empty string returns false
+     * @test
+     */
+    public function testPassingAnEmptyStringReturnsFalse()
+    {
+        $this->assertFalse(Strings::stripSlashes(""));
+        $this->assertFalse(Strings::stripSlashes(null));
+        $this->assertFalse(Strings::stripSlashes(false));
+    }
 }

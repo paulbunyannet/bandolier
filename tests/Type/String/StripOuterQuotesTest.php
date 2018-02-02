@@ -30,6 +30,17 @@ class StripOuterQuotesTest extends BandolierTestCase
         $this->assertSame($value, $stripped);
    }
 
+  /**
+   * Test stripOuterQuotes will return false if no string is passed
+   * @test testStripOuterQuotesCheckThatDoubleQuotesCanBeRemoved
+   */
+   public function testStripOuterQuotesWillReturnFalseIfNoStringIsPassed()
+   {
+        $this->assertFalse(Strings::stripOuterQuotes(""));
+        $this->assertFalse(Strings::stripOuterQuotes(null));
+        $this->assertFalse(Strings::stripOuterQuotes(false));
+   }
+
 
   /**
    * Test stripOuterQuotes Check that single quotes can be removed

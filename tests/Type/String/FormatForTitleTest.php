@@ -39,8 +39,9 @@ class FormatForTitleTest extends BandolierTestCase
      */
     public function testFormatStringFalseWithEmptyString()
     {
-        $string = '';
-        $this->assertFalse(Strings::formatForTitle($string));
+        $this->assertFalse(Strings::formatForTitle(""));
+        $this->assertFalse(Strings::formatForTitle(null));
+        $this->assertFalse(Strings::formatForTitle(false));
     }
 
     /**
@@ -48,8 +49,8 @@ class FormatForTitleTest extends BandolierTestCase
      */
     public function testFormatStringFalseWithNonString()
     {
-        $string = [];
-        $this->assertFalse(Strings::formatForTitle($string));
+        $this->assertFalse(Strings::formatForTitle([]));
+        $this->assertFalse(Strings::formatForTitle(new \stdClass()));
     }
 
 

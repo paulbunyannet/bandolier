@@ -16,4 +16,16 @@ class WordsToNumberTest extends BandolierTestCase
        $this->assertEquals(1101.0, Strings::wordsToNumber('one thousand one hundred and one'));
        $this->assertEquals(1100101.0, Strings::wordsToNumber('one million one hundred thousand one hundred and one'));
    }
+
+    /**
+     * It returns a false value if the value passed is empty
+     * @test
+     * @group wordsToNumber
+     */
+    public function it_returns_a_false_value_if_the_value_passed_is_empty()
+    {
+        $this->assertFalse(Strings::wordsToNumber(""));
+        $this->assertFalse(Strings::wordsToNumber(null));
+        $this->assertFalse(Strings::wordsToNumber(false));
+    }
 }
