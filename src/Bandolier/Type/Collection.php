@@ -48,7 +48,7 @@ class Collection extends BaseType
         if ($key == null) {
             $this->items[] = $obj;
         } else {
-            if (isset($this->items[$key])) {
+            if (array_key_exists($key, $this->getItems())) {
                 throw new KeyHasUseException("Key $key already in use.");
             } else {
                 $this->items[$key] = $obj;
@@ -72,7 +72,7 @@ class Collection extends BaseType
         } elseif (!is_string($key)) {
             throw new KeyInvalidException("The key should be a string.");
         } else {
-            if (!isset($this->items[$key])) {
+            if (!array_key_exists($key, $this->getItems())) {
                 throw new KeyInvalidException("Invalid key $key.");
             }
             $this->items[$key] = $obj;
