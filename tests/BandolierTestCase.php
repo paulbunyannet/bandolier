@@ -67,7 +67,7 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        self::$faker = \Faker\Factory::create();
+        self::$faker = Factory::create();
 
         $this->characterChecks = array_merge(
             range("a", "Z"),

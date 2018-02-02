@@ -36,7 +36,7 @@ class Numbers
      * $otherNum = '126,564,789.33 m²';
      * var_dump(toFloat($otherNum)); // float(126564789.33)
      *
-     * @param $num
+     * @param mixed $num
      * @return mixed
      */
     public static function toFloat($num)

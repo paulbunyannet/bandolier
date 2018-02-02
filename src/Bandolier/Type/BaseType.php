@@ -20,7 +20,6 @@ class BaseType
     public function __construct(array $params = [])
     {
         $this->initialize($params);
-        return $this;
     }
 
     /**

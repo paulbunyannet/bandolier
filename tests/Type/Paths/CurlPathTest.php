@@ -47,6 +47,9 @@ class CurlPathTest extends BandolierTestCase
         putenv("SERVER_NAME=somesite.local");
         putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('getDomainNameWeb')->once()->andReturn('web');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(true);
         $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
         $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
@@ -60,16 +63,15 @@ class CurlPathTest extends BandolierTestCase
      */
     public function testCurlPathWillReturnUrlWithWebInitIfSERVERNAMEContainsLocalWithSuperGlobals()
     {
-        putenv("SERVER_NAME");
-        putenv('SERVER_PORT');
-        $_SERVER['SERVER_NAME'] = 'somesite.local';
-        $_SERVER['SERVER_PORT'] = 443;
+        putenv("SERVER_NAME=somesite.local");
+        putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('getDomainNameWeb')->once()->andReturn('web');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(true);
         $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
         $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
-
     }
-
 
     /**
      * Test curlPath will return url with normal uri if SERVER_NAME contains .local with super globals but the container env files does not exist
@@ -79,13 +81,13 @@ class CurlPathTest extends BandolierTestCase
      */
     public function testCurlPathWillReturnUrlWithNormalUriIfSERVERNAMEContainsLocalWithSuperGlobalsButTheContainerEnvFilesDoesNotExist()
     {
-        putenv("SERVER_NAME");
-        putenv('SERVER_PORT');
-        $_SERVER['SERVER_NAME'] = 'somesite.local';
-        $_SERVER['SERVER_PORT'] = 443;
+        putenv("SERVER_NAME=somesite.local");
+        putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(true);
         $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(false);
-        $this->assertSame('https://'.$_SERVER['SERVER_NAME'].'/some_path', Paths::curlPath('/some_path', $pathsMock,'non/existant/container/env/.file'));
+        $this->assertSame('https://'.getenv('SERVER_NAME').'/some_path', Paths::curlPath('/some_path', $pathsMock,'non/existent/container/env/.file'));
 
     }
 
@@ -112,11 +114,12 @@ class CurlPathTest extends BandolierTestCase
      */
     public function testCurlPathWillReturnUrlWithoutWebInitIfSERVERNAMEDoesNotContainLocalWithSuperGlobals()
     {
-        putenv("SERVER_NAME");
-        putenv('SERVER_PORT');
-        $_SERVER['SERVER_NAME'] = 'somesite.local';
-        $_SERVER['SERVER_PORT'] = 443;
+        putenv("SERVER_NAME=somesite.local");
+        putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('getDomainNameWeb')->once()->andReturn('web');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(true);
         $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
         $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
 
@@ -132,6 +135,9 @@ class CurlPathTest extends BandolierTestCase
         putenv("SERVER_NAME=somesite.local");
         putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('getDomainNameWeb')->once()->andReturn('web');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(true);
         $pathsMock->shouldReceive('checkForEnvironmentFile')->once()->andReturn(true);
         $this->assertSame('https://web/some_path', Paths::curlPath('/some_path', $pathsMock));
     }
@@ -147,9 +153,9 @@ class CurlPathTest extends BandolierTestCase
         putenv("SERVER_NAME=somesite.com");
         putenv('SERVER_PORT=' . 443);
         $pathsMock = m::mock('Paths');
+        $pathsMock->shouldReceive('domainNameIsWeb')->once()->andReturn(false);
+        $pathsMock->shouldReceive('domainNameIsLocalHost')->once()->andReturn(false);
         $pathsMock->shouldNotReceive('checkForEnvironmentFile');
         $this->assertSame('https://somesite.com/some_path', Paths::curlPath('/some_path', $pathsMock));
     }
-
-
 }

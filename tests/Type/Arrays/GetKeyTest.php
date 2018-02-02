@@ -48,7 +48,7 @@ class GetKeyTest extends BandolierTestCase
      */
     public function testGettingAKeyFromAnArrayWithValueOfAnArray()
     {
-      $value = [self::$faker->word(), self::$faker->word(), self::$faker->word()];
+      $value = [self::$faker->word, self::$faker->word, self::$faker->word];
       $key = implode('-', self::$faker->words(2));
       $data = [$key => $value];
       $this->assertSame($key, Arrays::getKey($data, $value));
@@ -90,7 +90,7 @@ class GetKeyTest extends BandolierTestCase
      */
     public function testGettingAKeyFromAnArrayWithValueOfAnArrayThatIsNotTheSameWillReturnNull()
     {
-      $value = [self::$faker->word(), self::$faker->word(), self::$faker->word()];
+      $value = [self::$faker->word, self::$faker->word, self::$faker->word];
       $key = implode('-', self::$faker->words(2));
       $data = [$key => $value];
       $this->assertNull(Arrays::getKey($data, array_merge($value, ['foo'])));
@@ -104,7 +104,7 @@ class GetKeyTest extends BandolierTestCase
      */
     public function testGettingAKeyFromAnArrayThatIsNotTheSameTypeWillReturnNull()
     {
-      $value = [self::$faker->word(), self::$faker->word(), self::$faker->word()];
+      $value = [self::$faker->word, self::$faker->word, self::$faker->word];
       $key = implode('-', self::$faker->words(2));
       $data = [$key => $value];
       $this->assertNull(Arrays::getKey($data, (object)$value));

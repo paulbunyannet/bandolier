@@ -24,7 +24,7 @@ class Collection extends BaseType
     /**
      * @var array
      */
-    private $items = array();
+    protected $items = array();
 
     /**
      * Collection constructor.
@@ -33,7 +33,6 @@ class Collection extends BaseType
     public function __construct($params = [])
     {
         parent::__construct($params);
-        return $this;
     }
 
     /**

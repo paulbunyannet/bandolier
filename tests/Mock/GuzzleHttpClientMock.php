@@ -14,7 +14,6 @@ class GuzzleHttpClientMock
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        return $this;
     }
 
     public function request($request = "GET", $path = "", $params = "")

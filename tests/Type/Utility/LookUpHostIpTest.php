@@ -12,6 +12,7 @@ namespace Pbc\Bandolier\Type;
  * @package ${NAMESPACE}
  */
 
+use Faker\Factory;
 use \Mockery as m;
 
 /**
@@ -43,7 +44,7 @@ class LookUpHostIpTest extends \PHPUnit_Framework_TestCase
     /** @var m::mock $functions*/
     public static $functions;
 
-    /** @var  \Faker\Factory */
+    /** @var  \Faker\Generator */
     protected static $faker;
 
     /**
@@ -52,7 +53,7 @@ class LookUpHostIpTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        self::$faker = \Faker\Factory::create();
+        self::$faker = Factory::create();
         self::$functions = m::mock();
     }
 

@@ -8,3 +8,4 @@ coverage
 phpunit.phar
 _site
 Gemfile.lock
+*.phar

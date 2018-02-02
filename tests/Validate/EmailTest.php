@@ -30,7 +30,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 
     /** @var m $functions*/
     public static $functions;
-    /** @var  Faker */
+    /** @var  \Faker\Generator */
     protected static $faker;
 
 

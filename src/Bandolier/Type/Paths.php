@@ -17,6 +17,7 @@ namespace Pbc\Bandolier\Type;
  */
 class Paths
 {
+    protected $domainNameWeb = 'web';
     /**
      * Path to check for whether inside
      * a docker container or not.
@@ -40,7 +41,6 @@ class Paths
     public function __construct(array $data = [])
     {
         $this->data = $data;
-        return $this;
     }
 
     /**
@@ -63,10 +63,10 @@ class Paths
         }
         $serverName = self::serverName();
 
-        if ($serverName === 'web'
-            || (strpos($serverName, '.local') !== false && $paths->checkForEnvironmentFile($dockerEnv))
+        if ($paths->domainNameIsWeb($serverName)
+            || ($paths->domainNameIsLocalHost($serverName) && $paths->checkForEnvironmentFile($dockerEnv))
         ) {
-            $serverName = 'web';
+            $serverName = $paths->getDomainNameWeb();
         }
 
         return self::httpProtocol() . '://' . $serverName . DIRECTORY_SEPARATOR . ltrim($toPath, DIRECTORY_SEPARATOR);
@@ -143,7 +143,7 @@ class Paths
      * @param array $params parameters
      * @return string
      */
-    public static function fileGetContents($params)
+    public static function fileGetContents(array $params = [])
     {
         /** @var string $toPath Path to get request from */
         /** @var array $clientParams parameters passed into client */
@@ -151,22 +151,46 @@ class Paths
         /** @var string $request_type request type */
         /** @var array $requestParams parameters to pass into request */
         /** @var string $request type of request */
-        $parameters = Arrays::defaultAttributes([
+        $parameters = new Collection(array('items' => Arrays::defaultAttributes([
             "toPath" => self::httpProtocol() . '://' . self::serverName() . '/',
             "clientParams" => [],
             "client" => "\\GuzzleHttp\\Client",
             "request" => "GET",
             "requestParams" => [],
-        ], $params);
-        extract($parameters);
+        ], $params)));
 
-        $baseUri = parse_url($toPath, PHP_URL_SCHEME) . "://" . parse_url($toPath, PHP_URL_HOST);
-        $clientParams['base_uri'] = $baseUri;
-        if (is_string($client)) {
-            $client = new $client($clientParams);
+        $parameters->addItem(parse_url($parameters->getItem('toPath'), PHP_URL_SCHEME) . "://" . parse_url($parameters->getItem('toPath'), PHP_URL_HOST), 'base_uri');
+        $parameters->setItem(array_merge($parameters->getItem('clientParams'), array('base_uri' => $parameters->getItem('base_uri'))), 'clientParams');
+        if (is_string($parameters->getItem('client'))) {
+            $client = $parameters->getItem('client');
+            $parameters->setItem(new $client($parameters->getItem('clientParams')), 'client');
         }
-        $path = substr($toPath, strlen($baseUri), strlen($toPath));
-        return $client->request($request, $path, $requestParams)->getBody()->getContents();
+
+        $path = substr($parameters->getItem('toPath'), strlen($parameters->getItem('base_uri')), strlen($parameters->getItem('toPath')));
+
+        return $parameters->getItem('client')
+            ->request($parameters->getItem('request'), $path, $parameters->getItem('requestParams'))
+            ->getBody()
+            ->getContents();
+    }
+
+    /**
+     * @param $serverName
+     * @return bool
+     */
+    public function domainNameIsLocalHost($serverName)
+    {
+        $local = strpos($serverName, '.local');
+        return is_int($local) && !is_bool($local);
+    }
+
+    /**
+     * @param $serverName
+     * @return bool
+     */
+    private function domainNameIsWeb($serverName)
+    {
+        return $serverName === $this->getDomainNameWeb();
     }
 
     /**
@@ -228,5 +252,21 @@ class Paths
 
         }
         return rmdir($dir);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDomainNameWeb()
+    {
+        return $this->domainNameWeb;
+    }
+
+    /**
+     * @param string $domainNameWeb
+     */
+    public function setDomainNameWeb($domainNameWeb)
+    {
+        $this->domainNameWeb = $domainNameWeb;
     }
 }

@@ -34,10 +34,8 @@ class HttpProtocolTest extends BandolierTestCase
      */
     public function testHttpProtocolReturnsHttpIfHttpsIsEmptyBySuperGlobal()
     {
-        putenv('HTTPS');
-        putenv('SERVER_PORT' . 80);
-        $_SERVER['HTTPS'] = null;
-        $_SERVER['SERVER_PORT'] = 900;
+        putenv('HTTPS=null');
+        putenv('SERVER_PORT=' . 80);
         $this->assertSame('http', httpProtocol());
     }
     /**
@@ -59,10 +57,8 @@ class HttpProtocolTest extends BandolierTestCase
      */
     public function testHttpProtocolReturnsHttpIfHttpsIsOffBySuperGlobal()
     {
-        putenv('HTTPS');
-        putenv('SERVER_PORT');
-        $_SERVER['HTTPS'] = 'off';
-        $_SERVER['SERVER_PORT'] = 900;
+        putenv('HTTPS=off');
+        putenv('SERVER_PORT=' . 900);
         $this->assertSame('http', httpProtocol());
     }
 
@@ -85,10 +81,8 @@ class HttpProtocolTest extends BandolierTestCase
      */
     public function testHttpProtocolReturnsHttpIfServerPortIsNotFourFourThreeBySuperGlobal()
     {
-        putenv('HTTPS');
-        putenv('SERVER_PORT');
-        $_SERVER['HTTPS'] = 'off';
-        $_SERVER['SERVER_PORT'] = 900;
+        putenv('HTTPS=off');
+        putenv('SERVER_PORT=' . 900);
         $this->assertSame('http', httpProtocol());
     }
 
@@ -113,10 +107,8 @@ class HttpProtocolTest extends BandolierTestCase
     public function testHttpProtocolReturnsHttpsIfHTTPSIsSetToOtherThanOffWithSuperGlobal()
     {
 
-        putenv('HTTPS');
-        putenv('SERVER_PORT');
-        $_SERVER['HTTPS'] = 'on';
-        $_SERVER['SERVER_PORT'] = 900;
+        putenv('HTTPS=on');
+        putenv('SERVER_PORT=' . 900);
         $this->assertSame('https', httpProtocol());
     }
 
@@ -140,11 +132,8 @@ class HttpProtocolTest extends BandolierTestCase
      */
     public function testHttpProtocolReturnsHttpsIfServerPortIsSetToFourFourThreeWithSuperGlobal()
     {
-
-        putenv('HTTPS');
-        putenv('SERVER_PORT');
-        $_SERVER['HTTPS'] = 'off';
-        $_SERVER['SERVER_PORT'] = 443;
+        putenv('HTTPS=off');
+        putenv('SERVER_PORT=' . 443);
         $this->assertSame('https', httpProtocol());
     }
 }

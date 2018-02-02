@@ -22,11 +22,11 @@ class ToFloatTest extends BandolierTestCase
      */
     public function a_string_number_will_return_a_float()
     {
-        $this->assertSame(1.25, Numbers::tofloat('1.25'));
-        $this->assertSame(1.25, Numbers::tofloat('$1.25'));
-        $this->assertSame(1000.25, Numbers::tofloat('$1,000.25'));
-        $this->assertSame(1000000.25, Numbers::tofloat('$1,000,000.25'));
-        $this->assertSame(100.25, Numbers::tofloat('abc100def.25xyz'));
+        $this->assertSame(1.25, Numbers::toFloat('1.25'));
+        $this->assertSame(1.25, Numbers::toFloat('$1.25'));
+        $this->assertSame(1000.25, Numbers::toFloat('$1,000.25'));
+        $this->assertSame(1000000.25, Numbers::toFloat('$1,000,000.25'));
+        $this->assertSame(100.25, Numbers::toFloat('abc100def.25xyz'));
     }
 
     /**
@@ -34,6 +34,6 @@ class ToFloatTest extends BandolierTestCase
      */
     public function a_integer_will_return_as_a_float()
     {
-        $this->assertSame(125.0, Numbers::tofloat('125'));
+        $this->assertSame(125.0, Numbers::toFloat('125'));
     }
 }
