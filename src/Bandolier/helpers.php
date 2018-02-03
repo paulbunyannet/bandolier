@@ -4,7 +4,7 @@ use Pbc\Bandolier\Type\Strings;
 if (!function_exists('env')) {
     /**
      * Gets the value of an environment variable. Supports boolean, empty and null.
-     * Borrowed from Illuminate/Foundation
+     * Based on Illuminate/Foundation
      *
      * @param  string $key
      * @param  mixed $default
@@ -69,8 +69,69 @@ if (!function_exists('value')) {
 }
 
 if (!function_exists('httpProtocol')) {
+    /**
+     * Get whether running http or https http protocol
+     *
+     * @return string
+     */
     function httpProtocol()
     {
         return Pbc\Bandolier\Type\Paths::httpProtocol();
+    }
+}
+
+if ( ! function_exists('studlyCase'))
+{
+    /**
+     * Convert a value to studly caps case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    function studlyCase($value)
+    {
+        return Strings::studly($value);
+    }
+}
+
+if ( ! function_exists('camelCase'))
+{
+    /**
+     * Convert a value to camel case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    function camelCase($value)
+    {
+        return Strings::camel($value);
+    }
+}
+
+if ( ! function_exists('snakeCase'))
+{
+    /**
+     * Convert a value to snake case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    function snakeCase($value)
+    {
+        return Strings::snake($value);
+    }
+}
+
+if ( ! function_exists('kebabCase'))
+{
+    /**
+     * Convert a value to kebab case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    function kebabCase($value)
+    {
+        return Strings::kebab($value);
     }
 }
