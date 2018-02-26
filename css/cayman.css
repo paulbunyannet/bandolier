@@ -190,3 +190,9 @@ a:hover { text-decoration: underline; }
 .site-footer-owner { display: block; font-weight: bold; }
 
 .site-footer-credits { color: #819198; }
+
+.inline {
+  display: inline-block;
+}
+
+.br {border-radius: 0.4rem; padding: 0.1rem 0.4rem;}

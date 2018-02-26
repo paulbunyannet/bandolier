@@ -17,6 +17,8 @@ Handle encoded strings
 * [unpackJson](#unpackjson)
 * [isSerialized](#isserialized)
 * [unpackSerialized](#unpackserialized)
+* [isBase64](#isbase64)
+* [unpackBase64](#unpackbase64)
 
 ## getThingThatIsEncoded
 
@@ -173,4 +175,30 @@ Decode a serialized object:
   $string = "a:1:{s:3:"foo";s:3:"bar";}"
   Encoded::unpackSerialized($string);
   // returns ["foo" => "bar"]</pre>
+</figure>
+
+## isBase64
+
+Check to see if a string is a base64 encoded string or not. <span class="highlight inline br"><span class="nd">This is experimental!</span></span>
+
+<figure class="highlight">
+  <pre class="prettyprint lang-php linenums">
+  use \Pbc\Bandolier\Type\Encoded
+
+  $string = base64_encode("a:1:{s:3:"foo";s:3:"bar";}")
+  Encoded::isBase64($string);
+  // returns true</pre>
+</figure>
+
+## unpackBase64
+
+Unpack a base64 encoded string. <span class="highlight inline br"><span class="nd">This is experimental!</span></span>
+
+<figure class="highlight">
+  <pre class="prettyprint lang-php linenums">
+  use \Pbc\Bandolier\Type\Encoded
+
+  $string = base64_encode("hello world")
+  Encoded::unpackBase64($string);
+  // returns "hello world"</pre>
 </figure>
