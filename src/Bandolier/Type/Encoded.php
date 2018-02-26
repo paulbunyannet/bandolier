@@ -57,7 +57,7 @@ class Encoded
         $return = false;
         array_walk(self::$types, function($type) use (&$return, $string){
           static $found = false;
-          if($found === true) {
+          if($found) {
             return;
           }
           $unpackMethod = 'is'.ucfirst($type);
