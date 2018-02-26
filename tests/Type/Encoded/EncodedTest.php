@@ -58,7 +58,7 @@ class EncodedTest extends BandolierTestCase
         $this->assertFalse(Encoded::isJson('{12345}'));
         $this->assertFalse(Encoded::isJson('[ABCDE]'));
     }
-    
+
     /**
      * @test
      * @group encoded
@@ -104,6 +104,20 @@ class EncodedTest extends BandolierTestCase
         $value = 'b';
         $data = 'a:1:{s:1:"'. $key .'";s:1:"'.$value.'";}';
         $this->assertSame(Encoded::getThingThatIsEncoded($data, $key), $value);
+    }
+    /**
+     * An element can be found in a base64 encoded string
+     * @test
+     * @group encoded
+     * @group encoded-getThingThatIsEncoded
+     */
+    public function an_element_can_be_found_in_a_base64_encoded_string()
+    {
+        $key = 'a';
+        $value = 'b';
+        $data = 'a:1:{s:1:"'. $key .'";s:1:"'.$value.'";}';
+        $encoded = base64_encode($data);
+        $this->assertSame(Encoded::getThingThatIsEncoded($encoded, $key), $value);
     }
 
     /**
@@ -152,5 +166,86 @@ class EncodedTest extends BandolierTestCase
         $arr = ['a' => 'b'];
         $data = json_encode($arr);
         $this->assertSame(Encoded::getThingThatIsEncoded($data, 'b'), $data);
+    }
+
+    /**
+     * A string string will return true if encoded by base64 function
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function a_string_string_will_return_true_if_encoded_by_base64_function()
+    {
+        $this->assertTrue(Encoded::isBase64(base64_encode(time())));
+    }
+
+
+    /**
+     * The encoded type will return json if a string is a json encoded string
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function the_encoded_type_will_return_json_if_a_string_is_a_json_encoded_string()
+    {
+        $this->assertSame('json', Encoded::getEncodeType(json_encode([1,2,3,4,5])));
+    }
+
+
+    /**
+     * The encoded type will return serialized if a string is a serialize encoded string
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function the_encoded_type_will_return_serialized_if_a_string_is_a_serialize_encoded_string()
+    {
+        $this->assertSame('serialized', Encoded::getEncodeType(serialize([1,2,3,4,5])));
+    }
+
+
+    /**
+     * The encoded type will return base64 if a string is a base46 encoded string
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function the_encoded_type_will_return_base64_if_a_string_is_a_base46_encoded_string()
+    {
+        $this->assertSame('base64', Encoded::getEncodeType(base64_encode(time())));
+    }
+
+    /**
+     * Test that decoding a base64 string return an expected value
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function test_that_decoding_a_base64_string_return_an_expected_value()
+    {
+        $string = 'Lorem ipsom';
+        $base64Encoded = base64_encode($string);
+        $this->assertSame($string, Encoded::unpackBase64($base64Encoded));
+
+        $array = [1,2,3,4,5];
+        $json = json_encode($array);
+        $base64Encoded = base64_encode($json);
+        $this->assertSame($json, Encoded::unpackBase64($base64Encoded));
+
+        $serialized = serialize($array);
+        $base64Encoded = base64_encode($serialized);
+        $this->assertSame($serialized, Encoded::unpackBase64($base64Encoded));
+    }
+
+    /**
+     * A string string will return false if not encoded by base64 function
+     * @test
+     * @group encodedIsBase64
+     * @group encoded
+     */
+    public function a_string_string_will_return_false_if_not_encoded_by_base64_function()
+    {
+        $this->assertFalse(Encoded::isBase64(serialize([1,2,3,4,5])));
+        $this->assertFalse(Encoded::isBase64(json_encode([1,2,3,4,5])));
     }
 }

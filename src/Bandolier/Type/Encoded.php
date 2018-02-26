@@ -18,6 +18,10 @@ namespace Pbc\Bandolier\Type;
 class Encoded
 {
 
+    protected static $types = array('json','serialized','base64');
+
+    protected static $base64BadCharacterThreshold = 35;
+
     /**
      * Find a key inside a string that may or may not be encoded
      * @param $strange
@@ -27,15 +31,18 @@ class Encoded
     public static function getThingThatIsEncoded($strange, $thing)
     {
         $encodeType = self::getEncodeType($strange);
+        $unpackMethod = 'unpack'.ucfirst($encodeType);
         switch ($encodeType) {
             case ('json'):
             case ('serialized'):
-                $unpackMethod = 'unpack'.ucfirst($encodeType);
                 $decode = self::$unpackMethod($strange);
                 if (array_key_exists($thing, $decode)) {
                     return $decode[$thing];
                 }
                 break;
+            case('base64'):
+                $decode = self::$unpackMethod($strange);
+                return self::getThingThatIsEncoded($decode, $thing);
         }
 
         return $strange;
@@ -47,14 +54,21 @@ class Encoded
      */
     public static function getEncodeType($string)
     {
-        if (self::isJson($string)) {
-            return 'json';
-        }
-        if (self::isSerialized($string)) {
-            return 'serialized';
-        }
+        $return = false;
+        array_walk(self::$types, function($type) use (&$return, $string){
+          static $found = false;
+          if($found === true) {
+            return;
+          }
+          $unpackMethod = 'is'.ucfirst($type);
+          if (in_array($unpackMethod, get_class_methods(Encoded::class)) && self::$unpackMethod($string)) {
+              $found = true;
+              $return = $type;
+          }
+          return;
+        });
 
-        return false;
+        return $return;
 
     }
 
@@ -87,6 +101,39 @@ class Encoded
     }
 
     /**
+     * Check and see if a string is base64 encoded
+     * https://stackoverflow.com/a/30231906/405758
+     * @param $string
+     * @return bool
+     */
+    public static function isBase64($string)
+    {
+        if(!is_string($string)) return false;
+
+        // Check if there is no invalid character in string
+        if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string)) return false;
+
+        // Decode the string in strict mode and send the response
+        if (!base64_decode($string, true)) return false;
+
+        // Encode and compare it to original one
+        if (base64_encode(base64_decode($string, true)) !== $string) return false;
+
+        // http://www.albertmartin.de/blog/code.php/19/base64-detection
+        // check for bad character when decoding the base64 string
+        $check = str_split(base64_decode($string, true));
+        $x = 0;
+        array_walk($check, function($char) use (&$x){
+            if (ord($char) > 126) $x++;
+        });
+        //var_dump("Count: ". $x . " " . ($x/count($check)*100) . "%" . PHP_EOL);
+        if ($x/count($check)*100 > self::$base64BadCharacterThreshold) return false;
+
+        return true;
+
+    }
+
+    /**
      * @param $string
      * @param bool $associativeArray
      * @return mixed
@@ -104,4 +151,15 @@ class Encoded
     {
         return unserialize($string);
     }
+
+    /**
+     * Unpack a base64 encoded string
+     * @param $string
+     * @return mixed
+     */
+    public static function unpackBase64($string)
+    {
+      return base64_decode($string, true);
+    }
+
 }
