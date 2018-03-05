@@ -20,7 +20,7 @@ matrix:
     - php: 5.4
     - php: 5.5
 before_script:
-  - if [ "$PHAN" != "" ]; then mkdir setup; curl -L https://raw.githubusercontent.com/phan/phan/master/tests/travis_setup.sh -o setup/travis_setup.sh;  fi;
+  - if [ "$PHAN" != "" ]; then mkdir setup; curl -L https://raw.githubusercontent.com/phan/phan/master/tests/travis_setup.sh -o setup/travis_setup.sh; bash setup/travis_setup.sh;  fi;
   - if [ "$PHAN" != "" ]; then mkdir /tmp/opcache || true; echo -e 'opcache.enable_cli=1\nopcache.file_cache=/tmp/opcache' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;
   - composer validate
   - composer self-update
