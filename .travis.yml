@@ -9,16 +9,20 @@ php:
 - hhvm
 matrix:
   include:
+    - php: 7.0
+      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
     - php: 7.1
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes AST=yes PHAN=yes
+      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
     - php: 7.2
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes AST=yes PHAN=yes
+      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
   allow_failures:
     - php: hhvm
     - php: 5.4
     - php: 5.5
 before_script:
-  - if [ "AST" != "" ]; then git clone https://github.com/nikic/php-ast.git build/ast; cd ./build/ast/; phpize; ./configure; make; sudo make install; echo "extension=ast.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; cd ./../../; fi;
+  - if [ "$PHAN" != "" ]; then mkdir setup; curl -L https://raw.githubusercontent.com/phan/phan/master/tests/travis_setup.sh -o setup/travis_setup.sh;  fi;
+  - if [ "$PHAN" != "" ]; then mkdir /tmp/opcache || true; echo -e 'opcache.enable_cli=1\nopcache.file_cache=/tmp/opcache' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;
+  - composer validate
   - composer self-update
   - composer update --no-interaction ${COMPOSER_FLAGS}
   - if [ "$STATIC_ANALYSIS" != "" ]; then curl -L https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar -o phpstan.phar; fi;
@@ -31,5 +35,7 @@ cache:
   directories:
   - vendor
   - $HOME/.composer/cache
+  - $HOME/.cache/phan-ast/build
+  - $HOME/setup
 after_success:
     - bash <(curl -s https://codecov.io/bash)
