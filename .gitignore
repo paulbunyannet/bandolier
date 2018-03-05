@@ -9,3 +9,4 @@ phpunit.phar
 _site
 Gemfile.lock
 *.phar
+/phan.log

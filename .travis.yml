@@ -10,18 +10,34 @@ php:
 matrix:
   include:
     - php: 7.1
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes
+      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes AST=yes PHAN=yes
+    - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes AST=yes PHAN=yes
   allow_failures:
     - php: hhvm
     - php: 5.4
     - php: 5.5
 before_script:
+  - |
+    if [ "AST" != "" ]; then
+    git clone https://github.com/nikic/php-ast.git build/ast;
+    cd ./build/ast/;
+    phpize;
+    ./configure;
+    make;
+    sudo make install;
+    echo "extension=ast.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+    cd ./../../;
+    fi;
   - travis_retry composer self-update
-  - travis_retry composer update --no-interaction ${COMPOSER_FLAGS}
+  - composer self-update
+  - composer update --no-interaction ${COMPOSER_FLAGS}
   - if [ "$STATIC_ANALYSIS" != "" ]; then curl -L https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar -o phpstan.phar; fi;
+  - if [ "$PHAN" != "" ]; then curl -L https://github.com/phan/phan/releases/download/0.12.0/phan.phar -o phan.phar; fi;
 script:
   - vendor/bin/phpunit
   - if [ "$STATIC_ANALYSIS" != "" ]; then php phpstan.phar analyse --level=4 src; fi;
+  - if [ "$PHAN" != "" ]; then php phan.phar; fi;
 cache:
   directories:
   - vendor

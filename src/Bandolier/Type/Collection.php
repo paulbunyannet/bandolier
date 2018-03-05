@@ -38,7 +38,7 @@ class Collection extends BaseType
     /**
      * Add an item to the collection by key
      * @param $obj
-     * @param null $key
+     * @param null|string|int $key
      * @return $this
      * @throws KeyHasUseException
      */

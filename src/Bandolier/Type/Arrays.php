@@ -74,9 +74,9 @@ class Arrays extends BaseType
     }
 
     /**
-     * @param array $data
-     * @param null $attribute
-     * @param null $default
+     * @param array         $data
+     * @param null|string   $attribute
+     * @param null|mixed    $default
      * @return mixed|null
      */
     public static function getAttribute(array $data, $attribute = null, $default = null)
@@ -96,7 +96,8 @@ class Arrays extends BaseType
     /**
      * Get the key from an array by value
      * @param array $data
-     * @param $value
+     * @param mixed $value
+     * @param null|mixed $default
      * @return int|null|string
      */
     public static function getKey(array $data, $value, $default = null)

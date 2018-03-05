@@ -136,10 +136,14 @@ class Numbers
                 }
                 break;
             default:
-                $baseUnit = pow(1000, floor(log($number, 1000)));
-                $numBaseUnits = (int) ($number / $baseUnit);
+                /** @var int $baseUnit */
+                $baseUnit = intval(pow(1000, floor(log($number, 1000))));
+                /** @var int $numBaseUnits */
+                $numBaseUnits = intval($number / $baseUnit);
                 $remainder = $number % $baseUnit;
-                $string = Numbers::toWord($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+                $string = Numbers::toWord($numBaseUnits)
+                    . ' '
+                    . $dictionary[$baseUnit];
                 if ($remainder) {
                     $string .= $remainder < 100 ? $conjunction : $separator;
                     $string .= Numbers::toWord($remainder);

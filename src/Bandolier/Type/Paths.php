@@ -73,8 +73,8 @@ class Paths
     }
 
     /**
-     * Check environment for SERVER_PORT and fallback to the server global
-     * @return int
+     * Check environment for SERVER_NAME and fallback to the server global
+     * @return string
      */
     public static function serverName()
     {
@@ -112,7 +112,7 @@ class Paths
 
     /**
      * Check environment for HTTPS and fallback to the server global
-     * @return null
+     * @return string
      */
     public static function https()
     {
@@ -175,7 +175,7 @@ class Paths
     }
 
     /**
-     * @param $serverName
+     * @param string $serverName
      * @return bool
      */
     public function domainNameIsLocalHost($serverName)
