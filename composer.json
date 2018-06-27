@@ -28,7 +28,8 @@
   "autoload-dev": {
     "files": [
       "tests/BandolierTestCase.php",
-      "tests/Mock/GuzzleHttpClientMock.php"
+      "tests/Mock/GuzzleHttpClientMock.php",
+      "tests/Mock/GuzzleHttp53ClientMock.php"
     ]
   },
   "minimum-stability": "stable",
@@ -44,6 +45,7 @@
   "homepage": "https://github.com/paulbunyannet/bandolier",
   "prefer-stable": true,
   "suggest": {
-    "guzzlehttp/guzzle": "Needed for using Paths::fileGetContents() to retrieve remote content."
+    "guzzlehttp/guzzle": "Needed for using Paths::fileGetContents() to retrieve remote content.",
+    "tedivm/stash": "Needed for the Cache modules to function."
   }
 }

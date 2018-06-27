@@ -58,6 +58,25 @@ class Collection extends BaseType
     }
 
     /**
+     * @param $list
+     * @param null $key
+     * @return $this
+     * @throws KeyHasUseException
+     */
+    public function addItems($list, $key = null)
+    {
+        if(is_array($list)) {
+            array_walk($list, function($val, $key){
+                $this->addItem($val, $key);
+            });
+            return $this;
+        }
+
+        $this->addItem($list, $key);
+        return $this;
+    }
+
+    /**
      * Set a collection item by key
      * @param $obj
      * @param mixed $key

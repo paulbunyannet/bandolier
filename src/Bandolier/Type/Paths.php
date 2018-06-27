@@ -142,6 +142,7 @@ class Paths
      * Get content from a path
      * @param array $params parameters
      * @return string
+     * @throws \Exception
      */
     public static function fileGetContents(array $params = [])
     {
@@ -151,13 +152,14 @@ class Paths
         /** @var string $request_type request type */
         /** @var array $requestParams parameters to pass into request */
         /** @var string $request type of request */
-        $parameters = new Collection(array('items' => Arrays::defaultAttributes([
+        $parameters = new Collection();
+        $parameters->addItems(Arrays::defaultAttributes([
             "toPath" => self::httpProtocol() . '://' . self::serverName() . '/',
             "clientParams" => [],
             "client" => "\\GuzzleHttp\\Client",
             "request" => "GET",
             "requestParams" => [],
-        ], $params)));
+        ], $params));
 
         $parameters->addItem(parse_url($parameters->getItem('toPath'), PHP_URL_SCHEME) . "://" . parse_url($parameters->getItem('toPath'), PHP_URL_HOST), 'base_uri');
         $parameters->setItem(array_merge($parameters->getItem('clientParams'), array('base_uri' => $parameters->getItem('base_uri'))), 'clientParams');
@@ -167,11 +169,20 @@ class Paths
         }
 
         $path = substr($parameters->getItem('toPath'), strlen($parameters->getItem('base_uri')), strlen($parameters->getItem('toPath')));
-
-        return $parameters->getItem('client')
-            ->request($parameters->getItem('request'), $path, $parameters->getItem('requestParams'))
-            ->getBody()
-            ->getContents();
+        if (method_exists($parameters->getItem('client'), 'request')) {
+            // For GuzzleHttp 6
+            return $parameters->getItem('client')
+                ->request($parameters->getItem('request'), $path, $parameters->getItem('requestParams'))
+                ->getBody()
+                ->getContents();
+        } elseif (method_exists($parameters->getItem('client'), 'createRequest')) {
+            // for GuzzleHttp 5.3
+            $request = $parameters->getItem('client')
+                ->createRequest($parameters->getItem('request'), $path, $parameters->getItem('requestParams'));
+            return $parameters->getItem('client')->send($request)->getBody();
+        } else {
+          throw new \Exception('The client must be an instance of \\GuzzleHttp\\Client');
+        }
     }
 
     /**

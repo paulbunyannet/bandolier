@@ -47,6 +47,37 @@ class CollectionTest extends BandolierTestCase
     }
 
     /**
+     * Test Collection can add an items with key name pairs
+     * @test testCollectionCanAddAnItemWithAKeyName
+     * @group Collection
+     */
+    public function testCollectionCanAddAnItems()
+    {
+        $collection = new Collection();
+        $list = ['foo' => 'bar', 'bar' => 'bizz'];
+        $collection->addItems($list);
+        $this->assertArrayHasKey('foo', $collection->getItems());
+        $this->assertSame($list['foo'], $collection->getItem('foo'));
+        $this->assertArrayHasKey('bar', $collection->getItems());
+        $this->assertSame($list['bar'], $collection->getItem('bar'));
+    }
+
+    /**
+     * Test Collection can add an item in items if first param is not an array
+     * @test testCollectionCanAddAnItemWithAKeyName
+     * @group Collection
+     */
+    public function testCollectionCanAddAnItemInItems()
+    {
+        $collection = new Collection();
+        $value = self::$faker->sentence();
+        $key = implode('-', self::$faker->words());
+        $collection->addItems($value, $key);
+        $this->assertArrayHasKey($key, $collection->getItems());
+        $this->assertSame($value, $collection->getItem($key));
+    }
+
+    /**
      * Test Collection when adding an item it will throw an exception if key already exists
      * @test testCollectionWhenAddingAnItemItWillThrowAnExceptionIfKeyAlreadyExists
      * @group Collection

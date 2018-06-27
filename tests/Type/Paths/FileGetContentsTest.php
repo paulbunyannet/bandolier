@@ -57,6 +57,29 @@ class FileGetContentsTest extends BandolierTestCase
 
         $this->assertSame($body, $getBody);
     }
+
+    /**
+     * Test that FileGetContents can do a request and return the page content when client is a class
+     * using GuzzleHttp 5.3 style
+     * @test
+     * @group FileGetContents
+     */
+    public function testThatFileGetContentsCanDoARequestAndReturnThePageContentWhenClientIsAClassWithGuzzleHttp53()
+    {
+        $body = "Foo Bar Baz";
+        $request = "GET";
+        $clientParams = ["foo" => "bar"];
+
+        $getBody = Paths::fileGetContents([
+            "toPath" => "http://foobar.com/bla",
+            "client" => new \GuzzleHttp53ClientMock($clientParams),
+            "clientParams" => $clientParams,
+            "request" => $request,
+            "requestParams" => []
+        ]);
+
+        $this->assertSame($body, $getBody);
+    }
     /**
      * Test that FileGetContents can do a request and return the page content when client is a string
      * @test
