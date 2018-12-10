@@ -10,3 +10,4 @@ _site
 Gemfile.lock
 *.phar
 /phan.log
+phpstan.phar
