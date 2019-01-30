@@ -43,6 +43,8 @@ class Encoded
             case('base64'):
                 $decode = self::$unpackMethod($strange);
                 return self::getThingThatIsEncoded($decode, $thing);
+            default:
+                break;
         }
 
         return $strange;
@@ -65,7 +67,6 @@ class Encoded
               $found = true;
               $return = $type;
           }
-          return;
         });
 
         return $return;
@@ -144,12 +145,30 @@ class Encoded
     }
 
     /**
+     * @param $data
+     * @return string
+     */
+    public static function packJson($data)
+    {
+        return json_encode($data);
+    }
+
+    /**
      * @param $string
      * @return mixed
      */
     public static function unpackSerialized($string)
     {
         return unserialize($string);
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public static function packSerialized($data)
+    {
+        return serialize($data);
     }
 
     /**
@@ -160,6 +179,16 @@ class Encoded
     public static function unpackBase64($string)
     {
       return base64_decode($string, true);
+    }
+
+    /**
+     * Pack a base64 encoded string
+     * @param $string
+     * @return string
+     */
+    public static function packBase64($string)
+    {
+      return base64_encode($string);
     }
 
 }
