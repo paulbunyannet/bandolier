@@ -248,4 +248,43 @@ class EncodedTest extends BandolierTestCase
         $this->assertFalse(Encoded::isBase64(serialize([1,2,3,4,5])));
         $this->assertFalse(Encoded::isBase64(json_encode([1,2,3,4,5])));
     }
+
+    /**
+     * Test that we can "pack" a json encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_json_string() {
+
+        $array = ['a','b','c'];
+        $encoded = json_encode($array);
+        $this->assertSame($encoded, Encoded::packJson($array));
+
+    }
+
+    /**
+     * Test that we can "pack" a serialized encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_serialized_string() {
+
+        $array = ['a','b','c'];
+        $encoded = serialize($array);
+        $this->assertSame($encoded, Encoded::packSerialized($array));
+
+    }
+
+    /**
+     * Test that we can "pack" a base64 encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_base64_encoded_string() {
+
+        $string = "1bcde12345";
+        $encoded = base64_encode($string);
+        $this->assertSame($encoded, Encoded::packBase64($string));
+
+    }
 }
