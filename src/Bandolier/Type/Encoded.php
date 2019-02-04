@@ -24,24 +24,38 @@ class Encoded
 
     /**
      * Find a key inside a string that may or may not be encoded
-     * @param $strange
-     * @param $thing
+     * @param string $strange String to decode
+     * @param string $thing   Key to find
+     * @param bool   $strict  Whether to be strict with encoding. If true and the
+     * encoding type can not be  found then an exception will be thrown
+     *
      * @return mixed
+     * @throws \InvalidArgumentException
+     * @throws \BadMethodCallException
      */
-    public static function getThingThatIsEncoded($strange, $thing)
+    public static function getThingThatIsEncoded($strange, $thing, $strict = false)
     {
-        $encodeType = self::getEncodeType($strange);
+        $encodeType = self::getEncodeType($strange, $strict);
+        // If no encoded type gets returned and we're running in "strict" then return an exception...
+        if (!$encodeType && $strict) {
+            throw new \InvalidArgumentException('No encoded type could be found for the string.');
+        }
+
         $unpackMethod = 'unpack'.ucfirst($encodeType);
+        //  In case the first check passes but the the unpack method does not exist...
+        if (!method_exists(Encoded::class, $unpackMethod) && $strict) {
+            throw new \BadMethodCallException('The unpack method '.__CLASS__.'::'.$unpackMethod.' does not exist.');
+        }
         switch ($encodeType) {
             case ('json'):
             case ('serialized'):
-                $decode = self::$unpackMethod($strange);
+                $decode = Encoded::{$unpackMethod}($strange);
                 if (array_key_exists($thing, $decode)) {
                     return $decode[$thing];
                 }
                 break;
             case('base64'):
-                $decode = self::$unpackMethod($strange);
+                $decode = Encoded::{$unpackMethod}($strange);
                 return self::getThingThatIsEncoded($decode, $thing);
             default:
                 break;
@@ -51,15 +65,16 @@ class Encoded
     }
 
     /**
-     * @param $string
+     * @param string $string String to check the encoding of
+     * @param bool   $strict
      * @return bool|string
      */
-    public static function getEncodeType($string)
+    public static function getEncodeType($string, $strict = false)
     {
         $return = false;
         array_walk(self::$types, function($type) use (&$return, $string){
           static $found = false;
-          if($found) {
+          if ($found) {
             return;
           }
           $unpackMethod = 'is'.ucfirst($type);
@@ -68,7 +83,9 @@ class Encoded
               $return = $type;
           }
         });
-
+        if (!$return && !$strict) {
+            return 'unknown';
+        }
         return $return;
 
     }
