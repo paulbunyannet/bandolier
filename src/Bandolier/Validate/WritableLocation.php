@@ -65,7 +65,7 @@ class WritableLocation extends Setup
      * @param array $config Config array containing the path key
      *
      * @throws LocationDoesExist|LocationIsADirectory|LocationIsWritable
-     * @return WritableLocation
+     * @return void
      */
     public function __construct($config = [])
     {
@@ -76,7 +76,6 @@ class WritableLocation extends Setup
         $this->doesExist();
         $this->isADirectory();
         $this->isWritable();
-        return $this;
     }
 
     /**

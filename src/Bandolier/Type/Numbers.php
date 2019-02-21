@@ -103,7 +103,7 @@ class Numbers
             return false;
         }
 
-        if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
+        if (($number >= 0 && intval($number) < 0) || intval($number) < 0 - PHP_INT_MAX) {
             throw new OutOfRangeException(__METHOD__.' only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX);
         }
 
