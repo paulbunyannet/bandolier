@@ -24,13 +24,16 @@ class SpecialCharacter extends BaseType
             'hechsher'   => ['Ⓤ', '&#9418;']
         ];
         $characters = array_merge($defaults, $characters);
-        $specials = array();
+        $specials = [''];
         array_walk_recursive($characters, function ($v) use (&$specials) {
-            $specials[] = $v;
+            if (strlen($v) > 0) {
+                $specials[] = $v;
+            }
         });
+        $specials = array_values(array_filter($specials));
         // wrap all the special characters above with superscript tags
         for ($i = 0, $iCount = count($specials); $i < $iCount; $i++) {
-            if (strpos($string, $specials[0]) !== false) {
+            if (strpos($string, $specials[$i]) !== false) {
                 $string = str_replace($specials[$i], '<sup>' . $specials[$i] . '</sup>', $string);
             }
         }

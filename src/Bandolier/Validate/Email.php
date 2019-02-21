@@ -2,6 +2,8 @@
 
 namespace Pbc\Bandolier\Validate;
 
+use Pbc\Bandolier\Exception\Setup\ArrayRequired;
+
 /**
  * Class Email
  * @package Pbc\Bandolier\Validate
@@ -15,7 +17,8 @@ class Email
 
     /**
      * Validate an email address
-     * @param $email
+     *
+     * @param string $email
      * @return bool
      */
     public static function validate($email)
@@ -25,8 +28,7 @@ class Email
             $v = $validate->{'check' . ucfirst($filter)}($email);
             if ($v) {
                 $validate->setValid(true);
-                continue;
-            } elseif (!$v) {
+            } else {
                 $validate->setValid(false);
                 break;
             }
@@ -36,7 +38,8 @@ class Email
     }
 
     /**
-     * @param $email
+     * @param string $email
+     *
      * @return bool
      */
     public function checkDns($email)
@@ -47,7 +50,8 @@ class Email
     }
 
     /**
-     * @param $email
+     * @param string $email
+     *
      * @return mixed
      */
     public function checkFilter($email)
@@ -65,13 +69,13 @@ class Email
 
     /**
      * @param array $filters
-     * @throws \Exception
+     *
+     * @throws \TypeError
+     *
+     * @return void
      */
-    public function setFilters($filters)
+    public function setFilters(array $filters)
     {
-        if (!is_array($filters)) {
-            throw new \Exception('The filter value must be an array.');
-        }
         $this->filters = $filters;
     }
 
@@ -85,6 +89,8 @@ class Email
 
     /**
      * @param bool $valid
+     *
+     * @return void
      */
     public function setValid($valid)
     {

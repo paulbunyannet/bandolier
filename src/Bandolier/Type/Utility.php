@@ -17,7 +17,7 @@ class Utility
     /**
      * Grab IP from host
      * http://www.php.net/manual/en/function.gethostbyname.php#78965
-     * @param $address
+     * @param string $address
      * @return mixed
      */
     public static function lookUpHostIp($address)

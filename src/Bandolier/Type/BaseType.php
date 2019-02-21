@@ -10,6 +10,8 @@
 
 namespace Pbc\Bandolier\Type;
 
+use Pbc\Bandolier\Exception\Collection\KeyInvalidException;
+
 class BaseType
 {
 
@@ -49,17 +51,19 @@ class BaseType
 
 
     /**
-     * @param $field
-     * @param $value
+     * @param string $field
+     * @param mixed  $value
+     *
      * @return $this
-     * @throws Collection\Exception\KeyInvalidException
+     *
+     * @throws KeyInvalidException
      */
     protected function setData($field, $value)
     {
         if (property_exists($this, $field)) {
             $this->{$field} = $value;
         } else {
-            throw new Collection\Exception\KeyInvalidException("Property \"{$field}\" does not exist on \"". get_class($this) ."\".");
+            throw new KeyInvalidException("Property \"{$field}\" does not exist on \"". get_class($this) ."\".");
         }
 
         return $this;

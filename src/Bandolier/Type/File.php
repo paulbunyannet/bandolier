@@ -25,6 +25,8 @@ class File
      *
      * @param $dir
      * @param array $results
+     * @param string $dir
+     *
      * @return array
      */
     public static function getDirContents($dir, &$results = array())

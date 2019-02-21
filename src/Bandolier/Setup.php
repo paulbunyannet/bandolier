@@ -1,7 +1,9 @@
 <?php
 namespace Pbc\Bandolier;
 
-use Pbc\Bandolier\Exception\UnknownPropertyException;
+
+
+use Pbc\Bandolier\Exception\Setup\UnknownPropertyException;
 
 /**
  * Class Setup

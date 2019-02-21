@@ -60,6 +60,7 @@ class Collection extends BaseType
     /**
      * @param $list
      * @param null $key
+     * @param array $list
      *
      * @return $this
      *

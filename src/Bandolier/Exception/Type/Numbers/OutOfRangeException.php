@@ -1,7 +1,10 @@
 <?php
-namespace Pbc\Bandolier\Exception\Writable;
+namespace Pbc\Bandolier\Exception\Type\Numbers;
 
-class LocationIsADirectory extends WritableLocation {
+use Pbc\Bandolier\Exception\Exception;
+use Pbc\Bandolier\Exception\ExceptionInterface;
+
+class OutOfRangeException extends Exception implements ExceptionInterface {
 
     /**
      * @param string $message

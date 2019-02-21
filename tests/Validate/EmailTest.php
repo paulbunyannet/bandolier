@@ -97,8 +97,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test to make sure that if the filter field is not an array set will throw and exception
-     * @expectedException \Exception
-     * @expectedExceptionMessage The filter value must be an array.
+     * @expectedException \TypeError
      */
     public function testExceptionThornIfFiltersIsNotAnArray()
     {

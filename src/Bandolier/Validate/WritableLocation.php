@@ -16,8 +16,8 @@ namespace Pbc\Bandolier\Validate;
 use Pbc\Bandolier\Exception\Writable\LocationDoesExist;
 use Pbc\Bandolier\Exception\Writable\LocationIsADirectory;
 use Pbc\Bandolier\Exception\Writable\LocationIsWritable;
-use Pbc\Bandolier\Exception\Writable\WritableLocation as WritableLocationException;
 use Pbc\Bandolier\Setup;
+use Pbc\Bandolier\Type\Arrays;
 
 /**
  * Class WritableLocation
@@ -70,6 +70,9 @@ class WritableLocation extends Setup
     public function __construct($config = [])
     {
         parent::__construct($config);
+
+        $this->path = Arrays::getAttribute($config, 'path');
+
         $this->doesExist();
         $this->isADirectory();
         $this->isWritable();

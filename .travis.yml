@@ -29,6 +29,7 @@ before_script:
   - if [ "$PHAN" != "" ]; then curl -L https://github.com/phan/phan/releases/download/0.12.0/phan.phar -o phan.phar; fi;
 script:
   - vendor/bin/phpunit
+  - bash psalm.sh
   - if [ "$STATIC_ANALYSIS" != "" ]; then php phpstan.phar analyse --level=4 src; fi;
   - if [ "$PHAN" != "" ]; then php phan.phar; fi;
 cache:

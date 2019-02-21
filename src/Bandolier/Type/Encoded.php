@@ -41,7 +41,7 @@ class Encoded
             throw new \InvalidArgumentException('No encoded type could be found for the string.');
         }
 
-        $unpackMethod = 'unpack'.ucfirst($encodeType);
+        $unpackMethod = 'unpack'.ucfirst((string)$encodeType);
         //  In case the first check passes but the the unpack method does not exist...
         if (!method_exists(Encoded::class, $unpackMethod) && $strict) {
             throw new \BadMethodCallException('The unpack method '.__CLASS__.'::'.$unpackMethod.' does not exist.');
@@ -109,7 +109,10 @@ class Encoded
 
     /**
      * Check if string is serialized
+     *
      * @param $string
+     * @param string $string
+     *
      * @return bool
      */
     public static function isSerialized($string)
@@ -154,6 +157,8 @@ class Encoded
     /**
      * @param $string
      * @param bool $associativeArray
+     * @param string $string
+     *
      * @return mixed
      */
     public static function unpackJson($string, $associativeArray = true)
@@ -172,6 +177,8 @@ class Encoded
 
     /**
      * @param $string
+     * @param string $string
+     *
      * @return mixed
      */
     public static function unpackSerialized($string)
@@ -190,7 +197,10 @@ class Encoded
 
     /**
      * Unpack a base64 encoded string
+     *
      * @param $string
+     * @param string $string
+     *
      * @return mixed
      */
     public static function unpackBase64($string)
@@ -200,7 +210,10 @@ class Encoded
 
     /**
      * Pack a base64 encoded string
+     *
      * @param $string
+     * @param string $string
+     *
      * @return string
      */
     public static function packBase64($string)
