@@ -180,10 +180,12 @@ class Strings
     }
 
     /**
-     * @param $value
-     * @return bool|mixed|string
+     * @param string $value
+     * @param array  $delimiters
+     *
+     * @return bool|string
      */
-    public static function formatForTitle($value, $delimiters=['-','_'])
+    public static function formatForTitle($value = "", $delimiters=['-','_'])
     {
         // if value passed as empty or is not a string then return false
         if (!is_string($value) || strlen($value) === 0) {
@@ -207,10 +209,10 @@ class Strings
     /**
      * Convert a string to Title Case
      *
-     * @param string $value String to convert
-     * @param array $delimiters Delimiters to break into apart words
-     * @param array $exceptions strings to skip when capitalizing
-     * @return bool|mixed|string
+     * @param string $value      String to convert
+     * @param array  $delimiters Delimiters to break into apart words
+     * @param array  $exceptions strings to skip when capitalizing
+     * @return string|bool
      */
     public static function titleCase(
         $value,
@@ -218,7 +220,7 @@ class Strings
         $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"]
     ) {
         // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (!$value) {
             return false;
         }
 
@@ -262,8 +264,8 @@ class Strings
      * If string starts with
      * http://stackoverflow.com/a/834355/405758
      *
-     * @param $haystack
-     * @param $needle
+     * @param string $haystack
+     * @param string $needle
      *
      * @return bool
      */
@@ -276,8 +278,8 @@ class Strings
      * If string ends with
      * http://stackoverflow.com/a/834355/405758
      *
-     * @param $haystack
-     * @param $needle
+     * @param string $haystack
+     * @param string $needle
      * @return bool
      * @throws \Exception
      */
@@ -293,8 +295,8 @@ class Strings
 
     /**
      * @param string $haystack
-     * @param mixed $needle
-     * @param bool $caseSensitive
+     * @param mixed  $needle
+     * @param bool   $caseSensitive
      * @return bool
      */
     public static function contains($haystack, $needle, $caseSensitive = true)
@@ -311,21 +313,22 @@ class Strings
         }
 
         if ($caseSensitive) {
-            return strlen(strstr($haystack, $needle)) > 0;
+            return strstr($haystack, $needle) !== false;
         } else {
-            return strlen(stristr($haystack, $needle)) > 0;
+            return stristr($haystack, $needle) !== false;
         }
     }
 
     /**
      * Strip outer quotes from a string
-     * @param $value
+     * @param string $value
      * @return bool|string
+     * @throws \Exception
      */
-    public static function stripOuterQuotes($value)
+    public static function stripOuterQuotes($value = "")
     {
         // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (!$value) {
             return false;
         }
 
@@ -357,10 +360,10 @@ class Strings
      *
      * @return float|bool
      */
-    public static function wordsToNumber($value) {
+    public static function wordsToNumber($value = "") {
 
         // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (!$value) {
             return false;
         }
 
@@ -379,6 +382,10 @@ class Strings
 
         // Coerce all tokens to numbers
         $parts = array_map(
+            /**
+             * @param  string $val
+             * @return float
+             */
             function ($val) {
                 return floatval($val);
             },
@@ -425,7 +432,7 @@ class Strings
      */
     protected static function cacheString()
     {
-        $string = null;
+        $string = "";
         foreach (func_get_args() as $functionArgument) {
             $string .= md5(serialize($functionArgument));
         }

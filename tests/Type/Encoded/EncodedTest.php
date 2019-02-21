@@ -160,6 +160,19 @@ class EncodedTest extends BandolierTestCase
      * @test
      * @group encoded
      * @group encoded-getThingThatIsEncoded
+     * @expectedException \InvalidArgumentException
+     */
+    public function InvalidArgumentException_thrown_if_the_string_if_incorrectly_formatted_and_strict()
+    {
+        $arr = ['a' => 'b'];
+        $data = md5(json_encode($arr));
+        Encoded::getThingThatIsEncoded($data, 'a', true);
+    }
+
+    /**
+     * @test
+     * @group encoded
+     * @group encoded-getThingThatIsEncoded
      */
     public function it_will_return_the_string_if_formatted_correctly_but_the_key_does_not_exist()
     {

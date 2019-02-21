@@ -24,7 +24,7 @@ class Arrays extends BaseType
     protected $data;
 
     /**
-     * @var array|string
+     * @var mixed
      */
     protected $attribute;
 
@@ -37,15 +37,6 @@ class Arrays extends BaseType
      * @var mixed
      */
     protected $default = null;
-
-    /**
-     * Arrays constructor.
-     * @param array $params
-     */
-    public function __construct(array $params = [])
-    {
-        parent::__construct($params);
-    }
 
 
     /**
@@ -65,7 +56,7 @@ class Arrays extends BaseType
      */
     public function doDefaultAttributes()
     {
-        foreach ($this->attribute as $name => $value) {
+        foreach ((array)$this->attribute as $name => $value) {
             if (array_key_exists($name, $this->data)) {
                 $this->data[$name] = $value;
             }
@@ -79,7 +70,7 @@ class Arrays extends BaseType
      * @param null|mixed    $default
      * @return mixed|null
      */
-    public static function getAttribute(array $data, $attribute = null, $default = null)
+    public static function getAttribute(array $data, $attribute = "", $default = null)
     {
         return (new Arrays(['data' => $data, 'attribute' => $attribute, 'default' => $default]))->doGetAttribute();
     }

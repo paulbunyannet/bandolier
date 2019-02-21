@@ -47,12 +47,14 @@ class Paths
      * Check to see what curl path should be used. If running in
      * localhost or currently run inside a container use web,
      * otherwise use the current SERVER_NAME
-     * @param $toPath
-     * @param Paths $paths pass an instance of Path (or mock)
-     * @param null $dockerEnv path to environment file that should exist if we're in a docker container
+     *
+     * @param string $toPath    Path to start from
+     * @param Paths  $paths     Instance of Path (or mock)
+     * @param string $dockerEnv Path to environment file that should exist if we're in a docker container
+     *
      * @return string
      */
-    public static function curlPath($toPath, $paths = null, $dockerEnv = null)
+    public static function curlPath($toPath, $paths = null, $dockerEnv = "")
     {
         if (!$paths) {
             $paths = new Paths();
@@ -153,7 +155,7 @@ class Paths
         /** @var array $requestParams parameters to pass into request */
         /** @var string $request type of request */
         $parameters = new Collection();
-        $parameters->addItems(Arrays::defaultAttributes([
+        $parameters->addItems((array)Arrays::defaultAttributes([
             "toPath" => self::httpProtocol() . '://' . self::serverName() . '/',
             "clientParams" => [],
             "client" => "\\GuzzleHttp\\Client",
@@ -214,6 +216,8 @@ class Paths
 
     /**
      * @param string $curlCheckFile
+     *
+     * @return void
      */
     public function setCurlCheckFile($curlCheckFile = null)
     {
@@ -242,7 +246,10 @@ class Paths
      * Delete a non empty folder
      * https://stackoverflow.com/a/1653776/405758
      * http://us3.php.net/rmdir
+     *
      * @param $dir
+     * @param string $dir
+     *
      * @return bool
      */
     public static function rmDir($dir)
@@ -275,6 +282,8 @@ class Paths
 
     /**
      * @param string $domainNameWeb
+     *
+     * @return void
      */
     public function setDomainNameWeb($domainNameWeb)
     {

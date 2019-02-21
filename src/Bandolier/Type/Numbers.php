@@ -11,6 +11,8 @@
 
 namespace Pbc\Bandolier\Type;
 
+use Pbc\Bandolier\Exception\Type\Numbers\OutOfRangeException;
+
 class Numbers
 {
 
@@ -82,9 +84,9 @@ class Numbers
      * one hundred and twenty-three billion, four hundred and fifty-six million, seven hundred and eighty-nine thousand,
      * one hundred and twenty-three point one two three four five
      *
-     * @param $number
+     * @param int $number Number to convert to words
      * @return bool|mixed|null|string
-     * @throws \Exception
+     * @throws OutOfRangeException
      * @SuppressWarnings(PHPMD)
      */
     public static function toWord($number)
@@ -101,8 +103,8 @@ class Numbers
             return false;
         }
 
-        if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
-            throw new \Exception(__METHOD__.' only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX);
+        if (($number >= 0 && intval($number) < 0) || intval($number) < 0 - PHP_INT_MAX) {
+            throw new OutOfRangeException(__METHOD__.' only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX);
         }
 
         if ($number < 0) {
@@ -111,8 +113,9 @@ class Numbers
 
         $string = $fraction = null;
 
-        if (strpos($number, '.') !== false) {
-            list($number, $fraction) = explode('.', $number);
+        if (strpos((string)$number, '.') !== false) {
+            list($number, $fraction) = explode('.', (string)$number);
+            $number = intval($number);
         }
 
         switch (true) {
@@ -130,7 +133,7 @@ class Numbers
             case $number < 1000:
                 $hundreds  = $number / 100;
                 $remainder = $number % 100;
-                $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+                $string = $dictionary[intval($hundreds)] . ' ' . $dictionary[100];
                 if ($remainder) {
                     $string .= $conjunction . Numbers::toWord($remainder);
                 }

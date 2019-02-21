@@ -81,7 +81,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when adding an item it will throw an exception if key already exists
      * @test testCollectionWhenAddingAnItemItWillThrowAnExceptionIfKeyAlreadyExists
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyHasUseException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyHasUseException
      */
     public function testCollectionWhenAddingAnItemItWillThrowAnExceptionIfKeyAlreadyExists()
     {
@@ -97,7 +97,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when setting an item with key of none true throws an exception
      * @test testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      * @expectedExceptionMessage A key is required.
      */
     public function testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException()
@@ -111,7 +111,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when setting an item with key of null will throw an exception
      * @test collectionWhenSettingAnItemWithKeyOfNullWillThrowAnException
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      * @expectedExceptionMessage A key is required.
      */
     public function collectionWhenSettingAnItemWithKeyOfNullWillThrowAnException()
@@ -125,7 +125,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when setting an item with key that is not a string it throws an exception
      * @test testCollectionWhenSettingAnItemWithKeyThatIsNotAStringItThrowsAnException
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      * @expectedExceptionMessage The key should be a string.
      */
     public function testCollectionWhenSettingAnItemWithKeyThatIsNotAStringItThrowsAnException()
@@ -168,7 +168,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when getting a key will thow an exception if it does not exist
      * @test testCollectionWhenGettingAKeyWillThowAnExceptionIfItDoesNotExist
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      */
     public function testCollectionWhenGettingAKeyWillThowAnExceptionIfItDoesNotExist()
     {
@@ -196,7 +196,7 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when deleting a key that does not exist an exception will be thown
      * @test testCollectionWhenDeletingAKeyThatDoesNotExistAnExceptionWillBeThown
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      */
     public function testCollectionWhenDeletingAKeyThatDoesNotExistAnExceptionWillBeThown()
     {

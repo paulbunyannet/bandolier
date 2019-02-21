@@ -15,7 +15,8 @@
     "phpunit/phpunit": "^4.8",
     "mockery/mockery": "^0.9.9",
     "fzaninotto/faker": "^1.6",
-    "symfony/var-dumper": "^3.2"
+    "symfony/var-dumper": "^3.2",
+    "mikey179/vfsStream": "^1.6"
   },
   "autoload": {
     "psr-4": {

@@ -16,8 +16,9 @@ class Numbers
 {
     /**
      *
-     * @param $number
-     * @param $divisibleBy
+     * @param int $number
+     * @param int $divisibleBy
+     *
      * @return bool
      */
     public static function divisible($number, $divisibleBy) {
