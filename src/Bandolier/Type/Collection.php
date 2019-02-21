@@ -12,8 +12,8 @@
 
 namespace Pbc\Bandolier\Type;
 
-use Pbc\Bandolier\Type\Collection\Exception\KeyHasUseException;
-use Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException;
+use Pbc\Bandolier\Exception\Collection\KeyHasUseException;
+use Pbc\Bandolier\Exception\Collection\KeyInvalidException;
 
 /**
  * Class Collection
@@ -60,7 +60,9 @@ class Collection extends BaseType
     /**
      * @param $list
      * @param null $key
+     *
      * @return $this
+     *
      * @throws KeyHasUseException
      */
     public function addItems($list, $key = null)

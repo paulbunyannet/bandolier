@@ -11,3 +11,6 @@ Gemfile.lock
 *.phar
 /phan.log
 phpstan.phar
+psalm
+psalm.log.*
+psalm.log

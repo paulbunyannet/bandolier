@@ -9,8 +9,9 @@
  * @package Pbc\Bandolier\Type\Collection\Exception
  */
 
-namespace Pbc\Bandolier\Type\Collection\Exception;
+namespace Pbc\Bandolier\Exception\Collection;
 
-class KeyInvalidException extends \Exception
-{
-}
+use Pbc\Bandolier\Exception\Exception;
+use Pbc\Bandolier\Exception\ExceptionInterface;
+
+class KeyInvalidException extends Exception implements ExceptionInterface {}
