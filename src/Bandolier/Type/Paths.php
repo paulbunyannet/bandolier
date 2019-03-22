@@ -11,6 +11,8 @@
 
 namespace Pbc\Bandolier\Type;
 
+use Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException;
+
 /**
  * Class Paths
  * @package Pbc\Bandolier\Type
@@ -41,6 +43,21 @@ class Paths
     public function __construct(array $data = [])
     {
         $this->data = $data;
+    }
+
+    /**
+     * Get domain name from string
+     * http://stackoverflow.com/a/15498686/405758
+     * @param string $url String holding a url
+     * @return bool
+     */
+    public static function domainFromString($url)
+    {
+        $domain = parse_url($url, PHP_URL_HOST);
+        if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) {
+            return $regs['domain'];
+        }
+        return false;
     }
 
     /**
@@ -183,7 +200,7 @@ class Paths
                 ->createRequest($parameters->getItem('request'), $path, $parameters->getItem('requestParams'));
             return $parameters->getItem('client')->send($request)->getBody();
         } else {
-          throw new \Exception('The client must be an instance of \\GuzzleHttp\\Client');
+          throw new FileGetContentsException('The client must be an instance of \\GuzzleHttp\\Client');
         }
     }
 
