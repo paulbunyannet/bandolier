@@ -11,6 +11,8 @@
 
 namespace Pbc\Bandolier\Type;
 
+use Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException;
+
 /**
  * Class Paths
  * @package Pbc\Bandolier\Type
@@ -198,7 +200,7 @@ class Paths
                 ->createRequest($parameters->getItem('request'), $path, $parameters->getItem('requestParams'));
             return $parameters->getItem('client')->send($request)->getBody();
         } else {
-          throw new \Exception('The client must be an instance of \\GuzzleHttp\\Client');
+          throw new FileGetContentsException('The client must be an instance of \\GuzzleHttp\\Client');
         }
     }
 
