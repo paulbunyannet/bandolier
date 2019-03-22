@@ -151,8 +151,8 @@ class Strings
      * use Pbc\Bandolier\Type\String;
      * $string = String::stripSlashes('A string with a bunch of \\\ slashes in it');
      *
-     * @param $value
-     * @return mixed
+     * @param string $value
+     * @return bool|string
      */
     public static function stripSlashes($value)
     {
@@ -180,15 +180,15 @@ class Strings
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @param array  $delimiters
      *
      * @return bool|string
      */
-    public static function formatForTitle($value = "", $delimiters=['-','_'])
+    public static function formatForTitle($value, $delimiters=['-','_'])
     {
         // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (!is_string($value)) {
             return false;
         }
 
