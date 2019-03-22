@@ -54,10 +54,4 @@ interface ExceptionInterface
      */
     public function __toString();
 
-    /**
-     * ExceptionInterface constructor.
-     * @param string $message
-     * @param int    $code
-     */
-    public function __construct($message, $code = 0);
 }

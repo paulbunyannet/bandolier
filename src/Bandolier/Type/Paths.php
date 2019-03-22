@@ -49,7 +49,7 @@ class Paths
      * Get domain name from string
      * http://stackoverflow.com/a/15498686/405758
      * @param string $url String holding a url
-     * @return bool
+     * @return string|bool
      */
     public static function domainFromString($url)
     {
