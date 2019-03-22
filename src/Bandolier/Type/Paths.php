@@ -44,6 +44,21 @@ class Paths
     }
 
     /**
+     * Get domain name from string
+     * http://stackoverflow.com/a/15498686/405758
+     * @param string $url String holding a url
+     * @return bool
+     */
+    public static function domainFromString($url)
+    {
+        $domain = parse_url($url, PHP_URL_HOST);
+        if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) {
+            return $regs['domain'];
+        }
+        return false;
+    }
+
+    /**
      * Check to see what curl path should be used. If running in
      * localhost or currently run inside a container use web,
      * otherwise use the current SERVER_NAME
