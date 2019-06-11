@@ -47,7 +47,7 @@ class ToWordTest extends BandolierTestCase
 
     /**
      * @test
-     * @expectedException \Exception
+     * @expectedException \Pbc\Bandolier\Exception\Type\Numbers\OutOfRangeException
      */
     public function it_will_return_false_if_number_is_greater_than_max_int()
     {

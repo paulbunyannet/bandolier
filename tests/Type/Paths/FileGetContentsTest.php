@@ -11,7 +11,6 @@
 
 namespace Type\Paths;
 
-use Mockery as m;
 use Pbc\Bandolier\BandolierTestCase;
 use Pbc\Bandolier\Type\Paths;
 
@@ -19,21 +18,23 @@ class FileGetContentsTest extends BandolierTestCase
 {
 
     /**
-     * Setup the test
+     * @test
+     * @group FileGetContent
+     * @expectedException \Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException
      */
-    public function setUp()
+    public function testFileGetContentsWillThrowExceptionIfClientIncorrect()
     {
-        parent::setUp();
+        $body = "Foo Bar Baz";
+        $request = "GET";
+        $clientParams = ["foo" => "bar"];
 
-    }
-
-    /**
-     * Tear down the test
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        m::close();
+        $getBody = Paths::fileGetContents([
+            "toPath" => "http://foobar.com/bla",
+            "client" => new \stdClass(),
+            "clientParams" => $clientParams,
+            "request" => $request,
+            "requestParams" => []
+        ]);
     }
 
     /**

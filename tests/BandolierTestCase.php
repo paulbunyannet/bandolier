@@ -13,6 +13,7 @@ namespace Pbc\Bandolier;
  * @subpackage Test
  */
 use Faker\Factory;
+use Mockery as m;
 
 /**
  * Class BandolierTestCase
@@ -81,5 +82,6 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         parent::tearDown();
+        m::close();
     }
 }

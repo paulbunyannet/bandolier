@@ -160,6 +160,19 @@ class EncodedTest extends BandolierTestCase
      * @test
      * @group encoded
      * @group encoded-getThingThatIsEncoded
+     * @expectedException \InvalidArgumentException
+     */
+    public function InvalidArgumentException_thrown_if_the_string_if_incorrectly_formatted_and_strict()
+    {
+        $arr = ['a' => 'b'];
+        $data = md5(json_encode($arr));
+        Encoded::getThingThatIsEncoded($data, 'a', true);
+    }
+
+    /**
+     * @test
+     * @group encoded
+     * @group encoded-getThingThatIsEncoded
      */
     public function it_will_return_the_string_if_formatted_correctly_but_the_key_does_not_exist()
     {
@@ -247,5 +260,44 @@ class EncodedTest extends BandolierTestCase
     {
         $this->assertFalse(Encoded::isBase64(serialize([1,2,3,4,5])));
         $this->assertFalse(Encoded::isBase64(json_encode([1,2,3,4,5])));
+    }
+
+    /**
+     * Test that we can "pack" a json encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_json_string() {
+
+        $array = ['a','b','c'];
+        $encoded = json_encode($array);
+        $this->assertSame($encoded, Encoded::packJson($array));
+
+    }
+
+    /**
+     * Test that we can "pack" a serialized encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_serialized_string() {
+
+        $array = ['a','b','c'];
+        $encoded = serialize($array);
+        $this->assertSame($encoded, Encoded::packSerialized($array));
+
+    }
+
+    /**
+     * Test that we can "pack" a base64 encoded string
+     * @test
+     * @group encoded
+     */
+    public function can_pack_a_base64_encoded_string() {
+
+        $string = "1bcde12345";
+        $encoded = base64_encode($string);
+        $this->assertSame($encoded, Encoded::packBase64($string));
+
     }
 }
