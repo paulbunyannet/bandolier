@@ -287,4 +287,58 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         $data = [$key => $value];
         $this->assertSame($default, getAttribute($data, null, $default));
     }
+
+    /**
+     * @test
+     */
+    public function testThatStudlyCaseReturnsStudlyString()
+    {
+        $this->assertEquals('BandolierPHPToolbox', studlyCase('bandolier_p_h_p_toolbox'));
+        $this->assertEquals('BandolierPhpToolbox', studlyCase('bandolier_php_toolbox'));
+        $this->assertEquals('BandolierPhPToolbox', studlyCase('bandolier-phP-toolbox'));
+        $this->assertEquals('BandolierPhpToolbox', studlyCase('bandolier  -_-  php   -_-   toolbox   '));
+    }
+    /**
+     * @test
+     */
+    public function testThatCamelCaseCaseReturnsCamelCaseString()
+    {
+        $this->assertEquals('bandolierPHPToolbox', camelCase('bandolier_p_h_p_toolbox'));
+        $this->assertEquals('bandolierPhpToolbox', camelCase('bandolier_php_toolbox'));
+        $this->assertEquals('bandolierPhPToolbox', camelCase('bandolier-phP-toolbox'));
+        $this->assertEquals('bandolierPhpToolbox', camelCase('bandolier  -_-  php   -_-   toolbox   '));
+    }
+
+    /**
+     * @test
+     */
+    public function testThatSnakeCaseReturnsSnakeCaseString()
+    {
+        $this->assertEquals('bandolier_p_h_p_toolbox', snakeCase('BandolierPHPToolbox'));
+        $this->assertEquals('bandolier_php_toolbox',   snakeCase('BandolierPhpToolbox'));
+        $this->assertEquals('bandolier php toolbox',   snakeCase('BandolierPhpToolbox', ' '));
+        $this->assertEquals('bandolier_php_toolbox',   snakeCase('Bandolier Php Toolbox'));
+        $this->assertEquals('bandolier_php_toolbox',   snakeCase('Bandolier         Php          Toolbox        '));
+        // ensure cache keys don't overlap
+        $this->assertEquals('bandolier__php__toolbox', snakeCase('BandolierPhpToolbox', '__'));
+        $this->assertEquals('bandolier_php_toolbox_',  snakeCase('BandolierPhpToolbox_', '_'));
+        $this->assertEquals('bandolier_php_toolbox',   snakeCase('bandolier php toolbox'));
+        $this->assertEquals('bandolier_php_tool_box',  snakeCase('bandolier php ToolBox'));
+    }
+
+    /**
+     * @test
+     */
+    public function testThatKebabCaseReturnsKebabString()
+    {
+        $this->assertEquals('bandolier-p-h-p-toolbox', kebabCase('BandolierPHPToolbox'));
+        $this->assertEquals('bandolier-php-toolbox',   kebabCase('BandolierPhpToolbox'));
+        $this->assertEquals('bandolier-php-toolbox',   kebabCase('Bandolier Php Toolbox'));
+        $this->assertEquals('bandolier-php-toolbox',   kebabCase('Bandolier         Php          Toolbox        '));
+        // ensure cache keys don't overlap
+        $this->assertEquals('bandolier-php-toolbox', kebabCase('BandolierPhpToolbox'));
+        $this->assertEquals('bandolier-php-toolbox_',  kebabCase('BandolierPhpToolbox_'));
+        $this->assertEquals('bandolier-php-toolbox',   kebabCase('bandolier php toolbox'));
+        $this->assertEquals('bandolier-php-tool-box',  kebabCase('bandolier php ToolBox'));
+    }
 }

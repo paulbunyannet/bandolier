@@ -101,4 +101,26 @@ class FileGetContentsTest extends BandolierTestCase
 
         $this->assertSame($body, $getBody);
     }
+
+    /**
+     * Test that FileGetContents throws an exception if the client isn't an instance of \GuzzleHttp\Client
+     * @test
+     * @group FileGetContents
+     * @expectedException \Exception
+     * @expectedExceptionMessage The client must be an instance of \GuzzleHttp\Client
+     */
+    public function testThatFileGetContentsThrowsAnExceptionIfTheClientIsnTAnInstanceOfGuzzleHttpClient()
+    {
+        $body = "Foo Bar Baz";
+        $request = "GET";
+        $clientParams = ["foo" => "bar"];
+
+        Paths::fileGetContents([
+            "toPath" => "http://foobar.com/bla",
+            "client" => new \stdClass(),
+            "clientParams" => $clientParams,
+            "request" => $request,
+            "requestParams" => []
+        ]);
+    }
 }

@@ -34,6 +34,21 @@ class TitleCaseTest extends BandolierTestCase
 
     }
 
+    /*
+     * Test title case string with default settings
+     */
+    public function testReturnCachedIfAlreadyProcessed()
+    {
+
+        $stringIn = "this-is-a-string";
+        $stringOut = "This-Is-A-String";
+
+        $this->assertEquals(Strings::titleCase($stringIn), $stringOut);
+        // This one should be cached
+        $this->assertEquals(Strings::titleCase($stringIn), $stringOut);
+
+    }
+
     /**
      * test title case with custom delimiter
      */
@@ -69,5 +84,21 @@ class TitleCaseTest extends BandolierTestCase
         $stringOut = "This IS A STRING";
 
         $this->assertSame(Strings::titleCase($stringIn, [' '], ['IS', 'A', 'STRING']), $stringOut);
+    }
+
+    /**
+     * @test
+     */
+    public function testThatItWillReturnFalseIfInputIsNotAString()
+    {
+        $this->assertFalse(Strings::titleCase(['foo-bar']));
+    }
+
+    /**
+     * @test
+     */
+    public function testThatItWillReturnFalseIfInputStringIsEmpty()
+    {
+        $this->assertFalse(Strings::titleCase(''));
     }
 }

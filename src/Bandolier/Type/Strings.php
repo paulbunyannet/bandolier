@@ -255,7 +255,7 @@ class Strings
             }
             $value = join($delimiter, $newWords);
         }
-        return static::$formatForTitleCache[$cache] = $value;
+        return static::$titleCaseCache[$cache] = $value;
     }
 
     /**

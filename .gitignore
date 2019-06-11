@@ -1,3 +1,4 @@
+.env
 /vendor/
 .idea
 tmp
@@ -10,3 +11,11 @@ _site
 Gemfile.lock
 *.phar
 /phan.log
+dock.sh
+dock-helpers.sh
+docker-compose.yml
+docker-jenkins-start.sh
+lighthouse.sh
+stacks.sh
+update-docker-assets-file.sh
+getUid.php

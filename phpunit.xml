@@ -16,7 +16,7 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src/Bandolier</directory>
+            <directory suffix=".php">src/Bandolier</directory>
         </whitelist>
     </filter>
 

@@ -25,6 +25,7 @@ before_script:
   - composer validate
   - composer self-update
   - composer update --no-interaction ${COMPOSER_FLAGS}
+  - composer require guzzlehttp/guzzle:^6.3 --no-interaction
   - if [ "$STATIC_ANALYSIS" != "" ]; then curl -L https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar -o phpstan.phar; fi;
   - if [ "$PHAN" != "" ]; then curl -L https://github.com/phan/phan/releases/download/0.12.0/phan.phar -o phan.phar; fi;
 script:

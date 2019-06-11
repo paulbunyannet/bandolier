@@ -33,6 +33,19 @@ class FormatForTitleTest extends BandolierTestCase
         $this->assertEquals(Strings::formatForTitle($stringIn), $stringOut);
     }
 
+    /**
+     * Test that a cached version of the string will be returned if already formatted
+     */
+    public function testReturnCachedIfAlreadyProcessed()
+    {
+        $stringIn = "this_is_a_string";
+        $stringOut = "This Is A String";
+
+        $this->assertEquals(Strings::formatForTitle($stringIn), $stringOut);
+        // this one should be from the cache
+        $this->assertEquals(Strings::formatForTitle($stringIn), $stringOut);
+    }
+
 
     /**
      * test format for title will return false if empty string

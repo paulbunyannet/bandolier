@@ -113,12 +113,13 @@ if ( ! function_exists('snakeCase'))
     /**
      * Convert a value to snake case.
      *
-     * @param  string  $value
+     * @param string $value
+     * @param $delimiter
      * @return string
      */
-    function snakeCase($value)
+    function snakeCase($value, $delimiter = '_')
     {
-        return Strings::snake($value);
+        return Strings::snake($value, $delimiter);
     }
 }
 

@@ -108,6 +108,20 @@ class CollectionTest extends BandolierTestCase
     }
 
     /**
+     * Test Collection when setting an item with a missing key throws an exception
+     * @test testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException
+     * @group Collection
+     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
+     * @expectedExceptionMessage Invalid key foo-bar.
+     */
+    public function testCollectionWhenSettingAnItemWithKeyIsMissingThrowsAnException()
+    {
+        $item = self::$faker->sentence();
+        $collection = new Collection();
+        $collection->setItem($item, 'foo-bar');
+    }
+
+    /**
      * Test Collection when setting an item with key of null will throw an exception
      * @test collectionWhenSettingAnItemWithKeyOfNullWillThrowAnException
      * @group Collection
