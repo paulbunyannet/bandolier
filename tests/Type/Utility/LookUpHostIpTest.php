@@ -14,6 +14,7 @@ namespace Pbc\Bandolier\Type;
 
 use Faker\Factory;
 use \Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Mocked function_exists
@@ -38,7 +39,7 @@ function dns_get_record($hostname)
  * Class UtilityTest
  * @package Pbc\Bandolier\Type
  */
-class LookUpHostIpTest extends \PHPUnit_Framework_TestCase
+class LookUpHostIpTest extends TestCase
 {
 
     /** @var m::mock $functions*/
@@ -50,7 +51,7 @@ class LookUpHostIpTest extends \PHPUnit_Framework_TestCase
     /**
      * Setup test case
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         self::$faker = Factory::create();
@@ -60,7 +61,7 @@ class LookUpHostIpTest extends \PHPUnit_Framework_TestCase
     /**
      * tear down test case
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
         parent::tearDown();
         m::close();

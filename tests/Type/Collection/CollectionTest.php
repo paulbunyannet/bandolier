@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Collection;
 
 /**
  * CollectionTest
@@ -12,7 +12,10 @@ namespace Pbc\Bandolier\Type;
  * @package ${NAMESPACE}
  */
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Exception\Collection\KeyHasUseException;
+use Pbc\Bandolier\Exception\Collection\KeyInvalidException;
+use Pbc\Bandolier\Type\Collection;
+use Tests\BandolierTestCase;
 
 class CollectionTest extends BandolierTestCase
 {
@@ -62,91 +65,36 @@ class CollectionTest extends BandolierTestCase
         $this->assertSame($list['bar'], $collection->getItem('bar'));
     }
 
-    /**
-     * Test Collection can add an item in items if first param is not an array
-     * @test testCollectionCanAddAnItemWithAKeyName
-     * @group Collection
-     */
-    public function testCollectionCanAddAnItemInItems()
-    {
-        $collection = new Collection();
-        $value = self::$faker->sentence();
-        $key = implode('-', self::$faker->words());
-        $collection->addItems($value, $key);
-        $this->assertArrayHasKey($key, $collection->getItems());
-        $this->assertSame($value, $collection->getItem($key));
-    }
+
 
     /**
      * Test Collection when adding an item it will throw an exception if key already exists
      * @test testCollectionWhenAddingAnItemItWillThrowAnExceptionIfKeyAlreadyExists
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyHasUseException
      */
     public function testCollectionWhenAddingAnItemItWillThrowAnExceptionIfKeyAlreadyExists()
     {
+        $this->expectException(KeyHasUseException::class);
         $value = self::$faker->sentence();
         $key = implode('-', self::$faker->words());
         $collection = new Collection();
         $collection->addItem($value, $key);
         $collection->addItem($value, $key);
 
-    }
-
-    /**
-     * Test Collection when setting an item with key of none true throws an exception
-     * @test testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException
-     * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
-     * @expectedExceptionMessage A key is required.
-     */
-    public function testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException()
-    {
-        $item = self::$faker->sentence();
-        $collection = new Collection();
-        $collection->setItem($item, false);
     }
 
     /**
      * Test Collection when setting an item with a missing key throws an exception
      * @test testCollectionWhenSettingAnItemWithKeyOfNoneTrueThrowsAnException
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
-     * @expectedExceptionMessage Invalid key foo-bar.
      */
     public function testCollectionWhenSettingAnItemWithKeyIsMissingThrowsAnException()
     {
+        $this->expectException(KeyInvalidException::class);
+        $this->expectExceptionMessage('Invalid key foo-bar.');
         $item = self::$faker->sentence();
         $collection = new Collection();
         $collection->setItem($item, 'foo-bar');
-    }
-
-    /**
-     * Test Collection when setting an item with key of null will throw an exception
-     * @test collectionWhenSettingAnItemWithKeyOfNullWillThrowAnException
-     * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
-     * @expectedExceptionMessage A key is required.
-     */
-    public function collectionWhenSettingAnItemWithKeyOfNullWillThrowAnException()
-    {
-        $item = self::$faker->sentence();
-        $collection = new Collection();
-        $collection->setItem($item, null);
-    }
-
-    /**
-     * Test Collection when setting an item with key that is not a string it throws an exception
-     * @test testCollectionWhenSettingAnItemWithKeyThatIsNotAStringItThrowsAnException
-     * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
-     * @expectedExceptionMessage The key should be a string.
-     */
-    public function testCollectionWhenSettingAnItemWithKeyThatIsNotAStringItThrowsAnException()
-    {
-        $item = self::$faker->sentence();
-        $collection = new Collection();
-        $collection->setItem($item, ['foo', 'var', 'baz']);
     }
 
     /**
@@ -182,10 +130,10 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when getting a key will thow an exception if it does not exist
      * @test testCollectionWhenGettingAKeyWillThowAnExceptionIfItDoesNotExist
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      */
     public function testCollectionWhenGettingAKeyWillThowAnExceptionIfItDoesNotExist()
     {
+        $this->expectException(KeyInvalidException::class);
         $key = implode('-', self::$faker->words());
         $collection = new Collection();
         $collection->getItem($key);
@@ -210,10 +158,10 @@ class CollectionTest extends BandolierTestCase
      * Test Collection when deleting a key that does not exist an exception will be thown
      * @test testCollectionWhenDeletingAKeyThatDoesNotExistAnExceptionWillBeThown
      * @group Collection
-     * @expectedException \Pbc\Bandolier\Exception\Collection\KeyInvalidException
      */
     public function testCollectionWhenDeletingAKeyThatDoesNotExistAnExceptionWillBeThown()
     {
+        $this->expectException(KeyInvalidException::class);
         $collection = new Collection();
         $collection->deleteItem('foo');
     }

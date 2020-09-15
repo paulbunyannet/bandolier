@@ -1,5 +1,5 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Encoded;
 /**
  * EncodedTest
  *
@@ -10,7 +10,9 @@ namespace Pbc\Bandolier\Type;
  * @package Pbc\Bandolier\Type
  */
 
-use Pbc\Bandolier\BandolierTestCase;
+use http\Exception\InvalidArgumentException;
+use Pbc\Bandolier\Type\Encoded;
+use Tests\BandolierTestCase;
 
 /**
  * Class EncodedTest
@@ -18,23 +20,6 @@ use Pbc\Bandolier\BandolierTestCase;
  */
 class EncodedTest extends BandolierTestCase
 {
-
-    /**
-     * @return array
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return array
-     */
-    public function teatDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * @test
      * @group encoded-isJson
@@ -160,10 +145,10 @@ class EncodedTest extends BandolierTestCase
      * @test
      * @group encoded
      * @group encoded-getThingThatIsEncoded
-     * @expectedException \InvalidArgumentException
      */
     public function InvalidArgumentException_thrown_if_the_string_if_incorrectly_formatted_and_strict()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $arr = ['a' => 'b'];
         $data = md5(json_encode($arr));
         Encoded::getThingThatIsEncoded($data, 'a', true);

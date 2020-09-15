@@ -1,5 +1,5 @@
 <?php
-namespace Pbc\Bandolier;
+namespace Tests;
 
 /**
  * BandolierTestCase
@@ -13,13 +13,13 @@ namespace Pbc\Bandolier;
  * @subpackage Test
  */
 use Faker\Factory;
-use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class BandolierTestCase
  * @package Pbc\Bandolier
  */
-abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
+abstract class BandolierTestCase extends TestCase
 {
 
     /**
@@ -65,7 +65,7 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         self::$faker = Factory::create();
@@ -74,14 +74,5 @@ abstract class BandolierTestCase extends \PHPUnit_Framework_TestCase
             range("a", "Z"),
             $this->specialCharacters
         );
-    }
-
-    /**
-     *
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        m::close();
     }
 }

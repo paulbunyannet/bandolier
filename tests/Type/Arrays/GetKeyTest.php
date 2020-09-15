@@ -1,5 +1,5 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Arrays;
 /**
  * GetKeyTest
  *
@@ -12,21 +12,11 @@ namespace Pbc\Bandolier\Type;
  */
 
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Arrays;
+use Tests\BandolierTestCase;
 
 class GetKeyTest extends BandolierTestCase
 {
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * Test getting a key by string value that is in the array
      *

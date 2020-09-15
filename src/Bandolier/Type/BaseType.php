@@ -16,8 +16,9 @@ class BaseType
 {
 
     /**
-     * Arrays constructor.
+     * BaseType constructor.
      * @param array $params
+     * @throws KeyInvalidException
      */
     public function __construct(array $params = [])
     {
@@ -27,28 +28,17 @@ class BaseType
     /**
      * @param array $params
      * @return $this
+     * @throws KeyInvalidException
      */
     protected function initialize(array $params = [])
     {
-        $this->hydrate($params);
-        return $this;
-    }
-
-    /**
-     * @param array $data
-     * @return $this
-     */
-    private function hydrate(array $data = array())
-    {
-        if (!empty($data)) {
-            foreach ($data as $field => $value) {
+        if (!empty($params)) {
+            foreach ($params as $field => $value) {
                 $this->setData($field, $value);
             }
         }
-
         return $this;
     }
-
 
     /**
      * @param string $field
@@ -58,7 +48,7 @@ class BaseType
      *
      * @throws KeyInvalidException
      */
-    protected function setData($field, $value)
+    protected function setData(string $field, $value)
     {
         if (property_exists($this, $field)) {
             $this->{$field} = $value;

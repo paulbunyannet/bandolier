@@ -1,7 +1,9 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Numbers;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Exception\Type\Numbers\OutOfRangeException;
+use Pbc\Bandolier\Type\Numbers;
+use Tests\BandolierTestCase;
 
 class ToWordTest extends BandolierTestCase
 {
@@ -14,12 +16,12 @@ class ToWordTest extends BandolierTestCase
             Numbers::toWord(123456789),
             'one hundred and twenty-three million, four hundred and fifty-six thousand, seven hundred and eighty-nine'
         );
-        
+
         $this->assertSame(
             Numbers::toWord(123456789.123),
             'one hundred and twenty-three million, four hundred and fifty-six thousand, seven hundred and eighty-nine point one two three'
         );
-        
+
         $this->assertSame(
             Numbers::toWord(-1922685.477),
             'negative one million, nine hundred and twenty-two thousand, six hundred and eighty-five point four seven seven'
@@ -47,10 +49,10 @@ class ToWordTest extends BandolierTestCase
 
     /**
      * @test
-     * @expectedException \Pbc\Bandolier\Exception\Type\Numbers\OutOfRangeException
      */
     public function it_will_return_false_if_number_is_greater_than_max_int()
     {
+        $this->expectException(OutOfRangeException::class);
         Numbers::toWord(PHP_INT_MAX + 1);
     }
 }

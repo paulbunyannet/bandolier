@@ -7,9 +7,9 @@
  * @package Type\Paths
  */
 
-namespace Type\Paths;
+namespace Tests\Type\Paths;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Tests\BandolierTestCase;
 use Pbc\Bandolier\Type\Paths;
 
 class SetGetCurlFileCheckTest extends BandolierTestCase

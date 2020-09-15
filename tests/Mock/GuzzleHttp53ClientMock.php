@@ -6,6 +6,7 @@
  *
  * @author Nate Nolting <naten@paulbunyan.net>
  */
+namespace Tests\Mock;
 
 class GuzzleHttp53ClientMock
 {

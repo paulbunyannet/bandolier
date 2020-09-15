@@ -21,7 +21,7 @@ class Numbers
      *
      * @return bool
      */
-    public static function divisible($number, $divisibleBy) {
+    public static function divisible(int $number, int $divisibleBy) {
         return \Pbc\Bandolier\Type\Numbers::divisible($number, $divisibleBy);
     }
 }

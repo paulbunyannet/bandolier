@@ -9,10 +9,13 @@
  * @subpackage Subpackage
  */
 
-namespace Type\Paths;
+namespace Tests\Type\Paths;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException;
+use Tests\BandolierTestCase;
 use Pbc\Bandolier\Type\Paths;
+use Tests\Mock\GuzzleHttp53ClientMock;
+use Tests\Mock\GuzzleHttpClientMock;
 
 class FileGetContentsTest extends BandolierTestCase
 {
@@ -20,10 +23,10 @@ class FileGetContentsTest extends BandolierTestCase
     /**
      * @test
      * @group FileGetContent
-     * @expectedException \Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException
      */
     public function testFileGetContentsWillThrowExceptionIfClientIncorrect()
     {
+        $this->expectException(FileGetContentsException::class);
         $body = "Foo Bar Baz";
         $request = "GET";
         $clientParams = ["foo" => "bar"];
@@ -50,7 +53,7 @@ class FileGetContentsTest extends BandolierTestCase
 
         $getBody = Paths::fileGetContents([
             "toPath" => "http://foobar.com/bla",
-            "client" => new \GuzzleHttpClientMock($clientParams),
+            "client" => new GuzzleHttpClientMock($clientParams),
             "clientParams" => $clientParams,
             "request" => $request,
             "requestParams" => []
@@ -73,7 +76,7 @@ class FileGetContentsTest extends BandolierTestCase
 
         $getBody = Paths::fileGetContents([
             "toPath" => "http://foobar.com/bla",
-            "client" => new \GuzzleHttp53ClientMock($clientParams),
+            "client" => new GuzzleHttp53ClientMock($clientParams),
             "clientParams" => $clientParams,
             "request" => $request,
             "requestParams" => []
@@ -94,7 +97,7 @@ class FileGetContentsTest extends BandolierTestCase
 
         $getBody = Paths::fileGetContents([
             "toPath" => "http://foobar.com/bla",
-            "client" => "\\GuzzleHttpClientMock",
+            "client" => "Tests\\Mock\\GuzzleHttpClientMock",
             "clientParams" => $clientParams,
             "request" => $request,
             "requestParams" => []
@@ -107,11 +110,11 @@ class FileGetContentsTest extends BandolierTestCase
      * Test that FileGetContents throws an exception if the client isn't an instance of \GuzzleHttp\Client
      * @test
      * @group FileGetContents
-     * @expectedException \Exception
-     * @expectedExceptionMessage The client must be an instance of \GuzzleHttp\Client
      */
     public function testThatFileGetContentsThrowsAnExceptionIfTheClientIsnTAnInstanceOfGuzzleHttpClient()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The client must be an instance of \GuzzleHttp\Client');
         $body = "Foo Bar Baz";
         $request = "GET";
         $clientParams = ["foo" => "bar"];

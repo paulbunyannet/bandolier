@@ -10,10 +10,13 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type\Html;
+namespace Tests\Type\Html;
 
 
-class SpecialCharacterTest extends \PHPUnit_Framework_TestCase
+use Pbc\Bandolier\Type\Html\SpecialCharacter;
+use PHPUnit\Framework\TestCase;
+
+class SpecialCharacterTest extends TestCase
 {
 
     public function testSuperscriptSpecialCharacters()

@@ -10,9 +10,10 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 /**
  * Class StartWithTest
@@ -20,24 +21,6 @@ use Pbc\Bandolier\BandolierTestCase;
  */
 class EndsWithTest extends BandolierTestCase
 {
-
-    /**
-     *
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-    }
-
-    /**
-     *
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * Check that endsWith returns true if string does end with character
      */
@@ -64,12 +47,12 @@ class EndsWithTest extends BandolierTestCase
 
     /**
      * Check that an exception is thrown if needle is zero length
-     * @expectedException     \Exception
-     * @expectedExceptionMessage Needle must be one or more characters
      */
     public function testEndsWithWillThrowAnExceptionIfTheNeedleHasAStringLengthOfZero()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Needle must be one or more characters');
         $word = self::$faker->word;
-        Strings::endsWith($word, null);
+        Strings::endsWith($word, '');
     }
 }

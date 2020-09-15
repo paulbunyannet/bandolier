@@ -12,6 +12,7 @@ namespace Pbc\Bandolier\Validate;
 
 use Mockery as m;
 use Faker\Factory as Faker;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @param $dns
@@ -25,7 +26,7 @@ function checkdnsrr($dns) {
  * Class EmailTest
  * @package Pbc\Bandolier\Validate
  */
-class EmailTest extends \PHPUnit_Framework_TestCase
+class EmailTest extends TestCase
 {
 
     /** @var m $functions*/
@@ -37,7 +38,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     /**
      * Setup the test
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         self::$functions = m::mock();
@@ -47,7 +48,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     /**
      * Tear down the test
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
         parent::tearDown();
         m::close();
@@ -97,10 +98,10 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test to make sure that if the filter field is not an array set will throw and exception
-     * @expectedException \TypeError
      */
     public function testExceptionThornIfFiltersIsNotAnArray()
     {
+        $this->expectException(\TypeError::class);
         $validate = new Email();
         $filters = 'bar';
         $validate->setFilters($filters);

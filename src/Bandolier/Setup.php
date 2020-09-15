@@ -16,14 +16,13 @@ use Pbc\Bandolier\Exception\Setup\UnknownPropertyException;
  */
 abstract class Setup
 {
-    /** @var array $properties settable properties */
-    protected $properties = [];
+    protected array $properties = [];
 
     /**
      * Setup constructor.
      * @param array $config
      */
-    public function __construct($config = []) {
+    public function __construct(array $config = []) {
         $this->init($config);
     }
 

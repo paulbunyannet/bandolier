@@ -18,10 +18,7 @@ namespace Pbc\Bandolier\Type;
 class Arrays extends BaseType
 {
 
-    /**
-     * @var array
-     */
-    protected $data;
+    protected array $data;
 
     /**
      * @var mixed

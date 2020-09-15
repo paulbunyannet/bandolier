@@ -1,5 +1,5 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Arrays;
 
 /**
  * ArraysTest
@@ -11,26 +11,11 @@ namespace Pbc\Bandolier\Type;
  * @package Pbc\Bandolier\Type
  */
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Arrays;
+use Tests\BandolierTestCase;
 
 class DefaultAttributesTest extends BandolierTestCase
 {
-    /**
-     * @return array
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return array
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * Test that when passing a second array with the same key that the second value will be returned.
      * @test

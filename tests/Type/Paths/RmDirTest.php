@@ -9,10 +9,9 @@
  * @subpackage Subpackage
  */
 
-namespace Type\Paths;
+namespace Tests\Type\Paths;
 
-use Mockery as m;
-use Pbc\Bandolier\BandolierTestCase;
+use Tests\BandolierTestCase;
 use Pbc\Bandolier\Type\Paths;
 
 class RmDirTest extends BandolierTestCase
@@ -23,7 +22,7 @@ class RmDirTest extends BandolierTestCase
     /**
      * Setup the test
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->root = dirname(dirname(dirname(__DIR__))) . '/tmp/';
@@ -35,15 +34,6 @@ class RmDirTest extends BandolierTestCase
         $path = $root . $this->filePath;
         Paths::filePutContents($path, $content);
 
-    }
-
-    /**
-     * Tear down the test
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        m::close();
     }
 
     /**

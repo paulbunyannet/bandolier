@@ -20,9 +20,8 @@ class Utility
      * @param string $address
      * @return mixed
      */
-    public static function lookUpHostIp($address)
+    public static function lookUpHostIp(string $address)
     {
-
         $ipAddress = null;
         if (function_exists('dns_get_record')) {
             $records = dns_get_record(trim($address));

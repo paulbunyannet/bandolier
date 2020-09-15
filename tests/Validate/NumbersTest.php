@@ -10,8 +10,9 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Validate;
-use Pbc\Bandolier\BandolierTestCase;
+namespace Tests\Validate;
+use Pbc\Bandolier\Validate\Numbers;
+use Tests\BandolierTestCase;
 
 class NumbersTest extends BandolierTestCase
 {

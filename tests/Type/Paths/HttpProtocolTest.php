@@ -10,9 +10,10 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Paths;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Paths;
+use Tests\BandolierTestCase;
 
 class HttpProtocolTest extends BandolierTestCase
 {

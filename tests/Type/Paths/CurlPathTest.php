@@ -10,28 +10,18 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Paths;
 
 use Mockery as m;
 use Pbc\Bandolier\Type\Paths;
-use Pbc\Bandolier\BandolierTestCase;
+use Tests\BandolierTestCase;
 
 class CurlPathTest extends BandolierTestCase
 {
-
-    /**
-     * Setup the test
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-    }
-
     /**
      * Tear down the test
      */
-    public function tearDown()
+    public function tearDown() : void
     {
         parent::tearDown();
         m::close();
