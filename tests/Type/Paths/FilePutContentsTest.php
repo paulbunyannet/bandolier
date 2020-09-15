@@ -9,33 +9,13 @@
  * @package Bandolier\Type
  */
 
-namespace Bandolier\Type;
+namespace Tests\Type\Paths;
 
-use Mockery as m;
 use Pbc\Bandolier\Type\Paths;
-use Pbc\Bandolier\BandolierTestCase;
+use Tests\BandolierTestCase;
 
 class FilePutContentsTest extends BandolierTestCase
 {
-
-    /**
-     * Setup the test
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-    }
-
-    /**
-     * Tear down the test
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        m::close();
-    }
-
     /**
      * Test that we can make a file in a folder that does not exist
      * @test

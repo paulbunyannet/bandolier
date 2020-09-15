@@ -9,27 +9,21 @@
  * @package Pbc\Bandolier
  */
 
-namespace Pbc\Bandolier;
+namespace Tests\Helpers;
 
 use Faker\Factory as f;
-use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class HelpersTest extends \PHPUnit_Framework_TestCase
+class HelpersTest extends TestCase
 {
 
     /** @var  f */
     protected static $faker;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         self::$faker = f::create();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-        m::close();
     }
 
     /**

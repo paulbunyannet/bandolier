@@ -1,5 +1,5 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\Numbers;
 
 
 /**
@@ -12,7 +12,8 @@ namespace Pbc\Bandolier\Type;
  * @package Pbc\Bandolier\Type
  */
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Numbers;
+use Tests\BandolierTestCase;
 
 class ToFloatTest extends BandolierTestCase
 {

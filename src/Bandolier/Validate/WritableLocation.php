@@ -36,18 +36,14 @@ class WritableLocation extends Setup
 
     /**
      * Path to check if writable
-     *
-     * @var string $path
      */
-    protected $path;
+    protected string $path;
 
     /**
      * List of valid keys in the $config
      * array passed to the constructor
-     *
-     * @var array
      */
-    protected $properties = ['path'];
+    protected array $properties = ['path'];
 
     /**
      * Return the path
@@ -67,7 +63,7 @@ class WritableLocation extends Setup
      * @throws LocationDoesExist|LocationIsADirectory|LocationIsWritable
      * @return void
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         parent::__construct($config);
 

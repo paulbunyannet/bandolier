@@ -11,9 +11,10 @@
  */
 
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\File;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\File;
+use Tests\BandolierTestCase;
 
 class GetDirContentsTest extends BandolierTestCase
 {
@@ -24,7 +25,7 @@ class GetDirContentsTest extends BandolierTestCase
     /**
      * Setup test fixtures
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->fileName = md5(microtime(true)) . '.txt';
         $this->fileDirectory = 'fixture_directory';
@@ -46,7 +47,7 @@ class GetDirContentsTest extends BandolierTestCase
     /**
      * tear down the test fixtures
      */
-    public function tearDown()
+    public function tearDown() : void
     {
         unlink(__DIR__ . '/' .$this->fileDirectory . '/' . $this->fileSubDirectory . '/'.$this->fileName);
         rmdir(__DIR__ . '/' .$this->fileDirectory . '/' . $this->fileSubDirectory);

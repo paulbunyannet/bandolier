@@ -10,7 +10,7 @@ if (!function_exists('env')) {
      * @param  mixed $default
      * @return mixed
      */
-    function env($key, $default = null)
+    function env(string $key, $default = null)
     {
         // get the environment variable
         $value = getenv($key);
@@ -88,7 +88,7 @@ if ( ! function_exists('studlyCase'))
      * @param  string  $value
      * @return string
      */
-    function studlyCase($value)
+    function studlyCase(string $value)
     {
         return Strings::studly($value);
     }
@@ -102,7 +102,7 @@ if ( ! function_exists('camelCase'))
      * @param  string  $value
      * @return string
      */
-    function camelCase($value)
+    function camelCase(string $value)
     {
         return Strings::camel($value);
     }
@@ -117,7 +117,7 @@ if ( ! function_exists('snakeCase'))
      * @param $delimiter
      * @return string
      */
-    function snakeCase($value, $delimiter = '_')
+    function snakeCase(string $value, string $delimiter = '_')
     {
         return Strings::snake($value, $delimiter);
     }
@@ -131,7 +131,7 @@ if ( ! function_exists('kebabCase'))
      * @param  string  $value
      * @return string
      */
-    function kebabCase($value)
+    function kebabCase(string $value)
     {
         return Strings::kebab($value);
     }

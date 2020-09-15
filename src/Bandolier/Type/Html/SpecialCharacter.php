@@ -13,7 +13,8 @@ class SpecialCharacter extends BaseType
      * @param array $characters List of characters to find and apply superscript
      * @return string
      */
-    public static function superscriptSpecialCharacters($string, array $characters = []) {
+    public static function superscriptSpecialCharacters(string $string, array $characters = []) : string
+    {
 
         $defaults = [
             'registered' => ['®', '&reg;', '&#x00AE;', '&#174;'],

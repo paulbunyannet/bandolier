@@ -22,11 +22,9 @@ class Numbers
      * @param $divisibleBy
      * @return bool
      */
-    public static function divisible($number, $divisibleBy) {
-        if($number % $divisibleBy === 0) {
-            return true;
-        }
-        return false;
+    public static function divisible(int $number, int $divisibleBy)
+    {
+        return $number % $divisibleBy === 0;
     }
 
     /**
@@ -41,7 +39,7 @@ class Numbers
      * @param mixed $num
      * @return mixed
      */
-    public static function toFloat($num)
+    public static function toFloat(string $num)
     {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');

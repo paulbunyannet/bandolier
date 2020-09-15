@@ -24,16 +24,7 @@ class Collection extends BaseType
     /**
      * @var array
      */
-    protected $items = array();
-
-    /**
-     * Collection constructor.
-     * @param array $params
-     */
-    public function __construct($params = [])
-    {
-        parent::__construct($params);
-    }
+    protected array $items = array();
 
     /**
      * Add an item to the collection by key
@@ -66,16 +57,9 @@ class Collection extends BaseType
      *
      * @throws KeyHasUseException
      */
-    public function addItems($list, $key = null)
+    public function addItems($list)
     {
-        if(is_array($list)) {
-            array_walk($list, function($val, $key){
-                $this->addItem($val, $key);
-            });
-            return $this;
-        }
-
-        $this->addItem($list, $key);
+        array_walk($list, fn($val, $key) => $this->addItem($val, $key));
         return $this;
     }
 
@@ -86,18 +70,12 @@ class Collection extends BaseType
      * @return $this
      * @throws KeyInvalidException
      */
-    public function setItem($obj, $key = null)
+    public function setItem($obj, string $key)
     {
-        if (!$key) {
-            throw new KeyInvalidException("A key is required.");
-        } elseif (!is_string($key)) {
-            throw new KeyInvalidException("The key should be a string.");
-        } else {
-            if (!array_key_exists($key, $this->getItems())) {
-                throw new KeyInvalidException("Invalid key $key.");
-            }
-            $this->items[$key] = $obj;
+        if (!array_key_exists($key, $this->getItems())) {
+            throw new KeyInvalidException("Invalid key $key.");
         }
+        $this->items[$key] = $obj;
 
         return $this;
     }
@@ -108,7 +86,7 @@ class Collection extends BaseType
      * @return $this
      * @throws KeyInvalidException
      */
-    public function deleteItem($key)
+    public function deleteItem(string $key)
     {
         if (isset($this->items[$key])) {
             unset($this->items[$key]);

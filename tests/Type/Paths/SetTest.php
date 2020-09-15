@@ -1,10 +1,11 @@
 <?php
 
-namespace Type\Paths;
+namespace Tests\Type\Paths;
 
 use Pbc\Bandolier\Type\Paths;
+use PHPUnit\Framework\TestCase;
 
-class SetTest extends \PHPUnit_Framework_TestCase
+class SetTest extends TestCase
 {
 
 	public function testSetDomainNameWeb()

@@ -22,14 +22,12 @@ class File
     /**
      * Recursively List All Files In Directory
      * http://stackoverflow.com/a/24784144/405758
-     *
-     * @param $dir
-     * @param array $results
      * @param string $dir
+     * @param array $results
      *
      * @return array
      */
-    public static function getDirContents($dir, &$results = array())
+    public static function getDirContents(string $dir, array &$results = array()) : array
     {
         $files = scandir($dir);
 

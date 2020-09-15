@@ -18,9 +18,9 @@ namespace Pbc\Bandolier\Type;
 class Encoded
 {
 
-    protected static $types = array('json','serialized','base64');
+    protected static array $types = array('json','serialized','base64');
 
-    protected static $base64BadCharacterThreshold = 35;
+    protected static int $base64BadCharacterThreshold = 35;
 
     /**
      * Find a key inside a string that may or may not be encoded
@@ -29,11 +29,11 @@ class Encoded
      * @param bool   $strict  Whether to be strict with encoding. If true and the
      * encoding type can not be  found then an exception will be thrown
      *
-     * @return mixed
+     * @return string
      * @throws \InvalidArgumentException
      * @throws \BadMethodCallException
      */
-    public static function getThingThatIsEncoded($strange, $thing, $strict = false)
+    public static function getThingThatIsEncoded(string $strange, string $thing, bool $strict = false) : string
     {
         $encodeType = self::getEncodeType($strange, $strict);
         // If no encoded type gets returned and we're running in "strict" then return an exception...
@@ -69,7 +69,7 @@ class Encoded
      * @param bool   $strict
      * @return bool|string
      */
-    public static function getEncodeType($string, $strict = false)
+    public static function getEncodeType(string $string, bool $strict = false)
     {
         $return = false;
         array_walk(self::$types, function($type) use (&$return, $string){
@@ -95,12 +95,9 @@ class Encoded
      * @param $string
      * @return bool
      */
-    public static function isJson($string)
+    public static function isJson(string $string) : bool
     {
-        if (!is_string($string) || (is_string($string)
-                && substr($string, 0, 1) !== '{'
-                && substr($string, 0, 1) !== '[')
-        ) {
+        if (substr($string, 0, 1) !== '{' && substr($string, 0, 1) !== '[') {
             return false;
         }
         @json_decode($string);
@@ -115,7 +112,7 @@ class Encoded
      *
      * @return bool
      */
-    public static function isSerialized($string)
+    public static function isSerialized(string $string) : bool
     {
         $data = @unserialize($string);
         return $data !== false;
@@ -127,10 +124,8 @@ class Encoded
      * @param $string
      * @return bool
      */
-    public static function isBase64($string)
+    public static function isBase64(string $string)
     {
-        if(!is_string($string)) return false;
-
         // Check if there is no invalid character in string
         if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string)) return false;
 
@@ -151,17 +146,14 @@ class Encoded
         if ($x/count($check)*100 > self::$base64BadCharacterThreshold) return false;
 
         return true;
-
     }
 
     /**
-     * @param $string
-     * @param bool $associativeArray
      * @param string $string
-     *
-     * @return mixed
+     * @param bool $associativeArray
+     * @return array
      */
-    public static function unpackJson($string, $associativeArray = true)
+    public static function unpackJson(string $string, bool $associativeArray = true) : array
     {
         return json_decode($string, $associativeArray);
     }
@@ -170,18 +162,16 @@ class Encoded
      * @param $data
      * @return string
      */
-    public static function packJson($data)
+    public static function packJson(array $data) : string
     {
         return json_encode($data);
     }
 
     /**
-     * @param $string
      * @param string $string
-     *
      * @return mixed
      */
-    public static function unpackSerialized($string)
+    public static function unpackSerialized(string $string)
     {
         return unserialize($string);
     }
@@ -190,33 +180,29 @@ class Encoded
      * @param $data
      * @return string
      */
-    public static function packSerialized($data)
+    public static function packSerialized(array $data)
     {
         return serialize($data);
     }
 
     /**
      * Unpack a base64 encoded string
-     *
-     * @param $string
      * @param string $string
      *
-     * @return mixed
+     * @return string
      */
-    public static function unpackBase64($string)
+    public static function unpackBase64(string $string)
     {
       return base64_decode($string, true);
     }
 
     /**
      * Pack a base64 encoded string
-     *
-     * @param $string
      * @param string $string
      *
      * @return string
      */
-    public static function packBase64($string)
+    public static function packBase64(string $string)
     {
       return base64_encode($string);
     }

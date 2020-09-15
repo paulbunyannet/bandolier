@@ -19,59 +19,43 @@ class Strings
 
     /**
      * The cache of stripped slashes strings
-     *
-     * @var array
      */
-    protected static $stripSlashesCache = [];
+    protected static array $stripSlashesCache = [];
 
     /**
      * The cache of title formatted strings
-     *
-     * @var array
      */
-    protected static $formatForTitleCache = [];
+    protected static array $formatForTitleCache = [];
 
     /**
      * The cache of title case strings
-     *
-     * @var array
      */
-    protected static $titleCaseCache = [];
+    protected static array $titleCaseCache = [];
 
     /**
      * The cache of strip outer quotes
-     *
-     * @var array
      */
-    protected static $stripOuterQuotesCache =  [];
+    protected static array $stripOuterQuotesCache =  [];
 
     /**
      * The cache of words to numbers
-     *
-     * @var array
      */
-    protected static $wordsToNumberCache = [];
+    protected static array $wordsToNumberCache = [];
 
     /**
      * The cache of studly
-     *
-     * @var array
      */
-    protected static $studlyCache = [];
+    protected static array $studlyCache = [];
 
     /**
      * The cache of camel
-     *
-     * @var array
      */
-    protected static $camelCache = [];
+    protected static array $camelCache = [];
 
     /**
      * The cache of snake
-     *
-     * @var array
      */
-    protected static $snakeCache;
+    protected static array $snakeCache;
 
     /**
      * Convert the given string to lower-case.
@@ -79,7 +63,7 @@ class Strings
      * @param  string  $value
      * @return string
      */
-    public static function lower($value)
+    public static function lower(string $value)
     {
         return mb_strtolower($value, 'UTF-8');
     }
@@ -90,7 +74,7 @@ class Strings
      * @param  string  $value
      * @return string
      */
-    public static function kebab($value)
+    public static function kebab(string $value)
     {
         return static::snake($value, '-');
     }
@@ -102,7 +86,7 @@ class Strings
      * @param  string  $delimiter
      * @return string
      */
-    public static function snake($value, $delimiter = '_')
+    public static function snake(string $value, string $delimiter = '_')
     {
         $key = $value;
         if (isset(static::$snakeCache[$key][$delimiter])) {
@@ -121,7 +105,7 @@ class Strings
      * @param  string  $value
      * @return string
      */
-    public static function camel($value)
+    public static function camel(string $value)
     {
         if (isset(static::$camelCache[$value])) {
             return static::$camelCache[$value];
@@ -135,7 +119,7 @@ class Strings
      * @param  string  $value
      * @return string
      */
-    public static function studly($value)
+    public static function studly(string $value)
     {
         $key = $value;
         if (isset(static::$studlyCache[$key])) {
@@ -154,10 +138,9 @@ class Strings
      * @param $value
      * @return mixed
      */
-    public static function stripSlashes($value)
+    public static function stripSlashes(string $value)
     {
-        // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (strlen($value) === 0) {
             return false;
         }
 
@@ -185,10 +168,10 @@ class Strings
      *
      * @return bool|string
      */
-    public static function formatForTitle($value = "", $delimiters=['-','_'])
+    public static function formatForTitle(string $value = "", array $delimiters=['-','_'])
     {
         // if value passed as empty or is not a string then return false
-        if (!is_string($value) || strlen($value) === 0) {
+        if (strlen($value) === 0) {
             return false;
         }
 
@@ -215,12 +198,11 @@ class Strings
      * @return string|bool
      */
     public static function titleCase(
-        $value,
-        $delimiters = [" ", "-", ".", "'", "O'", "Mc"],
-        $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"]
+        string $value,
+        array $delimiters = [" ", "-", ".", "'", "O'", "Mc"],
+        array $exceptions = ["and", "to", "of", "das", "dos", "I", "II", "III", "IV", "V", "VI"]
     ) {
-        // if value passed as empty or is not a string then return false
-        if (!$value) {
+        if (strlen($value) === 0) {
             return false;
         }
 
@@ -269,7 +251,7 @@ class Strings
      *
      * @return bool
      */
-    public static function startsWith($haystack, $needle)
+    public static function startsWith(string $haystack, string $needle)
     {
         return !strncmp($haystack, $needle, strlen($needle));
     }
@@ -283,7 +265,7 @@ class Strings
      * @return bool
      * @throws \Exception
      */
-    public static function endsWith($haystack, $needle)
+    public static function endsWith(string $haystack, string $needle)
     {
         $length = strlen($needle);
         if ($length == 0) {
@@ -299,7 +281,7 @@ class Strings
      * @param bool   $caseSensitive
      * @return bool
      */
-    public static function contains($haystack, $needle, $caseSensitive = true)
+    public static function contains(string $haystack, $needle, bool $caseSensitive = true)
     {
         // if needle is an array then check is one of it's values is in the haystack
         if (is_array($needle)) {
@@ -325,10 +307,9 @@ class Strings
      * @return bool|string
      * @throws \Exception
      */
-    public static function stripOuterQuotes($value = "")
+    public static function stripOuterQuotes(string $value = "")
     {
-        // if value passed as empty or is not a string then return false
-        if (!$value) {
+        if (strlen($value) === 0) {
             return false;
         }
 
@@ -360,10 +341,9 @@ class Strings
      *
      * @return float|bool
      */
-    public static function wordsToNumber($value = "") {
+    public static function wordsToNumber(string $value = "") {
 
-        // if value passed as empty or is not a string then return false
-        if (!$value) {
+        if (strlen($value) === 0) {
             return false;
         }
 

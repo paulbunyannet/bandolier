@@ -10,9 +10,10 @@
  * @subpackage Tests
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 
 /**
@@ -46,25 +47,11 @@ class FormatForTitleTest extends BandolierTestCase
         $this->assertEquals(Strings::formatForTitle($stringIn), $stringOut);
     }
 
-
     /**
      * test format for title will return false if empty string
      */
     public function testFormatStringFalseWithEmptyString()
     {
         $this->assertFalse(Strings::formatForTitle(""));
-        $this->assertFalse(Strings::formatForTitle(null));
-        $this->assertFalse(Strings::formatForTitle(false));
     }
-
-    /**
-     * Test that format for title will return false if not a string
-     */
-    public function testFormatStringFalseWithNonString()
-    {
-        $this->assertFalse(Strings::formatForTitle([]));
-        $this->assertFalse(Strings::formatForTitle(new \stdClass()));
-    }
-
-
 }

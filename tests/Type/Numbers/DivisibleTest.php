@@ -9,8 +9,9 @@
  * @package Pbc\Bandolier\Type
  */
 
-namespace Pbc\Bandolier\Type;
-use Pbc\Bandolier\BandolierTestCase;
+namespace Tests\Type\Numbers;
+use Pbc\Bandolier\Type\Numbers;
+use Tests\BandolierTestCase;
 
 
 class DivisibleTest extends BandolierTestCase

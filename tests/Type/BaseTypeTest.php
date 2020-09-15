@@ -1,18 +1,22 @@
 <?php
 
-use Pbc\Bandolier\Type\BaseType;
+namespace Tests\Type;
 
-class BaseTypeTest extends PHPUnit_Framework_TestCase
+use Pbc\Bandolier\Exception\Collection\KeyInvalidException;
+use Pbc\Bandolier\Type\Arrays;
+use PHPUnit\Framework\TestCase;
+
+class BaseTypeTest extends TestCase
 {
 
 	/**
 	 * @test
 	 * @group BaseType
-	 * @expectedException \Pbc\Bandolier\Type\Collection\Exception\KeyInvalidException
 	 */
 	public function testBaseTypeWillThrowExceptionIfClassFieldDoesNotExist()
 	{
-		new \Pbc\Bandolier\Type\Arrays(['non_existant_field' => 'foo']);
+	    $this->expectException(KeyInvalidException::class);
+		new Arrays(['non_existant_field' => 'foo']);
 	}
 
 }

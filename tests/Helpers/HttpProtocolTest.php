@@ -9,9 +9,10 @@
  * @package Helpers
  */
 
-namespace Pbc\Bandolier\Type\Helpers;
+namespace Tests\Helpers;
 
-use Pbc\Bandolier\BandolierTestCase;
+
+use Tests\BandolierTestCase;
 
 class HttpProtocolTest extends BandolierTestCase
 {

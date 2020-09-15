@@ -19,22 +19,16 @@ use Pbc\Bandolier\Exception\Type\Paths\FileGetContentsException;
  */
 class Paths
 {
-    protected $domainNameWeb = 'web';
+    protected string $domainNameWeb = 'web';
     /**
      * Path to check for whether inside
      * a docker container or not.
      */
     const CURL_CHECK_FILE = '/.dockerenv';
 
-    /**
-     * @var array
-     */
-    protected $data = [];
+    protected array $data = [];
 
-    /**
-     * @var string
-     */
-    protected $curlCheckFile = "";
+    protected string $curlCheckFile = self::CURL_CHECK_FILE;
 
     /**
      * Paths constructor.
@@ -51,7 +45,7 @@ class Paths
      * @param string $url String holding a url
      * @return bool
      */
-    public static function domainFromString($url)
+    public static function domainFromString(string $url)
     {
         $domain = parse_url($url, PHP_URL_HOST);
         if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) {
@@ -71,7 +65,7 @@ class Paths
      *
      * @return string
      */
-    public static function curlPath($toPath, $paths = null, $dockerEnv = "")
+    public static function curlPath(string $toPath, $paths = null, string $dockerEnv = "")
     {
         if (!$paths) {
             $paths = new Paths();
@@ -106,7 +100,7 @@ class Paths
      * @return bool
      * @codeCoverageIgnore
      */
-    protected function checkForEnvironmentFile($file = self::CURL_CHECK_FILE)
+    protected function checkForEnvironmentFile(string $file = self::CURL_CHECK_FILE)
     {
         return $file && file_exists($file);
     }
@@ -208,7 +202,7 @@ class Paths
      * @param string $serverName
      * @return bool
      */
-    public function domainNameIsLocalHost($serverName)
+    public function domainNameIsLocalHost(string $serverName)
     {
         $local = strpos($serverName, '.local');
         return is_int($local) && !is_bool($local);
@@ -218,7 +212,7 @@ class Paths
      * @param $serverName
      * @return bool
      */
-    private function domainNameIsWeb($serverName)
+    private function domainNameIsWeb(string $serverName)
     {
         return $serverName === $this->getDomainNameWeb();
     }
@@ -236,12 +230,12 @@ class Paths
      *
      * @return void
      */
-    public function setCurlCheckFile($curlCheckFile = null)
+    public function setCurlCheckFile(string $curlCheckFile = null)
     {
-        if (!$curlCheckFile) {
-            $curlCheckFile = self::CURL_CHECK_FILE;
+        if ($curlCheckFile) {
+            $this->curlCheckFile = $curlCheckFile;
         }
-        $this->curlCheckFile = $curlCheckFile;
+
     }
 
     /**
@@ -250,7 +244,7 @@ class Paths
      * @param string|null $content content of file to be written
      * @return bool|int
      */
-    public static function filePutContents($filePath, $content = null)
+    public static function filePutContents(string $filePath, string $content = null)
     {
         // https://stackoverflow.com/a/282140/405758
         if (!file_exists(dirname($filePath))) {
@@ -269,7 +263,7 @@ class Paths
      *
      * @return bool
      */
-    public static function rmDir($dir)
+    public static function rmDir(string $dir)
     {
         if (!file_exists($dir)) {
             return true;
@@ -302,7 +296,7 @@ class Paths
      *
      * @return void
      */
-    public function setDomainNameWeb($domainNameWeb)
+    public function setDomainNameWeb(string $domainNameWeb)
     {
         $this->domainNameWeb = $domainNameWeb;
     }

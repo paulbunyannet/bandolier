@@ -1,7 +1,8 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 class WordsToNumberTest extends BandolierTestCase
 {
@@ -37,7 +38,5 @@ class WordsToNumberTest extends BandolierTestCase
     public function it_returns_a_false_value_if_the_value_passed_is_empty()
     {
         $this->assertFalse(Strings::wordsToNumber(""));
-        $this->assertFalse(Strings::wordsToNumber(null));
-        $this->assertFalse(Strings::wordsToNumber(false));
     }
 }

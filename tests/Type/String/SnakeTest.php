@@ -1,7 +1,10 @@
 <?php
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-class SnakeTest extends \PHPUnit_Framework_TestCase
+use Pbc\Bandolier\Type\Strings;
+use PHPUnit\Framework\TestCase;
+
+class SnakeTest extends TestCase
 {
     /**
      * @test

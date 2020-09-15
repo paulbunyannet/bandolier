@@ -9,15 +9,14 @@
  * @package Type\String
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 
 class StripOuterQuotesTest extends BandolierTestCase
 {
-
-
   /**
    * Test stripOuterQuotes Check that double quotes can be removed
    * @test testStripOuterQuotesCheckThatDoubleQuotesCanBeRemoved
@@ -30,15 +29,14 @@ class StripOuterQuotesTest extends BandolierTestCase
         $this->assertSame($value, $stripped);
    }
 
-  /**
-   * Test stripOuterQuotes will return false if no string is passed
-   * @test testStripOuterQuotesCheckThatDoubleQuotesCanBeRemoved
-   */
+    /**
+     * * Test stripOuterQuotes will return false if no string is passed
+     * @test testStripOuterQuotesCheckThatDoubleQuotesCanBeRemoved
+     * @throws \Exception
+     */
    public function testStripOuterQuotesWillReturnFalseIfNoStringIsPassed()
    {
         $this->assertFalse(Strings::stripOuterQuotes(""));
-        $this->assertFalse(Strings::stripOuterQuotes(null));
-        $this->assertFalse(Strings::stripOuterQuotes(false));
    }
 
 

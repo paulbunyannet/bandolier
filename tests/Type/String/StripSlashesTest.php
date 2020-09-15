@@ -10,9 +10,10 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 /**
  * Class StringsTest
@@ -73,7 +74,5 @@ class StripSlashesTest extends BandolierTestCase
     public function testPassingAnEmptyStringReturnsFalse()
     {
         $this->assertFalse(Strings::stripSlashes(""));
-        $this->assertFalse(Strings::stripSlashes(null));
-        $this->assertFalse(Strings::stripSlashes(false));
     }
 }

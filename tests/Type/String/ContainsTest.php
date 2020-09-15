@@ -10,9 +10,10 @@
  * @subpackage Subpackage
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 /**
  * Class StartWithTest
@@ -20,24 +21,6 @@ use Pbc\Bandolier\BandolierTestCase;
  */
 class ContainsTest extends BandolierTestCase
 {
-
-    /**
-     *
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-    }
-
-    /**
-     *
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * Check that a string can be found in string if case sensitive
      */

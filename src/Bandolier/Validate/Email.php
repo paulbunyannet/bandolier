@@ -10,10 +10,8 @@ use Pbc\Bandolier\Exception\Setup\ArrayRequired;
  */
 class Email
 {
-    /** @var array */
-    protected $filters = ['filter', 'dns'];
-    /** @var  bool */
-    protected $valid = false;
+    protected array $filters = ['filter', 'dns'];
+    protected bool $valid = false;
 
     /**
      * Validate an email address
@@ -21,7 +19,7 @@ class Email
      * @param string $email
      * @return bool
      */
-    public static function validate($email)
+    public static function validate(string $email)
     {
         $validate = new Email();
         foreach ($validate->getFilters() as $filter) {
@@ -42,7 +40,7 @@ class Email
      *
      * @return bool
      */
-    public function checkDns($email)
+    public function checkDns(string $email)
     {
         // Next check the domain is real.
         $domain = explode("@", $email, 2);
@@ -54,7 +52,7 @@ class Email
      *
      * @return mixed
      */
-    public function checkFilter($email)
+    public function checkFilter(string $email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
@@ -92,7 +90,7 @@ class Email
      *
      * @return void
      */
-    public function setValid($valid)
+    public function setValid(bool $valid)
     {
         $this->valid = $valid;
     }

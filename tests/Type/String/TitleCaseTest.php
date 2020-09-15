@@ -10,9 +10,10 @@
  * @subpackage Test
  */
 
-namespace Pbc\Bandolier\Type;
+namespace Tests\Type\String;
 
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Type\Strings;
+use Tests\BandolierTestCase;
 
 
 /**
@@ -59,7 +60,7 @@ class TitleCaseTest extends BandolierTestCase
         $stringOut = "This|Is|A|String";
 
         $this->assertEquals(Strings::titleCase($stringIn, ['|']), $stringOut);
-        
+
     }
 
     /**
@@ -72,7 +73,7 @@ class TitleCaseTest extends BandolierTestCase
         $stringOut = "This is a string";
 
         $this->assertEquals(Strings::titleCase($stringIn, [' '], ['is', 'a', 'string']), $stringOut);
-        
+
     }
 
     /**
@@ -84,14 +85,6 @@ class TitleCaseTest extends BandolierTestCase
         $stringOut = "This IS A STRING";
 
         $this->assertSame(Strings::titleCase($stringIn, [' '], ['IS', 'A', 'STRING']), $stringOut);
-    }
-
-    /**
-     * @test
-     */
-    public function testThatItWillReturnFalseIfInputIsNotAString()
-    {
-        $this->assertFalse(Strings::titleCase(['foo-bar']));
     }
 
     /**

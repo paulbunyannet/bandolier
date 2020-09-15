@@ -1,8 +1,12 @@
 <?php
-namespace Pbc\Bandolier\Validate;
+namespace Tests\Validate;
 
 use org\bovigo\vfs\content\LargeFileContent;
-use Pbc\Bandolier\BandolierTestCase;
+use Pbc\Bandolier\Exception\Writable\LocationDoesExist;
+use Pbc\Bandolier\Exception\Writable\LocationIsADirectory;
+use Pbc\Bandolier\Exception\Writable\LocationIsWritable;
+use Pbc\Bandolier\Validate\WritableLocation;
+use Tests\BandolierTestCase;
 use org\bovigo\vfs\vfsStream;
 
 class WritableLocationsTest extends BandolierTestCase
@@ -26,10 +30,10 @@ class WritableLocationsTest extends BandolierTestCase
      * Test that a location is not writable
      *
      * @test
-     * @expectedException \Pbc\Bandolier\Exception\Writable\LocationIsWritable
      */
     public function testThatALocationIsNotWritable()
     {
+        $this->expectException(LocationIsWritable::class);
         $stream = vfsStream::setup('not_writable');
         $stream->chmod(0444);
         $writable = new WritableLocation(['path' => $stream->url()]);
@@ -39,10 +43,10 @@ class WritableLocationsTest extends BandolierTestCase
      * Test that a location is not writable
      *
      * @test
-     * @expectedException \Pbc\Bandolier\Exception\Writable\LocationDoesExist
      */
     public function testThatALocationExists()
     {
+        $this->expectException(LocationDoesExist::class);
         $writable = new WritableLocation(['path' => '/some/unknown/path']);
     }
 
@@ -50,10 +54,10 @@ class WritableLocationsTest extends BandolierTestCase
      * Test that a location is not writable
      *
      * @test
-     * @expectedException \Pbc\Bandolier\Exception\Writable\LocationIsADirectory
      */
     public function testThatALocationIsADirectory()
     {
+        $this->expectException(LocationIsADirectory::class);
         $stream = vfsStream::setup('not_a_directory');
         $file = vfsStream::newFile('large.txt')
             ->withContent(LargeFileContent::withKilobytes(10))
