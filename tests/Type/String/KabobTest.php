@@ -9,16 +9,10 @@ class KabobTest extends TestCase
     /**
      * @test
      */
-    public function it_return_a_kebab_cased_string()
+    public function it_return_a_camel_cased_string()
     {
-        $this->assertEquals('bandolier-p-h-p-toolbox', Strings::kebab('BandolierPHPToolbox'));
-        $this->assertEquals('bandolier-php-toolbox',   Strings::kebab('BandolierPhpToolbox'));
-        $this->assertEquals('bandolier-php-toolbox',   Strings::kebab('Bandolier Php Toolbox'));
-        $this->assertEquals('bandolier-php-toolbox',   Strings::kebab('Bandolier         Php          Toolbox        '));
-        // ensure cache keys don't overlap
-        $this->assertEquals('bandolier-php-toolbox', Strings::kebab('BandolierPhpToolbox'));
-        $this->assertEquals('bandolier-php-toolbox_',  Strings::kebab('BandolierPhpToolbox_'));
-        $this->assertEquals('bandolier-php-toolbox',   Strings::kebab('bandolier php toolbox'));
-        $this->assertEquals('bandolier-php-tool-box',  Strings::kebab('bandolier php ToolBox'));
-    }
+        $this->assertEquals('bandolierPHPToolbox', Strings::camel('bandolier_p_h_p_toolbox'));
+        $this->assertEquals('bandolierPhpToolbox', Strings::camel('bandolier_php_toolbox'));
+        $this->assertEquals('bandolierPhPToolbox', Strings::camel('bandolier-phP-toolbox'));
+        $this->assertEquals('bandolierPhpToolbox', Strings::camel('bandolier  -_-  php   -_-   toolbox   '));    }
 }
