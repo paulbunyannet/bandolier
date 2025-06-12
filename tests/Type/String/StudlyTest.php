@@ -9,7 +9,7 @@ class StudlyTest extends TestCase
     /**
      * @test
      */
-    public function it_return_a_studly_cased_string()
+    public function testItReturnAStudlyCasedString()
     {
         $this->assertEquals('BandolierPHPToolbox', Strings::studly('bandolier_p_h_p_toolbox'));
         $this->assertEquals('BandolierPhpToolbox', Strings::studly('bandolier_php_toolbox'));

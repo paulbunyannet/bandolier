@@ -21,7 +21,7 @@ class ToFloatTest extends BandolierTestCase
     /**
      * @test
      */
-    public function a_string_number_will_return_a_float()
+    public function testAStringNumberWillReturnAFloat()
     {
         $this->assertSame(1.25, Numbers::toFloat('1.25'));
         $this->assertSame(1.25, Numbers::toFloat('$1.25'));
@@ -33,7 +33,7 @@ class ToFloatTest extends BandolierTestCase
     /**
      * @test
      */
-    public function a_integer_will_return_as_a_float()
+    public function testAIntegerWillReturnAsAFloat()
     {
         $this->assertSame(125.0, Numbers::toFloat('125'));
     }

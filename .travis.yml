@@ -1,39 +1,31 @@
 language: php
 php:
-- 5.4
-- 5.5
-- 5.6
-- 7.0
-- 7.1
 - 7.2
+- 8.0
+- 8.1
+- 8.2
+- 8.3
 - hhvm
 matrix:
   include:
-    - php: 7.0
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
-    - php: 7.1
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
     - php: 7.2
-      env: COMPOSER_FLAGS="--prefer-lowest" STATIC_ANALYSIS=yes PHAN=yes
-  allow_failures:
-    - php: hhvm
-    - php: 5.4
-    - php: 5.5
-    - php: 5.6
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 8.0
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 8.1
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 8.2
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 8.3
+      env: COMPOSER_FLAGS="--prefer-lowest"
 before_script:
-  - if [ "$PHAN" != "" ]; then mkdir setup; curl -L https://raw.githubusercontent.com/phan/phan/master/tests/travis_setup.sh -o setup/travis_setup.sh; bash setup/travis_setup.sh;  fi;
-  - if [ "$PHAN" != "" ]; then mkdir /tmp/opcache || true; echo -e 'opcache.enable_cli=1\nopcache.file_cache=/tmp/opcache' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;
   - composer validate
   - composer self-update
   - composer update --no-interaction ${COMPOSER_FLAGS}
-  - composer require guzzlehttp/guzzle:^6.3 --no-interaction
-  - if [ "$STATIC_ANALYSIS" != "" ]; then curl -L https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar -o phpstan.phar; fi;
-  - if [ "$PHAN" != "" ]; then curl -L https://github.com/phan/phan/releases/download/0.12.0/phan.phar -o phan.phar; fi;
+  - composer require guzzlehttp/guzzle:^7.9 --no-interaction
+  - composer require tedivm/stash:^1.2 --no-interaction
 script:
   - vendor/bin/phpunit
-  - bash psalm.sh
-  - if [ "$STATIC_ANALYSIS" != "" ]; then php phpstan.phar analyse --level=4 src; fi;
-  - if [ "$PHAN" != "" ]; then php phan.phar; fi;
 cache:
   directories:
   - vendor

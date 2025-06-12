@@ -46,7 +46,7 @@ class RmDirTest extends BandolierTestCase
         $path = explode(DIRECTORY_SEPARATOR, $this->filePath);
         $folder = $this->root . $path[0];
         $this->assertTrue(Paths::rmDir($folder));
-        $this->assertFileNotExists($this->root . $this->filePath);
+        $this->assertFileDoesNotExist($this->root . $this->filePath);
     }
 
 
