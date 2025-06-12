@@ -22,7 +22,7 @@ class DefaultAttributesTest extends BandolierTestCase
      * @group arrays
      * @group arrays-defaultAttributes
      */
-    public function default_array_will_be_overwritten_if_collision_is_found()
+    public function testDefaultArrayWillBeOverwrittenIfCollisionIsFound()
     {
         $array1 = ['a' => '123'];
         $array2 = ['a' => '345'];
@@ -37,7 +37,7 @@ class DefaultAttributesTest extends BandolierTestCase
      * @group arrays
      * @group arrays-defaultAttributes
      */
-    public function default_array_will_be_used_if_no_collision_is_found()
+    public function testDefaultArrayWillBeUsedIfNoCollisionIsFound()
     {
         $array1 = ['a' => '123'];
         $array2 = ['b' => '345'];

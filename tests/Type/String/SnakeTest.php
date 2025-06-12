@@ -9,7 +9,7 @@ class SnakeTest extends TestCase
     /**
      * @test
      */
-    public function it_return_a_snake_cased_string()
+    public function testItReturnASnakeCasedString()
     {
         $this->assertEquals('bandolier_p_h_p_toolbox', Strings::snake('BandolierPHPToolbox'));
         $this->assertEquals('bandolier_php_toolbox',   Strings::snake('BandolierPhpToolbox'));

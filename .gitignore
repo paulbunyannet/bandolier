@@ -19,3 +19,10 @@ lighthouse.sh
 stacks.sh
 update-docker-assets-file.sh
 getUid.php
+/get_docker_assets.sh.log
+/update_docker_assets_file.sh
+/.phpunit.result.cache
+/phpunit.xml.bak
+.phpunit.cache
+docker-compose.override.yml
+php-override.ini

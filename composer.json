@@ -12,11 +12,11 @@
     }
   ],
   "require-dev": {
-    "phpunit/phpunit": "^8.5.8",
     "mockery/mockery": "^1.4.2",
     "symfony/var-dumper": "^3.2",
     "fakerphp/faker": "^1.12",
-    "mikey179/vfsstream": "^1.6"
+    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "^12.2"
   },
   "autoload": {
     "psr-4": {
@@ -46,5 +46,9 @@
   "suggest": {
     "guzzlehttp/guzzle": "Needed for using Paths::fileGetContents() to retrieve remote content.",
     "tedivm/stash": "Needed for the Cache modules to function."
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.9",
+    "tedivm/stash": "^1.2"
   }
 }

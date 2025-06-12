@@ -44,11 +44,11 @@ if (!function_exists('getAttribute')) {
     /**
      * Get an attribute from an array.
      * @param array $data
-     * @param null $attribute
-     * @param null $default
+     * @param string $attribute
+     * @param string $default
      * @return mixed|null
      */
-    function getAttribute(array $data, $attribute = null, $default = null)
+    function getAttribute(array $data, string $attribute = '', string $default = '')
     {
         return \Pbc\Bandolier\Type\Arrays::getAttribute($data, $attribute, $default);
     }

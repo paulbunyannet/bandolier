@@ -10,7 +10,7 @@ class ToWordTest extends BandolierTestCase
     /**
      * @test
      */
-    public function it_will_return_a_word_from_number()
+    public function testItWillReturnAWordFromNumber()
     {
         $this->assertSame(
             Numbers::toWord(123456789),
@@ -31,7 +31,7 @@ class ToWordTest extends BandolierTestCase
     /**
      * @test
      */
-    public function it_returns_a_word_if_number_is_a_string()
+    public function testItReturnsAWordIfNumberIsAString()
     {
         $this->assertSame(
             Numbers::toWord('123456789123.12345'),
@@ -42,7 +42,7 @@ class ToWordTest extends BandolierTestCase
     /**
      * @test
      */
-    public function it_will_return_false_if_number_is_not_numeric()
+    public function testItWillReturnFalseIfNumberIsNotNumeric()
     {
         $this->assertFalse(Numbers::toWord('this is not a number'));
     }
@@ -50,7 +50,7 @@ class ToWordTest extends BandolierTestCase
     /**
      * @test
      */
-    public function it_will_return_false_if_number_is_greater_than_max_int()
+    public function testItWillReturnFalseIfNumberIsGreaterThanMaxInt()
     {
         $this->expectException(OutOfRangeException::class);
         Numbers::toWord(PHP_INT_MAX + 1);
